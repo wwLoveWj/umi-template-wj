@@ -1,6 +1,8 @@
 {
+  "name": "my-template-umi",
   "private": true,
-  "author": "wwLoveWj <blww885@163.com>",
+  "author": "wj",
+  "version": "1.0.0",
   "scripts": {
     "dev": "umi dev",
     "build": "umi build",
