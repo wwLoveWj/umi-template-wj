@@ -10,9 +10,13 @@ export const Login = () => {
     token: string;
   }>("/api/user/login");
 };
+// 获取用户的所有基础信息接口
+export const verify = (params = {}): Promise<any> => {
+  return request.get<API.UseInfoType>("/userInfo/check", params);
+};
 // 查询用户信息接口
 export const UserInfoQueryAPI = (params = {}): Promise<any> => {
-  return request.get<API.UseInfoType>("/userInfo", params);
+  return request.get<API.UseInfoType>("/userInfo/query", params);
 };
 // 创建用户信息
 export const UserInfoCreateAPI = (params: any): Promise<any> => {

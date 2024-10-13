@@ -17,11 +17,11 @@ const routes: API.MenuRoutesType[] = [
       },
     ],
   },
-  // {
-  //   path: "/login",
-  //   component: "@/pages/login", // 加载login登录页面
-  //   layout: false,
-  // },
+  {
+    path: "/login",
+    component: "@/pages/login", // 加载login登录页面
+    layout: false,
+  },
   // {
   //   path: "/register",
   //   component: "@/pages/login/register", // 加载login注册页面

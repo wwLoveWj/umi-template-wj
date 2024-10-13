@@ -1,0 +1,184 @@
+.main {
+    position: absolute;
+    top: 0;
+    right: 7%;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 400px;
+    height: 430px;
+    margin: auto;
+    margin-right: 0;
+    // overflow: hidden;
+    // border: 1px solid #ddd;
+    // border-radius: 4px;
+    // box-shadow: 0px 0px 10px #ccc;
+    box-sizing: content-box;
+
+    .title {
+        margin-bottom: 20px;
+        font-family: PingFangSC-Regular;
+        font-size: 28px;
+        color: #0049a6;
+        letter-spacing: 0;
+        line-height: 40px;
+        font-weight: 400;
+        margin-top: 40px;
+    }
+
+    .submit {
+        width: 100%;
+    }
+}
+
+.ribbon {
+    position: absolute;
+    top: 80px;
+    right: -27px;
+    padding: 8px 40px;
+    font-size: 14px;
+    color: white;
+    background-color: #ff0000;
+    transform: rotate(45deg);
+    transform-origin: top right;
+    z-index: 1;
+}
+
+.ribbon::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border-top: 8px solid #ff0000;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+}
+
+.mainLeft {
+    width: 240px;
+    height: 344px;
+    // background: url('./img/loginLeft.svg') no-repeat;
+    background-image: url('../../assets/imgs/login.png') no-repeat;
+    position: relative;
+
+    p {
+        margin-top: 140px;
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    span {
+        position: absolute;
+        width: 80%;
+        bottom: 20px;
+        left: 0px;
+        right: 0px;
+        margin: 0 auto;
+        text-align: center;
+        color: #ddd;
+        font-size: 12px;
+    }
+}
+
+.mainRight {
+    flex: 1;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    // background-color: rgba(255, 255, 255, 0.6);
+    background: #ffffff;
+    border-radius: 12px;
+
+    .formCard {
+        margin-top: 20px;
+        position: relative;
+        flex: 1;
+        // margin-bottom: 20px;
+        border-radius: 0 0 6px 6px;
+
+        .submitItem {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding-bottom: 16px;
+        }
+    }
+
+    .otpTips {
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #999999;
+        letter-spacing: 0;
+        text-align: right;
+        line-height: 20px;
+        font-weight: 400;
+    }
+
+    :global {
+
+        .tenantcenter-fe-ant-input-affix-wrapper,
+        .tenantcenter-fe-ant-btn {
+            border-radius: 4px !important;
+        }
+
+        .tenantcenter-fe-ant-form-item-with-help .tenantcenter-fe-ant-form-item-explain {
+            padding-top: 4px;
+            min-height: 32px !important;
+        }
+
+        .tenantcenter-fe-ant-input-prefix {
+            margin-right: 12px;
+        }
+
+        .tenantcenter-fe-ant-input-affix-wrapper-status-success {
+            background: #ebf0f8 !important;
+            border-color: transparent;
+
+            .tenantcenter-fe-ant-input {
+                background: #ebf0f8 !important;
+            }
+        }
+
+        .tenantcenter-fe-ant-input-affix-wrapper-status-error {
+            border-color: #ff0020 !important;
+
+            .tenantcenter-fe-ant-input {
+                background: #fff !important;
+            }
+        }
+
+        .tenantcenter-fe-ant-form-item-explain-error {
+            color: #ff0020 !important;
+        }
+
+        .tenantcenter-fe-ant-input-affix-wrapper {
+            background: #ebf0f8;
+            border-color: transparent;
+
+            .tenantcenter-fe-ant-input {
+                background: #ebf0f8;
+            }
+        }
+
+        .tenantcenter-fe-ant-input-clear-icon {
+            color: #666666d9;
+            font-size: 13px;
+        }
+    }
+}
+
+.loginPage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // background: url('./img/newloginBg.gif') no-repeat;
+    background: url('../../assets/imgs/login.png') no-repeat;
+    // background-color: rgb(218, 245, 255);
+    background-size: cover;
+}
+
+.loginInfoCheck {
+    display: flex;
+    justify-content: space-between;
+}
