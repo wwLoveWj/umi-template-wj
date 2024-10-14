@@ -40,21 +40,21 @@ export default function Layout() {
       const _lastTime =
         (Number(localStorage.getItem("lastTime")) as number) * 1;
       const nowTime = new Date().getTime();
-      console.log(
-        _lastTime,
-        "nowTime----------------------------------",
-        nowTime
-      );
+      // console.log(
+      //   _lastTime,
+      //   "nowTime----------------------------------",
+      //   nowTime
+      // );
       if (nowTime - _lastTime > 1000 * 1000) {
-        console.log(
-          "当前时间：",
-          nowTime,
-          "最新时间",
-          _lastTime,
-          "间隔：",
-          nowTime - _lastTime,
-          "超时了，已退出登录"
-        );
+        // console.log(
+        //   "当前时间：",
+        //   nowTime,
+        //   "最新时间",
+        //   _lastTime,
+        //   "间隔：",
+        //   nowTime - _lastTime,
+        //   "超时了，已退出登录"
+        // );
         message.warning("长时间未操作，即将退出登录");
         // notification.error({ message: "'长时间未操作，已退出登录'" });
         // 清除计时器
@@ -126,7 +126,7 @@ export default function Layout() {
     },
   ];
   return (
-    <div className={styles.navs}>
+    <div>
       <WjLayout
         isShowHeader={false}
         avatarItems={avatarItems}

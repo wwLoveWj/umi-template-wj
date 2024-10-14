@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, history } from "umi";
+import { WjRadio } from "magical-antd-ui";
 // import { useToggle } from "react-use";
 import {
   Form,
@@ -21,11 +22,12 @@ import { redirectUrl, setPrivateKey, getPrivateKey } from "@/utils";
 import { storage } from "@/utils/storage";
 // 登录页面
 const Login = () => {
-  const [checked, setChecked] = useState(false); //记住密码
   const pwdRef = useRef(null);
   const { pathname } = useLocation();
   const [form] = Form.useForm();
   //   const [visible, toggleVisible] = useToggle(false);
+  const [checked, setChecked] = useState(false); //记住密码
+  const [selectedValue, setSelectedValue] = useState("4"); //radio的选中值，登录身份
   const [role, setActiveName] = useState<1 | 2 | 3 | 4>(2); //存储切换的页面
   const [isVipLogin, setIsVipLogin] = useState<boolean>(false);
 
@@ -156,6 +158,14 @@ const Login = () => {
     setActiveName(e.target.value);
   };
 
+  /**
+   * @description 获取radio选中的值，切换登陆身份
+   * @param value 选中的值
+   */
+  const handleRadioChange = (value: string) => {
+    setSelectedValue(value);
+  };
+
   useEffect(() => {
     setIsVipLogin(pathname?.includes("/iamlogin"));
     let selectRole: 1 | 2 | 3 | 4 = 2;
@@ -188,10 +198,34 @@ const Login = () => {
               <Radio value={1}>造物主</Radio>
             </Radio.Group>
           ) : (
-            <Radio.Group onChange={onChange} value={role}>
-              <Radio value={4}>普通用户</Radio>
-              <Radio value={3}>权限管理员</Radio>
-            </Radio.Group>
+            // <Radio.Group onChange={onChange} value={role}>
+            //   <Radio value={4}>普通用户</Radio>
+            //   <Radio value={3}>权限管理员</Radio>
+            //               </Radio.Group>
+            <WjRadio
+              value={selectedValue}
+              onChange={handleRadioChange}
+              options={[
+                {
+                  label: "普通用户",
+                  value: "4",
+                },
+                {
+                  label: "权限管理员",
+                  value: "3",
+                },
+              ]}
+              configuration={{
+                colorRadio: "red",
+                mode: "flex",
+                jumpX: "10em",
+                // jumpX: "3em",
+                // jumpY: "-1.5em",
+                // widthRadio: "10em",
+                //   '--tranlateX': '6.65em',
+                //   '--tranlateY': '-2.5em',
+              }}
+            />
           )}
           <div className={styles.formCard}>
             <Form name="basic" form={form} onFinish={handleSubmit}>
