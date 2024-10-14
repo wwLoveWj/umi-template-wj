@@ -47,6 +47,66 @@ export const menuRoutes: API.MenuRoutesType[] = [
     //   },
     // ],
   },
+  {
+    key: "collect",
+    title: "收藏管理",
+    path: "/collect",
+    icon: HomeOutlined,
+    routes: [
+      {
+        path: "/collect",
+        hidden: true,
+        redirect: "/collect/table",
+      },
+      {
+        key: "collect",
+        title: "收藏列表",
+        path: "/collect/table",
+        component: "./collect/index",
+      },
+      // {
+      //   key: "detail",
+      //   title: "router.home.detail",
+      //   path: "/home/detail",
+      //   component: "./home/Detail",
+      //   hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
+      // },
+    ],
+  },
+  {
+    key: "article",
+    title: "文章管理",
+    path: "/article",
+    icon: ReadOutlined,
+    // component: "./article/index",
+    routes: [
+      {
+        path: "/article",
+        hidden: true,
+        redirect: "/article/table",
+      },
+      {
+        key: "table",
+        path: "/article/table",
+        component: "./article/index",
+        title: "文章列表",
+      },
+      {
+        key: "edit",
+        title: "更新文章",
+        path: "/article/edit",
+        component: "./article/components/ArticleCreate.tsx",
+        hidden: true,
+      },
+      {
+        key: "create",
+        title: "创建文章",
+        path: "/article/create",
+        component: "./article/components/ArticleCreate.tsx",
+        hidden: true,
+      },
+    ],
+  },
   // {
   //   key: "system",
   //   title: "router.system",
