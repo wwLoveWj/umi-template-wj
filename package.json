@@ -11,9 +11,9 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-react": "^1.0.6",
-    "@ant-design/icons": "^5.3.7",
     "ahooks": "^3.8.0",
     "antd": "^5.18.0",
     "axios": "^1.7.2",
@@ -21,6 +21,7 @@
     "jsencrypt": "^3.3.2",
     "lodash-es": "^4.17.21",
     "magical-antd-ui": "^0.0.30",
+    "react-schema-render": "^0.0.5",
     "umi": "^4.3.25",
     "vstores": "^0.0.17"
   },
