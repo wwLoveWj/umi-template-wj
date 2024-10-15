@@ -21,8 +21,8 @@ interface FormItemConfigLsitType {
     | "select"
     | "button"
     | "number";
-  name?: string;
-  label?: string;
+  dataIndex?: string;
+  title?: string;
   span?: number;
   formItemProps?: any;
   fieldProps?: any;
@@ -32,8 +32,8 @@ interface FormItemConfigLsitType {
  * const formConfigList: FormItemConfigLsitType[] = [
     {
       type: "search",
-      name: "username",
-      label: "用户名",
+      dataIndex: "username",
+      title: "用户名",
       formItemProps: {
         rules: [{ required: true, message: "用户名必填" }],
       },
@@ -46,32 +46,32 @@ interface FormItemConfigLsitType {
     },
     {
       type: "input",
-      name: "username",
-      label: "用户名",
+      dataIndex: "username",
+      title: "用户名",
       formItemProps: {
         rules: [{ required: true, message: "请输入用户名" }],
       },
     },
     {
       type: "number",
-      name: "age",
-      label: "年龄",
+      dataIndex: "age",
+      title: "年龄",
       formItemProps: {
         rules: [{ required: true, message: "请输入年龄" }],
       },
     },
     {
       type: "password",
-      name: "username",
-      label: "用户密码",
+      dataIndex: "username",
+      title: "用户密码",
       formItemProps: {
         rules: [{ required: true, message: "请输入用户密码" }],
       },
     },
     {
       type: "select",
-      name: "userType",
-      label: "用户类型",
+      dataIndex: "userType",
+      title: "用户类型",
       formItemProps: {
         rules: [{ required: true, message: "请选择用户类型" }],
       },
@@ -90,8 +90,8 @@ interface FormItemConfigLsitType {
     },
     {
       type: "textarea",
-      name: "description",
-      label: "描述",
+      dataIndex: "description",
+      title: "描述",
       formItemProps: {
         rules: [{ required: true, message: "请输入描述" }],
       },
@@ -164,8 +164,8 @@ export default function Index({
         span: column?.span || formItemLayout?.span || 12,
         children: {
           component: "formitem",
-          label: column?.label,
-          name: column?.name,
+          label: column?.title,
+          name: column?.dataIndex,
           ...column?.formItemProps,
           // 根据type类型来决定渲染的组件
           children: {
