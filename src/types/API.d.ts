@@ -49,4 +49,22 @@ declare namespace API {
     userId: string;
     [propsname: string]: any;
   }
+  // =======================文章列表类型==============================
+  interface ArticleTableDataType {
+    editorId: string;
+    editorContent: string;
+    title: string;
+    createTime: string;
+  }
+  //============================任务通知==================================
+  interface TaskListType {
+    task: string;
+    taskId: string;
+    createTime: string;
+    reminderTime: string;
+    reminderPattern: string;
+    intervalUnit: string;
+    status: string;
+    checked: boolean;
+  }
 }

@@ -107,6 +107,26 @@ export const menuRoutes: API.MenuRoutesType[] = [
       },
     ],
   },
+  {
+    key: "task",
+    title: "任务管理",
+    path: "/task",
+    icon: BellOutlined,
+    routes: [
+      {
+        path: "/task",
+        hidden: true,
+        redirect: "/task/table",
+      },
+      {
+        key: "task-table",
+        hidden: true,
+        title: "任务列表",
+        path: "/task/table",
+        component: "./task/index",
+      },
+    ],
+  },
   // {
   //   key: "system",
   //   title: "router.system",
