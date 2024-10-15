@@ -8,6 +8,7 @@ import {
   Select,
   InputNumber,
   Card,
+  DatePicker,
 } from "antd";
 
 export type ComponentsType = {
@@ -24,6 +25,7 @@ export type ComponentsType = {
   input: typeof Input;
   number: typeof InputNumber;
   password: typeof Input.Password;
+  date: typeof DatePicker;
 };
 
 const components: ComponentsType = {
@@ -40,6 +42,7 @@ const components: ComponentsType = {
   input: Input,
   number: InputNumber,
   password: Input.Password,
+  date: DatePicker,
 };
 
 export default components;

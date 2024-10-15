@@ -3,35 +3,19 @@ import { SchemaRender } from "react-schema-render";
 import type { FormProps } from "antd";
 import { Form, notification } from "antd";
 import type { FormInstance } from "antd";
+import { WjFormColumnsPropsType } from "./type";
 
 type FieldType = {
   username?: string;
   password?: string;
   remember?: string;
 };
-/**
- * 表单的配置类型
- */
-interface FormItemConfigLsitType {
-  type:
-    | "input"
-    | "password"
-    | "search"
-    | "textarea"
-    | "select"
-    | "button"
-    | "number";
-  dataIndex?: string;
-  title?: string;
-  span?: number;
-  formItemProps?: any;
-  fieldProps?: any;
-}
+
 /**
  * @description 表单传参示例
- * const formConfigList: FormItemConfigLsitType[] = [
+ * const formConfigList: WjFormColumnsPropsType[] = [
     {
-      type: "search",
+      valueType: "search",
       dataIndex: "username",
       title: "用户名",
       formItemProps: {
@@ -45,7 +29,7 @@ interface FormItemConfigLsitType {
       },
     },
     {
-      type: "input",
+      valueType: "input",
       dataIndex: "username",
       title: "用户名",
       formItemProps: {
@@ -53,7 +37,7 @@ interface FormItemConfigLsitType {
       },
     },
     {
-      type: "number",
+      valueType: "number",
       dataIndex: "age",
       title: "年龄",
       formItemProps: {
@@ -61,7 +45,7 @@ interface FormItemConfigLsitType {
       },
     },
     {
-      type: "password",
+      valueType: "password",
       dataIndex: "username",
       title: "用户密码",
       formItemProps: {
@@ -69,7 +53,7 @@ interface FormItemConfigLsitType {
       },
     },
     {
-      type: "select",
+      valueType: "select",
       dataIndex: "userType",
       title: "用户类型",
       formItemProps: {
@@ -89,7 +73,7 @@ interface FormItemConfigLsitType {
       },
     },
     {
-      type: "textarea",
+      valueType: "textarea",
       dataIndex: "description",
       title: "描述",
       formItemProps: {
@@ -101,7 +85,7 @@ interface FormItemConfigLsitType {
     },
   ];
  */
-export type { FormItemConfigLsitType };
+
 export default function Index({
   formConfigList,
   form: formInstance,
@@ -109,11 +93,11 @@ export default function Index({
   successNotify = true,
   btnConfig,
 }: {
-  formConfigList: FormItemConfigLsitType[];
+  formConfigList: WjFormColumnsPropsType[];
   form?: FormInstance;
   successNotify?: boolean;
   successNotifyProps?: any;
-  btnConfig: {
+  btnConfig?: {
     onCancel?: () => void;
     cancelTxt?: string;
     submitTxt?: string;
@@ -149,19 +133,19 @@ export default function Index({
     layout: "inline",
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
-    span: 8,
+    colProps: { span: 8 },
     noCard: false,
     form,
     onFinish,
-    // style: { maxWidth: 600 },
+    style: { maxWidth: 1600 },
   };
 
   // 整体的formItem渲染结果
-  const fromItemRender = (config: FormItemConfigLsitType[]) => {
+  const fromItemRender = (config: WjFormColumnsPropsType[]) => {
     return config?.map((column) => {
       return {
         component: "col",
-        span: column?.span || formItemLayout?.span || 12,
+        span: column?.colProps?.span || formItemLayout?.colProps?.span || 12,
         children: {
           component: "formitem",
           label: column?.title,
@@ -169,7 +153,7 @@ export default function Index({
           ...column?.formItemProps,
           // 根据type类型来决定渲染的组件
           children: {
-            component: column?.type,
+            component: column?.valueType,
             ...column?.fieldProps,
             style: { width: "100%" },
           },
@@ -177,7 +161,7 @@ export default function Index({
       };
     });
   };
-  const card = (config: FormItemConfigLsitType[]) => ({
+  const card = (config: WjFormColumnsPropsType[]) => ({
     component: "wjfrom",
     initialValues: { remember: true },
     onFinishFailed,
