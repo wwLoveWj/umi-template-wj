@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { Button, Form, Row, Skeleton, Space } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { DownOutlined, UpOutlined, SearchOutlined } from "@ant-design/icons";
 import useResponsiveSize from "../hooks/useResponsiveSize";
 import { WjFormColumnsPropsType } from "../WjForm/type";
 import type { FormInstance } from "antd";
@@ -78,6 +78,7 @@ export default forwardRef(function Index({
               type="primary"
               loading={loading}
               onClick={handleSubmit}
+              // icon={<SearchOutlined />}
               {...submitter?.submitBtnProps}
             >
               {submitter?.submitText ?? "查询"}

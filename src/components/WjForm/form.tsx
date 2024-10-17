@@ -158,7 +158,7 @@ export default function Index({
     colProps: { span: 8, style: {} },
     noCard: false,
     form,
-    style: { maxWidth: 1600 },
+    style: { width: "100%" },
     ...restProps,
   };
 
@@ -167,7 +167,7 @@ export default function Index({
     return config?.map((column) => {
       return {
         component: "col",
-        span: column?.colProps?.span || formItemLayout?.colProps?.span || 12,
+        // span: column?.colProps?.span || formItemLayout?.colProps?.span || 12,
         style: column?.colProps?.style,
         children: {
           component: "formitem",

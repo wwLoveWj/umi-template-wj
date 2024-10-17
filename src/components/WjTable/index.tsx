@@ -2,10 +2,10 @@ import { Alert, Spin, Table, Button, Space } from "antd";
 import React, { useImperativeHandle, forwardRef } from "react";
 import { useRequest } from "ahooks";
 import { WjForm, WjFormColumnsPropsType } from "../WjForm";
-import { WjTableProps, WjTableColumns, WjTableColumnType } from "./type";
+import { WjTableProps } from "./type";
 import styles from "./style.less";
 
-const Index: React.FC<WjTableProps> = forwardRef(
+const Index = forwardRef<HTMLDivElement, WjTableProps>(
   (
     {
       rowSelection,
@@ -17,6 +17,7 @@ const Index: React.FC<WjTableProps> = forwardRef(
       batchOpertions,
       noCard,
       actionRef,
+      createBtnOperations,
       ...restProps
     },
     ref
@@ -33,29 +34,39 @@ const Index: React.FC<WjTableProps> = forwardRef(
         reload: () => run(),
       };
     });
+    const tableSearchColumns =
+      columns?.filter((column: any) => column.search) || [];
     return (
       <>
-        <div style={{ marginBottom: 12 }}>
-          <WjForm formConfigList={columns as WjFormColumnsPropsType[]} />
-        </div>
+        {tableSearchColumns?.length === 0 ? (
+          <></>
+        ) : (
+          <div style={{ marginBottom: 12 }}>
+            <WjForm formConfigList={columns as WjFormColumnsPropsType[]} />
+          </div>
+        )}
         <div className={styles.tableLayout}>
           <Spin spinning={loading}>
             <div className={styles.tableOperations}>
-              <Button type="primary" style={{ marginRight: 12 }}>
-                创建按钮
-              </Button>
-              <Alert
-                message={
-                  hasSelected ? `选中项 ${selectedRowLens} ${title}` : ""
-                }
-                type="success"
-                showIcon
-                style={{ width: 200 }}
-              />
+              {createBtnOperations && createBtnOperations?.length > 0 && (
+                <Space style={{ marginRight: 12 }}>
+                  {createBtnOperations?.map((item) => item)}
+                </Space>
+              )}
+              {hasSelected && (
+                <Alert
+                  message={
+                    hasSelected ? `选中项 ${selectedRowLens} ${title}` : ""
+                  }
+                  type="success"
+                  showIcon
+                  style={{ width: 200 }}
+                />
+              )}
             </div>
             <Table
               {...restProps}
-              // ref={ref}
+              ref={ref}
               rowSelection={rowSelection}
               columns={columns}
               pagination={false}
@@ -89,4 +100,9 @@ const Index: React.FC<WjTableProps> = forwardRef(
 );
 
 export default Index;
-export type { WjTableProps, WjTableColumns, WjTableColumnType };
+export type {
+  WjTableProps,
+  WjTableColumns,
+  WjTableColumnType,
+  WjTableRefType,
+} from "./type";

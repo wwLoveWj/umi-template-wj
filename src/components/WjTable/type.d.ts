@@ -19,6 +19,16 @@ export type WjTableColumnType<D = any> = Omit<
   };
 export type WjTableColumns<D = any> = WjTableColumnType<D>[];
 
+/** 表格 ref 方法 */
+export type WjTableRefType = {
+  refresh: (params?: Record<string, any>) => Promise<void>;
+  search: (params?: Record<string, any>, isNew?: boolean) => Promise<void>;
+  reload: (clearSelected?: boolean) => Promise<any>;
+  reloadAndRest: (clearSelected?: boolean) => Promise<void>;
+  reset: () => Promise<void>;
+  clearSelected: () => void;
+};
+
 export type WjTableProps<DataType = any, ParamsType = any> = Omit<
   TableProps<DataType>,
   "title" | "columns" | "pagination" | "rowSelection"
@@ -49,5 +59,6 @@ export type WjTableProps<DataType = any, ParamsType = any> = Omit<
     type: "primary" | "default";
   }>;
   noCard?: boolean;
-  actionRef?: {};
+  actionRef?: Ref<WjTableRefType>;
+  createBtnOperations?: any[];
 };
