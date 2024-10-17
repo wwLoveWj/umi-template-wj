@@ -1,8 +1,8 @@
 import request from "../request";
 
 // 文章列表信息
-export const ArticleInfoListQueryAPI = (params: any): Promise<any> => {
-  return request.get("/article/query", params);
+export const ArticleInfoListQueryAPI = (params: any) => {
+  return request.get<API.ArticleTableDataType[]>("/article/query", params);
 };
 // 创建文章
 export const ArticleInfoCreateAPI = (params: any): Promise<any> => {

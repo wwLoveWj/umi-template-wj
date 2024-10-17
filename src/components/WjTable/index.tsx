@@ -14,9 +14,9 @@ const Index: React.FC<WjTableProps> = forwardRef(
       columns,
       dataSource,
       batchOpertions,
-      ...tableParams
+      ...restProps
     },
-    preantRef
+    actionRef
   ) => {
     const hasSelected = selectedRowLens > 0;
     // 表格的请求方法
@@ -25,7 +25,7 @@ const Index: React.FC<WjTableProps> = forwardRef(
         ? request?.url(request?.params)
         : new Promise((res) => res({ data: null }))
     );
-    useImperativeHandle(preantRef, () => {
+    useImperativeHandle(actionRef, () => {
       return {
         reload: () => run(),
       };
@@ -50,6 +50,7 @@ const Index: React.FC<WjTableProps> = forwardRef(
             </div>
           )}
           <Table
+            {...restProps}
             rowSelection={rowSelection}
             columns={columns}
             pagination={false}
@@ -58,7 +59,6 @@ const Index: React.FC<WjTableProps> = forwardRef(
                 ? dataSource
                 : (data as []) || []
             }
-            {...tableParams}
           />
           <div>
             <Space>

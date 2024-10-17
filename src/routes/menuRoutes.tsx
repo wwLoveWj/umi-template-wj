@@ -127,6 +127,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
       },
     ],
   },
+  {
+    key: "backlog",
+    title: "待办管理",
+    path: "/backlog",
+    icon: BellOutlined,
+    component: "./backlog/index",
+  },
   // {
   //   key: "system",
   //   title: "router.system",
