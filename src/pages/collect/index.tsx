@@ -6,8 +6,9 @@ export default function Index() {
   const formConfigList1: WjTableColumnType[] = [
     {
       valueType: "search",
-      dataIndex: "username",
+      dataIndex: "username1",
       title: "用户名",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "用户名必填" }],
       },
@@ -21,7 +22,8 @@ export default function Index() {
     {
       valueType: "input",
       dataIndex: "username",
-      title: "用户名",
+      title: "用户名2",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "请输入用户名" }],
       },
@@ -30,6 +32,7 @@ export default function Index() {
       valueType: "number",
       dataIndex: "age",
       title: "年龄",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "请输入年龄" }],
       },
@@ -38,6 +41,7 @@ export default function Index() {
       valueType: "password",
       dataIndex: "username",
       title: "用户密码",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "请输入用户密码" }],
       },
@@ -46,6 +50,7 @@ export default function Index() {
       valueType: "select",
       dataIndex: "userType",
       title: "用户类型",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "请选择用户类型" }],
       },
@@ -66,6 +71,7 @@ export default function Index() {
       valueType: "textarea",
       dataIndex: "description",
       title: "描述",
+      search: true,
       formItemProps: {
         rules: [{ required: true, message: "请输入描述" }],
       },
@@ -78,17 +84,7 @@ export default function Index() {
   return (
     <div>
       收藏管理
-      <WjForm
-        formConfigList={formConfigList1}
-        btnConfig={{
-          submitTxt: "提交",
-          cancelTxt: "取消",
-          onCancel: () => {
-            debugger;
-            history.push("/article");
-          },
-        }}
-      />
+      <WjForm formConfigList={formConfigList1} />
     </div>
   );
 }

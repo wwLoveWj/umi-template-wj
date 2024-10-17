@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Space, Button, Table } from "antd";
-import type { TableColumnsType } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import React, { useState, useEffect, useRef } from "react";
+import { Space, Button } from "antd";
 import { history, useLocation } from "umi";
 import dayjs from "dayjs";
 import { useRequest } from "ahooks";
@@ -11,27 +9,30 @@ import {
 } from "@/service/api/article";
 import DelPopconfirm from "@/components/DelPopconfirm";
 import type { ArticleTableDataType } from "./type.d.ts";
+import WjTable, { WjTableColumns, WjTableRefType } from "@/components/WjTable";
 
 const Index: React.FC = () => {
-  // const [tableData, setTableData] = useState<ArticleTableDataType[]>([]); //文章信息表格
+  const actionRef = useRef<WjTableRefType>(null);
   // const detailsHistory = useLocation();
-  // 查询列表信息
-  const { data: tableData, run, loading } = useRequest(ArticleInfoListQueryAPI);
+
   //   删除文章列表数据接口
   const DelArticleAPIRun = useRequest(ArticleInfoDelAPI, {
     debounceWait: 100,
     manual: true,
     onSuccess: () => {
-      run({});
+      // 查询列表信息;
+      actionRef?.current?.reload();
     },
   });
 
   // 列表项配置
-  const columns: TableColumnsType<ArticleTableDataType> = [
+  const columns: WjTableColumns = [
     {
       title: "标题",
       dataIndex: "title",
       width: 180,
+      valueType: "input",
+      search: true,
     },
     {
       title: "文章内容",
@@ -89,11 +90,16 @@ const Index: React.FC = () => {
       ),
     },
   ];
-
   return (
-    <div className="layout-padding-white">
-      <div style={{ marginBottom: 16 }}>
-        <Space size="small">
+    <div>
+      <WjTable
+        actionRef={actionRef}
+        columns={columns}
+        request={{ url: ArticleInfoListQueryAPI, params: {} }}
+        rowKey="editorId"
+        size="small"
+        noCard={true}
+        createBtnOperations={[
           <Button
             type="primary"
             onClick={() => {
@@ -101,20 +107,14 @@ const Index: React.FC = () => {
             }}
           >
             写文章
-          </Button>
-          <Button type="primary" icon={<SearchOutlined />} onClick={run}>
-            查询
-          </Button>
-        </Space>
-      </div>
-      <Table
-        loading={loading}
-        columns={columns}
-        dataSource={tableData}
-        rowKey="editorId"
+          </Button>,
+          // <Button type="primary" icon={<SearchOutlined />} onClick={run}>
+          //   查询
+          // </Button>,
+        ]}
         // sticky
         // scroll={{ y: "max-content" }}
-        size="small"
+        // batchOpertions={[{ label: "批量上传" }]}
       />
     </div>
   );
