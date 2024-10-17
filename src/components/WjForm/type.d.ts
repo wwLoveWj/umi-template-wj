@@ -12,5 +12,5 @@ export type WjFormColumnsPropsType<D = any> = {
     | Record<string, any>
     | ((form: FormInstance) => Record<string, any>);
   formItemProps?: FormItemProps<D> | ((form: FormInstance) => FormItemProps<D>);
-  colProps?: { span: number };
+  colProps?: { span?: number; style?: object };
 };

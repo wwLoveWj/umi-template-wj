@@ -48,4 +48,6 @@ export type WjTableProps<DataType = any, ParamsType = any> = Omit<
     onClick: (selectedRowKeys: string[]) => void; //点击事件
     type: "primary" | "default";
   }>;
+  noCard?: boolean;
+  actionRef?: {};
 };

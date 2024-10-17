@@ -10,6 +10,7 @@ import {
   Card,
   DatePicker,
 } from "antd";
+import WjBtnConfigForm from "../../WjBtnConfigForm/index";
 
 export type ComponentsType = {
   card: typeof Card;
@@ -26,6 +27,7 @@ export type ComponentsType = {
   number: typeof InputNumber;
   password: typeof Input.Password;
   date: typeof DatePicker;
+  searchForm: typeof WjBtnConfigForm;
 };
 
 const components: ComponentsType = {
@@ -43,6 +45,7 @@ const components: ComponentsType = {
   number: InputNumber,
   password: Input.Password,
   date: DatePicker,
+  searchForm: WjBtnConfigForm,
 };
 
 export default components;

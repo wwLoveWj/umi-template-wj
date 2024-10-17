@@ -33,7 +33,7 @@ const useResponsiveSize = (
   const responsive = useResponsive();
   const array = Object.keys(colConfig);
   let index = array.findIndex((key) => !responsive[key]);
-  debugger;
+
   if (index === -1) index = array.length;
   const current = array[index - 1] as keyof typeof colConfig;
 
