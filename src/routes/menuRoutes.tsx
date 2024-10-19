@@ -134,6 +134,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
     icon: BellOutlined,
     component: "./backlog/index",
   },
+  {
+    key: "excel",
+    title: "Excel管理",
+    path: "/excel",
+    icon: BellOutlined,
+    component: "./excel/index",
+  },
   // {
   //   key: "system",
   //   title: "router.system",

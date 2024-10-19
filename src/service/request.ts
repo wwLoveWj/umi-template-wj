@@ -44,6 +44,11 @@ instance.interceptors.request.use(
 
     // 对应可以删除也可以在此添加一些参数
     // config.data.userName = '天道酬勤'
+    if (config.method === "post") {
+      if (config.data instanceof FormData) {
+        config.headers = { Accept: "application/json;", ...config.headers };
+      }
+    }
     return config;
   },
   (error: AxiosError) => {
@@ -71,8 +76,11 @@ const openNotification = (
   });
 };
 instance.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response) => {
     const { code, msg, data } = response.data;
+    // if (response?.config?.responseType === "blob") {
+    //   return response;
+    // }
     // 根据自定义错误码判断请求是否成功
     if (code === 1) {
       // 将组件用的数据返回
