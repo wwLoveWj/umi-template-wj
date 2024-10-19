@@ -3,6 +3,7 @@ import "./global.less";
 import { ConfigProvider } from "antd";
 import Package from "../package.json";
 import React from "react";
+import zhCN from "antd/es/locale/zh_CN";
 // import vstores from "vstores";
 
 // let loginInfo = vstores.get("login-info");
@@ -17,7 +18,7 @@ export function rootContainer(container: React.ReactNode) {
     prefixCls: Package.name + "-ant",
   });
   return (
-    <ConfigProvider prefixCls={Package.name + "-ant"}>
+    <ConfigProvider prefixCls={Package.name + "-ant"} locale={zhCN}>
       {container}
     </ConfigProvider>
   );
