@@ -20,7 +20,7 @@
     "dayjs": "^1.11.11",
     "jsencrypt": "^3.3.2",
     "lodash-es": "^4.17.21",
-    "magical-antd-ui": "^0.0.30",
+    "magical-antd-ui": "^0.0.31",
     "react-schema-render": "^0.0.5",
     "umi": "^4.3.25",
     "vstores": "^0.0.17"

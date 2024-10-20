@@ -47,6 +47,12 @@ instance.interceptors.request.use(
     if (config.method === "post") {
       if (config.data instanceof FormData) {
         config.headers = { Accept: "application/json;", ...config.headers };
+      } else {
+        // config.data = JSON.stringify(config.data);
+        config.headers = {
+          "Content-Type": "application/json;charset=utf-8",
+          ...config.headers,
+        };
       }
     }
     return config;

@@ -2,17 +2,17 @@ import request from "../request";
 
 // 查询待办任务列表
 export const ExcelInfoQueryAPI = (params = {}): Promise<any> => {
-  return request.get("/excel/query", params);
+  return request.get("/excel/query", { params });
 };
 // 删除待办任务
-export const ExcelInfoDelAPI = (params = {}): Promise<any> => {
-  return request.post("/excel/delete", params);
+export const ExcelInfoDelAPI = (data = {}): Promise<any> => {
+  return request.post("/excel/delete", data);
 };
 // excel列表的数据导出
-export const ExcelInfoExportAPI = (params = {}): Promise<any> => {
+export const ExcelInfoExportAPI = (data = {}): Promise<any> => {
   return request("/excel/export", {
     method: "post",
-    params: { taskStatus: "2", ...params },
+    data,
     // responseType: "blob",
   });
 };

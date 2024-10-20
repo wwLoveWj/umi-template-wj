@@ -6,10 +6,10 @@ import { WjForm, WjFormColumnsPropsType } from "../WjForm";
 import { WjTableProps } from "./type";
 import TableFooterRender from "./components/TableFooterRender";
 import styles from "./style.less";
+import useTableSelection from "./hooks/useTableSelection";
 
 const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
   const {
-    rowSelection,
     selectedRowLens = 0,
     title,
     request,
@@ -26,6 +26,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
     paginationType = "page",
     ...restProps
   } = props;
+
   // ============================表单配置相关==============================
   const getCurrent = () => {
     if (paginationType === "cursor") return;
@@ -120,9 +121,16 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
     });
     return res;
   });
+  const tableSelectionProps = useTableSelection(props, {
+    ...props,
+    res: data,
+    dataSource: data?.list,
+  });
+  const { rowSelection, clearSelected } = tableSelectionProps;
   useImperativeHandle(actionRef, () => {
     return {
       reload: () => run(),
+      clearSelected,
     };
   });
   const tableSearchColumns =

@@ -14,7 +14,7 @@ function WjTableSelection(props: WjTableSelectionProps) {
     open,
     setOpen,
     currentOpenSelectionKeyRef,
-    tableProps = {},
+    tableProps,
   } = props;
 
   if (rowSelection === false || isNil(rowSelection)) return <></>;

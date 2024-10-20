@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Button, Space } from "antd";
+import React, { useRef, useState } from "react";
+import { Button, Space, notification } from "antd";
 import WjTable, { WjTableColumns, WjTableRefType } from "@/components/WjTable";
 import { history } from "umi";
 import DelPopconfirm from "@/components/DelPopconfirm";
@@ -31,9 +31,13 @@ export default function Index() {
     {
       title: "待办事项",
       dataIndex: "backlogName",
+      width: 180,
+    },
+    {
+      title: "待办事项",
+      dataIndex: "keyWords",
       search: true,
       valueType: "input",
-      width: 180,
     },
     {
       valueType: "select",
@@ -144,6 +148,10 @@ export default function Index() {
     manual: true,
     onSuccess: (res) => {
       let source = res?.data;
+      notification.success({
+        message: "导出成功",
+        description: "文件已下载到本地",
+      });
       // 创建 Blob 对象
       // const blob = new Blob([res?.data], { type: "application/octet-stream" });
       const blob = new Blob([new Uint8Array(source)]);
@@ -157,6 +165,7 @@ export default function Index() {
       link.click();
       // 移除链接
       document.body.removeChild(link);
+      actionRef?.current?.clearSelected();
     },
   });
 
@@ -207,15 +216,19 @@ export default function Index() {
   //   // 读取 Excel 文件
   //   // let file = new Blob([fileData]);
   // };
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
   return (
     <div>
-      excel文件导入导出
       {/* <input type="file" name="file" onChange={handleFileChange} /> */}
       <WjTable
-        // actionRef={actionRef}
+        actionRef={actionRef}
         columns={columns}
         request={{ url: ExcelInfoQueryAPI, params: {} }}
-        rowKey="editorId"
+        rowKey="backlogId"
         size="small"
         noCard={true}
         createBtnOperations={[
@@ -225,11 +238,25 @@ export default function Index() {
           <Button onClick={() => ExcelInfoExportAPIRun.run()}>
             下载excel
           </Button>,
-          <Button>批量导出</Button>,
         ]}
         // sticky
         // scroll={{ y: "max-content" }}
         // batchOpertions={[{ label: "批量上传" }]}
+        rowSelection={{
+          selectedRowKeys,
+          type: "checkbox ",
+          onChange: onSelectChange,
+          selectionButtonsRender: (selectedRowKeys: string[]) => (
+            <Button
+              onClick={() => {
+                ExcelInfoExportAPIRun.run({ backlogIds: selectedRowKeys });
+              }}
+              disabled={selectedRowKeys.length === 0}
+            >
+              批量导出
+            </Button>
+          ),
+        }}
       />
     </div>
   );

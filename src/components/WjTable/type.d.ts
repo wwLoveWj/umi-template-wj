@@ -1,9 +1,11 @@
 import { TableProps } from "antd/lib";
 import type { ColumnType } from "antd/es/table";
 import { WjFormColumnsPropsType } from "../WjForm";
-import type { PaginationProps } from "antd";
+import type { PaginationProps, CheckboxProps } from "antd";
 import type { NamePath } from "antd/lib/form/interface";
 import type useTableSelection from "./hooks/useTableSelection";
+import type { TableRowSelection } from "antd/lib/table/interface";
+import type { WjActionsProps } from "magical-antd-ui";
 
 export type WjTableColumnType<D = any> = Omit<
   ColumnType<D>,
@@ -32,19 +34,48 @@ export type WjTableRefType = {
   clearSelected: () => void;
 };
 
+export type WjTableSelectionType<DataType = any> = Omit<
+  TableRowSelection<DataType>,
+  "defaultSelectedRowKeys" | "getCheckboxProps"
+> & {
+  afterChange?: (
+    selectedRowKeys: React.Key[],
+    selectedRows: DataType[]
+  ) => void;
+  defaultSelectedRowKeys?:
+    | ((res: any, selectionKey?: React.Key) => React.Key[])
+    | React.Key[];
+  getCheckboxProps?: (
+    record: DataType,
+    selectionKey?: React.Key
+  ) => Partial<Omit<CheckboxProps, "checked" | "defaultChecked">>;
+  /** 自定义左下角选择器按钮，使用配置渲染操作按钮 */
+  selectionButtonsMode?: "default" | "multiple";
+  selectionButtons?: (
+    selectedRowKeys: React.Key[],
+    selectedRows: DataType[]
+  ) => Omit<WjActionsProps, "lint" | "children" | "actionsType">;
+  /** 自定义左下角选择器按钮，自定义渲染操作按钮 */
+  selectionButtonsRender?: (
+    selectedRowKeys: React.Key[],
+    selectedRows: DataType[]
+  ) => React.ReactNode;
+};
+
 export type WjTableProps<DataType = any, ParamsType = any> = Omit<
   TableProps<DataType>,
   "title" | "columns" | "pagination" | "rowSelection"
 > & {
-  rowSelection?:
-    | false
-    | {
-        selectedRowKeys: string[];
-        onChange: (selectedRowKeys: string[]) => void;
-        [propsname: string]: any;
-      } extends Record<string, any>
-    ? DataType
-    : Record<string, any>; //勾选配置
+  // rowSelection?:
+  //   | false
+  //   | {
+  //       selectedRowKeys: string[];
+  //       onChange: (selectedRowKeys: string[]) => void;
+  //       [propsname: string]: any;
+  //     } extends Record<string, any>
+  //   ? DataType
+  //   : Record<string, any>; //勾选配置
+
   selectedRowLens?: number; //勾选的个数
   title?: string; //勾选的表格业务名
   request: {
@@ -62,6 +93,8 @@ export type WjTableProps<DataType = any, ParamsType = any> = Omit<
     selectedRowKeys: React.Key[],
     selectedRows: DataType[]
   ) => React.ReactNode;
+  /** 打开/关闭选择器，对象属性和 Table 一致，无需设置selectedRowKeys 和 onChange，已经内置处理了 */
+  rowSelection?: false | WjTableSelectionType;
   /** 显示/隐藏分页器 */
   pagination?:
     | false

@@ -6137,10 +6137,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-magical-antd-ui@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.npmjs.org/magical-antd-ui/-/magical-antd-ui-0.0.30.tgz#615a319e2c938f92b6011b543f0bd27f54653f18"
-  integrity sha512-gAJAY4O6W0zWsPpn49QEfLSvFT/lu7n0LjCS4qD/xWf9zuUQmsQg+5D0MD4CTQRDiPxVv9BgVvjSEW3bxxjfsg==
+magical-antd-ui@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.npmjs.org/magical-antd-ui/-/magical-antd-ui-0.0.31.tgz#c28ffdf9bcdf6e3dcb6fb328a2faefb6daa2a680"
+  integrity sha512-Xr1bo/WPoR3Her4N9Fqdtpo76Lqt6ATEeR64+Ypf3HpIFO5gx7bCGL384fkxdYN4oAQCmnvMXA7L2Hbgh9b41Q==
   dependencies:
     ahooks "^3.8.1"
     antd "^5.20.6"

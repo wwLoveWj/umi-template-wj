@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import MsTablePagination from "./MsTablePagination";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import type { WjTableProps } from "../type";
 import WjTableSelection from "./WjTableSelection";
 import useTableSelection from "../hooks/useTableSelection";
@@ -32,8 +32,7 @@ export default function TableFooterRender({
   footer,
   pagination,
   res,
-}: // tableSelectionProps,
-// tableFooterAreaRef,
+}: // tableFooterAreaRef,
 WjTableFooterRenderProps) {
   const tableFooterAreaRef = useRef<HTMLDivElement>(null);
   const tableSelectionProps = useTableSelection(tableProps, {
