@@ -63,10 +63,11 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
   /** 表格及表单状态 */
   const [query, setQuery] = useState<{
     current?: number;
+    pageNo?: number;
     pageSize?: number;
     pageStart?: string;
     pageType?: "next" | "prev";
-  }>({ ...defaultQuery });
+  }>({ ...defaultQuery, pageSize: 10, pageNo: 1 });
 
   /**
    * 页码切换
@@ -81,9 +82,15 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
     pageStart?: string,
     pageType?: "prev" | "next"
   ) => {
-    debugger;
     // contentLoadingRef.current = true;
-    const newQuery = { ...query, current, pageSize, pageStart, pageType };
+    const newQuery = {
+      ...query,
+      pageNo: current,
+      current,
+      pageSize,
+      pageStart,
+      pageType,
+    };
     setQuery(newQuery);
     onSubmit?.();
     run(newQuery);
@@ -99,7 +106,12 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
   // 表格的请求方法
   const { data, run, loading } = useRequest(async (query?: any) => {
     const res = request?.url
-      ? await request?.url({ ...request?.params, ...query })
+      ? await request?.url({
+          ...request?.params,
+          pageSize: 10,
+          pageNo: 1,
+          ...query,
+        })
       : new Promise((res) => res({ data: null }));
     setQueryState({
       total: res?.total,
@@ -122,7 +134,11 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
         <></>
       ) : (
         <div style={{ marginBottom: 12 }}>
-          <WjForm formConfigList={columns as WjFormColumnsPropsType[]} />
+          <WjForm
+            formConfigList={columns as WjFormColumnsPropsType[]}
+            onFinish={(params) => run(params)}
+            successNotify={false}
+          />
         </div>
       )}
       <div className={styles.tableLayout}>
@@ -154,16 +170,16 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
             dataSource={
               dataSource && Array.isArray(dataSource)
                 ? dataSource
-                : (data as []) || []
+                : (data?.list as []) || []
             }
           />
           {/* 分页处理 */}
           <TableFooterRender
             tableProps={props}
             queryState={queryState}
-            data={data}
+            data={dataSource || data?.list}
             handlePaginationChange={handlePaginationChange}
-            pagination={pagination}
+            pagination={{ ...pagination, total: data?.total }}
             selectionButtonsRender={selectionButtonsRender}
             footer={footer}
             request={request}

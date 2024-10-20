@@ -30,8 +30,8 @@ export default forwardRef(function Index({
   };
   btnFormRef: any;
   onChgCollapsed: (param: boolean) => void; //传递给父级判断是否已经收起展开
-  onSubmit: any; //提交操作之外的处理
-  onReset: any; //重置取消事件之外的其他操作
+  onSubmit?: () => void; //提交操作之外的处理
+  onReset?: () => void; //重置取消事件之外的其他操作
 }) {
   // 响应式列数量
   const columnNumber = useResponsiveSize(column);

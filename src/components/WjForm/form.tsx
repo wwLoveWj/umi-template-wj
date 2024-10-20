@@ -115,8 +115,8 @@ export default function Index({
   columnShow?: number; //一行展示几列
   onFinish?: any;
   loading?: boolean;
-  onSubmit?: any;
-  onReset?: any;
+  onSubmit?: () => void;
+  onReset?: () => void;
 }) {
   // 常规表单项
   const tableSearchColumns =

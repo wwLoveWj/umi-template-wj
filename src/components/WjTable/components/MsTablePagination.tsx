@@ -20,6 +20,7 @@ function MsTablePagination(props: MsTablePaginationProps) {
         showSizeChanger
         showTotal={(value) => `共 ${value} 项`}
         {...paginationProps}
+        total={pagination?.total}
       />
     );
   }

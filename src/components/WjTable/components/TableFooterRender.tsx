@@ -75,7 +75,7 @@ WjTableFooterRenderProps) {
           total={queryState.total}
           hasNext={queryState.hasNext}
           hasPrev={queryState.hasPrev}
-          tableProps={tableProps}
+          tableProps={{ ...tableProps, pagination }}
         />
       </Col>
     </Row>
