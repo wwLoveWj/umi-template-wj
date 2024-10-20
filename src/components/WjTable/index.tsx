@@ -176,6 +176,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
           {/* 分页处理 */}
           <TableFooterRender
             tableProps={props}
+            res={data}
             queryState={queryState}
             data={dataSource || data?.list}
             handlePaginationChange={handlePaginationChange}

@@ -2,16 +2,18 @@ import { Col, Row } from "antd";
 import MsTablePagination from "./MsTablePagination";
 import { useState, useRef } from "react";
 import type { WjTableProps } from "../type";
+import WjTableSelection from "./WjTableSelection";
+import useTableSelection from "../hooks/useTableSelection";
 
 type WjTableFooterRenderProps = WjTableProps & { tableProps: WjTableProps } & {
   queryState: any;
   data: any;
+  res: any;
   query: any;
   request: any;
   handlePaginationChange: any;
   selectionButtonsRender: any;
   footer: any;
-  // tableSelectionProps: any;
   // tableFooterAreaRef: any;
 };
 const TABLE_SPACE = 16;
@@ -29,10 +31,16 @@ export default function TableFooterRender({
   selectionButtonsRender,
   footer,
   pagination,
+  res,
 }: // tableSelectionProps,
 // tableFooterAreaRef,
 WjTableFooterRenderProps) {
   const tableFooterAreaRef = useRef<HTMLDivElement>(null);
+  const tableSelectionProps = useTableSelection(tableProps, {
+    ...tableProps,
+    res,
+    dataSource: data,
+  });
   if (footer) {
     return (
       <Row
@@ -60,7 +68,7 @@ WjTableFooterRenderProps) {
     >
       <Col>
         {/* 多选操作按钮 */}
-        {/* <MsTableSelection {...tableSelectionProps} tableProps={tableProps} /> */}
+        <WjTableSelection {...tableSelectionProps} tableProps={tableProps} />
       </Col>
       <Col>
         {/* 分页器 */}

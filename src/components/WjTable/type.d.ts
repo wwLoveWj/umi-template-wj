@@ -3,6 +3,7 @@ import type { ColumnType } from "antd/es/table";
 import { WjFormColumnsPropsType } from "../WjForm";
 import type { PaginationProps } from "antd";
 import type { NamePath } from "antd/lib/form/interface";
+import type useTableSelection from "./hooks/useTableSelection";
 
 export type WjTableColumnType<D = any> = Omit<
   ColumnType<D>,
@@ -103,4 +104,8 @@ export type MsTableCursorPaginationProps = Omit<PaginationProps, "onChange"> & {
     pageStart?: string,
     pageType?: "prev" | "next"
   ) => void;
+};
+// 多选操作按钮的类型
+export type WjTableSelectionProps = ReturnType<typeof useTableSelection> & {
+  tableProps: WjTableProps;
 };
