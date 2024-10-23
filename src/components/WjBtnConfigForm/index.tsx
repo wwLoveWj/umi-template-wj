@@ -10,7 +10,7 @@ export default forwardRef(function Index({
   submitter,
   defaultCollapsed,
   column,
-  formConfigList,
+  tableSearchColumns,
   onSubmit,
   onReset,
   form,
@@ -20,7 +20,7 @@ export default forwardRef(function Index({
   loading: boolean;
   column?: number;
   defaultCollapsed?: boolean;
-  formConfigList?: WjFormColumnsPropsType[];
+  tableSearchColumns: WjFormColumnsPropsType[];
   form: FormInstance;
   submitter?: {
     submitText?: string;
@@ -39,12 +39,9 @@ export default forwardRef(function Index({
   // 是否折叠
   const [collapsed, setCollapsed] = useState(defaultCollapsed ?? true);
 
-  // 常规表单项
-  const tableSearchColumns =
-    formConfigList?.filter((column: any) => column.search) || [];
-
   // 显示折叠按钮
-  const showCollapsed = tableSearchColumns?.length > columnNumber - 1;
+  const showCollapsed =
+    tableSearchColumns && tableSearchColumns?.length > columnNumber - 1;
 
   const handleCollapsed = () => {
     setCollapsed((prev) => !prev);

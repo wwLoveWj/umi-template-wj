@@ -172,7 +172,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
             {...restProps}
             ref={ref}
             rowSelection={rowSelection}
-            columns={columns}
+            columns={columns?.filter((item) => !item.hideInTable)}
             pagination={false}
             scroll={{ y: "auto-content" }}
             dataSource={
@@ -194,7 +194,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
             request={request}
             query={query}
           />
-          <div>
+          {/* <div>
             <Space>
               {(batchOpertions || [])?.map((item) => (
                 <Button
@@ -208,7 +208,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
                 </Button>
               ))}
             </Space>
-          </div>
+          </div> */}
         </Spin>
       </div>
     </>

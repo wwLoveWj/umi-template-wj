@@ -15,6 +15,7 @@ export type WjTableColumnType<D = any> = Omit<
     // 子表格
     columns?: WjTableColumnType<D>[];
     search?: boolean;
+    hideInTable?: boolean;
     // span?: number;
     dataIndex?: string;
     title?: string;
