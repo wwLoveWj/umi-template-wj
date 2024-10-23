@@ -47,7 +47,6 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
   // ---------------------------外部使用时传递的参数-----------------------------
   // const detailsData = (useLocation() as any).state;
   const { editorId, isRealTimeediting = true }: Iprops = detailsFromProps;
-  debugger;
   const isEditMode = !!editorId;
   //   获取编辑器信息
   const searchEditorTxtApi = useRequest(
@@ -114,7 +113,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
       searchEditorTxtApi.run();
     }
     if (isRealTimeediting) {
-      createWebSocket("ws://localhost:8080");
+      createWebSocket("ws://localhost:3007");
     }
     return () => {
       if (isRealTimeediting) {

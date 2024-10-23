@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Button, Space, notification } from "antd";
+import { Button, Space, message } from "antd";
 import WjTable, { WjTableColumns, WjTableRefType } from "@/components/WjTable";
 import { history } from "umi";
 import DelPopconfirm from "@/components/DelPopconfirm";
@@ -11,7 +11,8 @@ import {
   ExcelInfoDelAPI,
 } from "@/service/api/excel";
 import { useRequest } from "ahooks";
-
+import ReminderTimeModal from "./components/ReminderTimeModal";
+import { MsModal } from "magical-antd-ui";
 interface FileInputEvent extends React.FormEvent<HTMLInputElement> {
   target: HTMLInputElement & {
     files: FileList;
@@ -26,6 +27,11 @@ export default function Index() {
       actionRef?.current?.reload();
     },
   });
+
+  // 打开定时任务的提醒modal
+  const handleTaskWhenExec = (row) => {
+    MsModal.open(ReminderTimeModal).then();
+  };
   // 列表项配置
   const columns: WjTableColumns = [
     {
@@ -37,6 +43,7 @@ export default function Index() {
       title: "待办事项",
       dataIndex: "keyWords",
       search: true,
+      hideInTable: true,
       valueType: "input",
     },
     {
@@ -103,9 +110,10 @@ export default function Index() {
       title: "操作",
       key: "action",
       sorter: true,
-      width: 120,
+      width: 210,
       render: (record: any) => (
         <Space size="middle">
+          <a onClick={() => handleTaskWhenExec(record)}>定时任务</a>
           <a
             onClick={() => {
               history.push(
@@ -148,10 +156,7 @@ export default function Index() {
     manual: true,
     onSuccess: (res) => {
       let source = res?.data;
-      notification.success({
-        message: "导出成功",
-        description: "文件已下载到本地",
-      });
+      message.success("文件已成功下载到本地");
       // 创建 Blob 对象
       // const blob = new Blob([res?.data], { type: "application/octet-stream" });
       const blob = new Blob([new Uint8Array(source)]);
@@ -244,9 +249,9 @@ export default function Index() {
         // batchOpertions={[{ label: "批量上传" }]}
         rowSelection={{
           selectedRowKeys,
-          type: "checkbox ",
+          type: "checkbox",
           onChange: onSelectChange,
-          selectionButtonsRender: (selectedRowKeys: string[]) => (
+          selectionButtonsRender: (selectedRowKeys: React.Key[]) => (
             <Button
               onClick={() => {
                 ExcelInfoExportAPIRun.run({ backlogIds: selectedRowKeys });

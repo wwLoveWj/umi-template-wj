@@ -17,12 +17,12 @@ export default function Index() {
       title: "通知人邮箱",
     },
     {
-      type: "date",
+      valueType: "date",
       dataIndex: "notifyTime",
       title: "通知时间",
     },
     {
-      type: "select",
+      valueType: "select",
       dataIndex: "status",
       search: true,
       title: "状态",

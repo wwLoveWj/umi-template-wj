@@ -100,6 +100,7 @@ export default function Index({
   onSubmit,
   onReset,
   formType = "search",
+  ishideLabel = false, //是否隐藏label
   ...restProps
 }: {
   formConfigList: WjFormColumnsPropsType[];
@@ -156,18 +157,19 @@ export default function Index({
    */
   const formItemLayout = {
     // layout: "inline",
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 },
     colProps: { span: 8, style: {} },
     noCard: false,
-    form,
     title: "",
-    style: { width: "100%" },
     ...restProps,
   };
-
+  // 获取placeholder提示
+  const getPlaceholderTips = (column: WjFormColumnsPropsType) => {
+    return ["select", "date"]?.includes(column?.valueType || "")
+      ? `请选择${column?.title}`
+      : `请输入${column?.title}`;
+  };
   // 整体的formItem渲染结果
-  const fromItemRender = (config: WjFormColumnsPropsType[]) => {
+  const fromItemRender = (config: WjFormColumnsPropsType<{ rules: any }>[]) => {
     return config?.map((column) => {
       return {
         component: "col",
@@ -178,12 +180,24 @@ export default function Index({
         style: column?.colProps?.style,
         children: {
           component: "formitem",
-          label: column?.title,
+          label: ishideLabel ? "" : column?.title,
           name: column?.dataIndex,
           ...column?.formItemProps,
+          rules: column?.formItemProps?.rules[0]?.required
+            ? [
+                Object.assign(
+                  {
+                    message: getPlaceholderTips(column),
+                  },
+                  ...column?.formItemProps?.rules
+                ),
+              ]
+            : undefined,
           // 根据type类型来决定渲染的组件
           children: {
-            component: column?.valueType,
+            component: column?.valueType || "input",
+            placeholder: getPlaceholderTips(column),
+            allowClear: true,
             ...column?.fieldProps,
             style: { width: "100%" },
           },
@@ -224,109 +238,74 @@ export default function Index({
     onFinishFailed,
     onFinish: handleFinish,
     autoComplete: "off",
+    form,
+    style: { width: "100%" },
+    labelCol: ishideLabel ? { span: 2 } : { span: 6 },
+    wrapperCol: ishideLabel ? { span: 22 } : { span: 18 },
     ...formItemLayout,
     children: {
       component: "row",
       // gutter: [0, 20],
-      justify: "end",
-      children: [
-        ...fromItemRender(configFilters),
-        // 查询和重置按钮部分
-        {
-          component: "col",
-          style: { flex: "auto" },
-          children: {
-            component: "searchForm",
-            loading,
-            submitter,
-            defaultCollapsed,
-            column: columnShow,
-            tableSearchColumns,
-            onSubmit,
-            onReset,
-            form,
-            btnFormRef,
-            onChgCollapsed,
-          },
-        },
-        // {
-        //   component: "space",
-        //   children: [
-        //     {
-        //       component: "button",
-        //       span: 12,
-        //       children: btnConfig?.submitTxt || "查询",
-        //       type: "primary",
-        //       htmlType: "submit",
-        //     },
-        //     {
-        //       component: "button",
-        //       span: 12,
-        //       children: btnConfig?.cancelTxt || "重置",
-        //       onClick: () => {
-        //         (btnConfig?.onCancel && btnConfig?.onCancel()) ||
-        //           form.resetFields();
-        //       },
-        //     },
-        //   ],
-        // },
-      ],
+      justify: formType === "basic" ? "" : "end",
+      children:
+        formType === "basic"
+          ? [...fromItemRender(configFilters)]
+          : [
+              ...fromItemRender(configFilters),
+              // 查询和重置按钮部分
+              {
+                component: "col",
+                style: { flex: "auto" },
+                children: {
+                  component: "searchForm",
+                  loading,
+                  submitter,
+                  defaultCollapsed,
+                  column: columnShow,
+                  tableSearchColumns,
+                  onSubmit,
+                  onReset,
+                  form,
+                  btnFormRef,
+                  onChgCollapsed,
+                },
+              },
+              // {
+              //   component: "space",
+              //   children: [
+              //     {
+              //       component: "button",
+              //       span: 12,
+              //       children: btnConfig?.submitTxt || "查询",
+              //       type: "primary",
+              //       htmlType: "submit",
+              //     },
+              //     {
+              //       component: "button",
+              //       span: 12,
+              //       children: btnConfig?.cancelTxt || "重置",
+              //       onClick: () => {
+              //         (btnConfig?.onCancel && btnConfig?.onCancel()) ||
+              //           form.resetFields();
+              //       },
+              //     },
+              //   ],
+              // },
+            ],
     },
   });
-  // 组装正常的业务form表单
-  const schemaFormConfig = () => ({
-    component: "wjfrom",
-    initialValues: { remember: true },
-    onFinishFailed,
-    onFinish: handleFinish,
-    autoComplete: "off",
-    ...formItemLayout,
-    children: {
-      component: "row",
-      children: [
-        ...fromItemRender(configFilters),
-        // 查询和重置按钮部分
-        // {
-        //   component: "space",
-        //   children: [
-        //     {
-        //       component: "button",
-        //       span: 12,
-        //       children: btnConfig?.submitTxt || "查询",
-        //       type: "primary",
-        //       htmlType: "submit",
-        //     },
-        //     {
-        //       component: "button",
-        //       span: 12,
-        //       children: btnConfig?.cancelTxt || "重置",
-        //       onClick: () => {
-        //         (btnConfig?.onCancel && btnConfig?.onCancel()) ||
-        //           form.resetFields();
-        //       },
-        //     },
-        //   ],
-        // },
-      ],
-    },
-  });
-
-  const formTypeList: any = new Map([
-    ["basic", schemaFormConfig()],
-    ["search", schemaConfig()],
-  ]);
   // 最终的schema配置信息
   const schema = () => {
     //   是否需要卡片包裹
     return formItemLayout?.noCard
-      ? formTypeList?.get(formType)
+      ? schemaConfig()
       : {
           component: "card",
           title: formItemLayout?.title,
           bordered: false,
           style: { width: "100%" },
           bodyStyle: { padding: "24px 24px 0" },
-          children: formTypeList?.get(formType),
+          children: schemaConfig(),
         };
   };
   return <SchemaRender schema={schema()}></SchemaRender>;
