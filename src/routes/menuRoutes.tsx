@@ -141,6 +141,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
     icon: BellOutlined,
     component: "./excel/index",
   },
+  {
+    key: "upload",
+    title: "文件上传",
+    path: "/upload",
+    icon: BellOutlined,
+    component: "./upload/index",
+  },
   // {
   //   key: "system",
   //   title: "router.system",
