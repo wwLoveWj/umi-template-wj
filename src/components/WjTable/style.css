@@ -6,3 +6,7 @@
   background: #fff;
   padding: 12px;
 }
+.tableLayout :global .my-template-umi-ant-table-thead > tr > th {
+  background: #a3d0fd;
+  color: #666;
+}

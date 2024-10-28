@@ -188,133 +188,157 @@ const Login = () => {
 
   return (
     <div className={styles.loginPage}>
-      {/* {process.env.NODE_ENV === "development" && (
+      <div className={styles.main}>
+        {process.env.NODE_ENV === "development" && (
           <div className={styles.ribbon}>本地开发环境</div>
-        )} */}
-      <div className={styles?.container}>
-        <div className={styles?.content}>
-          <div className={styles?.mainLeft}>
-            <h1>
-              <span>L</span>
-              <span className={styles?.colorChg}>O</span>
-              <span>G</span>
-              <span className={styles?.colorChg}>I</span>
-              <span>N</span>
-            </h1>
-            <div className={styles.formCard}>
-              <Form name="basic" form={form} onFinish={handleSubmit}>
-                <Form.Item
-                  name="loginName"
-                  rules={[
-                    {
-                      required: true,
-                      message: "请输入用户名（带邮箱后缀）",
+        )}
+        <div className={styles.mainRight}>
+          <h1 className={styles.title}>欢迎使用创世纪管理平台</h1>
+          {isVipLogin ? (
+            <Radio.Group onChange={onChange} value={role}>
+              <Radio value={2}>超级管理员</Radio>
+              <Radio value={1}>造物主</Radio>
+            </Radio.Group>
+          ) : (
+            // <Radio.Group onChange={onChange} value={role}>
+            //   <Radio value={4}>普通用户</Radio>
+            //   <Radio value={3}>权限管理员</Radio>
+            //               </Radio.Group>
+            <WjRadio
+              value={selectedValue}
+              onChange={handleRadioChange}
+              options={[
+                {
+                  label: "普通用户",
+                  value: "4",
+                },
+                {
+                  label: "权限管理员",
+                  value: "3",
+                },
+              ]}
+              configuration={{
+                colorRadio: "red",
+                mode: "flex",
+                jumpX: "10em",
+                // jumpX: "3em",
+                // jumpY: "-1.5em",
+                // widthRadio: "10em",
+                //   '--tranlateX': '6.65em',
+                //   '--tranlateY': '-2.5em',
+              }}
+            />
+          )}
+          <div className={styles.formCard}>
+            <Form name="basic" form={form} onFinish={handleSubmit}>
+              <Form.Item
+                name="loginName"
+                rules={[
+                  {
+                    required: true,
+                    message: "请输入用户名（带邮箱后缀）",
+                  },
+                  {
+                    validator(_, value) {
+                      const trimValue = value && value.trim();
+                      if (
+                        !trimValue ||
+                        trimValue.endsWith("@163.com") ||
+                        trimValue.endsWith("@qq.com")
+                      ) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("用户名需带邮箱后缀"));
                     },
-                    {
-                      validator(_, value) {
-                        const trimValue = value && value.trim();
-                        if (
-                          !trimValue ||
-                          trimValue.endsWith("@163.com") ||
-                          trimValue.endsWith("@qq.com")
-                        ) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error("用户名需带邮箱后缀"));
-                      },
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="请输入用户名（带邮箱后缀）"
-                    allowClear
-                    //   prefix={
-                    //     <img
-                    //       src={require("../../../assets/iconsvg/login_userName.svg")}
-                    //     />
-                    //   }
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "请输入密码",
-                    },
-                  ]}
-                >
-                  <Input.Password
-                    ref={pwdRef}
-                    placeholder="请输入密码"
-                    // visibilityToggle={false}
-                    //   iconRender={(visiblePwd) =>
-                    //     visiblePwd ? (
-                    //       <img
-                    //         src={require("../../../assets/iconsvg/login_showPwd.svg")}
-                    //       />
-                    //     ) : (
-                    //       <img
-                    //         src={require("../../../assets/iconsvg/login_hidePwd.svg")}
-                    //       />
-                    //     )
-                    //   }
-                    //   prefix={
-                    //     <img
-                    //       src={require("../../../assets/iconsvg/login_pwd.svg")}
-                    //     />
-                    //   }
-                  />
-                </Form.Item>
-                {process.env.NODE_ENV === "development" && (
-                  <Row className={styles.loginInfoCheck}>
-                    <Form.Item
-                      name="checked"
-                      valuePropName="checked"
-                      wrapperCol={{
-                        offset: 0,
-                        span: 24,
-                      }}
-                    >
-                      <Checkbox onChange={onChangePwd} checked={checked}>
-                        记住密码
-                      </Checkbox>
-                    </Form.Item>
-                    <Form.Item>
-                      {location.pathname === "/iamlogin" ? (
-                        <a
-                          href={window.location.origin + "/login"}
-                          style={{ minHeight: "32px" }}
-                        >
-                          {"外部登录"}
-                        </a>
-                      ) : (
-                        <a
-                          href={window.location.origin + "/iamlogin"}
-                          style={{ minHeight: "32px" }}
-                        >
-                          {"内部登录"}
-                        </a>
-                      )}
-                    </Form.Item>
-                  </Row>
-                )}
-                {/* <p className={styles.otpTips}>忘记密码怎么办？</p> */}
-                <Form.Item className={styles.submitItem}>
-                  <Button
-                    type="primary"
-                    className={styles.submit}
-                    htmlType="submit"
-                    loading={handleLoginInfoMsg?.loading}
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="请输入用户名（带邮箱后缀）"
+                  allowClear
+                  //   prefix={
+                  //     <img
+                  //       src={require("../../../assets/iconsvg/login_userName.svg")}
+                  //     />
+                  //   }
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "请输入密码",
+                  },
+                ]}
+              >
+                <Input.Password
+                  ref={pwdRef}
+                  placeholder="请输入密码"
+                  // visibilityToggle={false}
+                  //   iconRender={(visiblePwd) =>
+                  //     visiblePwd ? (
+                  //       <img
+                  //         src={require("../../../assets/iconsvg/login_showPwd.svg")}
+                  //       />
+                  //     ) : (
+                  //       <img
+                  //         src={require("../../../assets/iconsvg/login_hidePwd.svg")}
+                  //       />
+                  //     )
+                  //   }
+                  //   prefix={
+                  //     <img
+                  //       src={require("../../../assets/iconsvg/login_pwd.svg")}
+                  //     />
+                  //   }
+                />
+              </Form.Item>
+              {process.env.NODE_ENV === "development" && (
+                <Row className={styles.loginInfoCheck}>
+                  <Form.Item
+                    name="checked"
+                    valuePropName="checked"
+                    wrapperCol={{
+                      offset: 0,
+                      span: 24,
+                    }}
                   >
-                    登录
-                  </Button>
-                </Form.Item>
-              </Form>
-            </div>
-          </div>
-          <div className={styles?.mainRight}>
-            <img src={require("@/assets/imgs/planet.png")} alt="" />
+                    <Checkbox onChange={onChangePwd} checked={checked}>
+                      记住密码
+                    </Checkbox>
+                  </Form.Item>
+                  <Form.Item>
+                    {location.pathname === "/iamlogin" ? (
+                      <a
+                        href={window.location.origin + "/login"}
+                        style={{ minHeight: "32px" }}
+                      >
+                        {"外部登录"}
+                      </a>
+                    ) : (
+                      <a
+                        href={window.location.origin + "/iamlogin"}
+                        style={{ minHeight: "32px" }}
+                      >
+                        {"内部登录"}
+                      </a>
+                    )}
+                  </Form.Item>
+                </Row>
+              )}
+              {/* <p className={styles.otpTips}>忘记密码怎么办？</p> */}
+              <Form.Item className={styles.submitItem}>
+                <Button
+                  type="primary"
+                  className={styles.submit}
+                  htmlType="submit"
+                  loading={handleLoginInfoMsg?.loading}
+                >
+                  登录
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </div>
       </div>
