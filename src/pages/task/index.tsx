@@ -55,13 +55,6 @@ const Index = () => {
   const [form] = Form.useForm();
   const [taskList, setTaskList] = useState<API.TaskListType[]>([]);
   const [taskName, setTaskName] = useState("");
-  const [taskDetails, setTaskDetails] = useState<{
-    task: string;
-    taskId: string;
-  }>({
-    task: "",
-    taskId: "",
-  });
   const [taskIdList, setTaskIdList] = useState<string[]>([]);
   const [allChecked, setAllChecked] = useState(false);
   const [isShowDelBtn, setIsShowDelBtn] = useState(true);
@@ -153,12 +146,13 @@ const Index = () => {
   });
   //   发送任务提醒
   const getReminderTime = (param: any) => {
-    const { userEmail, reminderTime, reminderPattern, interval } = param;
+    const { userEmail, reminderTime, reminderPattern, interval, task, taskId } =
+      param;
     reminderTaskFn.run({
       userEmail,
-      reminderContent: taskDetails.task,
+      reminderContent: task,
       reminderTime,
-      taskId: taskDetails.taskId,
+      taskId,
       reminderPattern,
       interval,
     });
@@ -416,10 +410,15 @@ const Index = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           // 调出时间设置弹窗
-                          setTaskDetails(item);
-                          MsModal.open(NotificationModal, {
-                            getReminderTime,
-                          }).then((modal) => {});
+                          MsModal.open(NotificationModal).then((res: any) => {
+                            getReminderTime({
+                              ...item,
+                              reminderTime: res.reminderTime,
+                              userEmail: res.userEmail,
+                              reminderPattern: res.reminderPattern,
+                              interval: res.interval,
+                            });
+                          });
                         }}
                       >
                         <AlertOutlined />

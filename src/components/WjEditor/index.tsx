@@ -15,7 +15,7 @@ import {
   ArticleInfoDetailsAPI,
 } from "@/service/api/article";
 import React, { useState, useEffect } from "react";
-import { Button, Affix, Tooltip } from "antd";
+import { Button, Affix, Tooltip, Space } from "antd";
 import { history } from "umi";
 import _ from "lodash-es";
 // 获取锚点、目录等公共方法
@@ -136,9 +136,12 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
             changeEditorTitleWs();
           }}
         />
-        <Button type="primary" onClick={saveEditorContent}>
-          更新
-        </Button>
+        <Space className="upload-btn">
+          <Button>取消</Button>
+          <Button type="primary" onClick={saveEditorContent}>
+            更新
+          </Button>
+        </Space>
       </div>
       <div className={styles.allInfo}>
         {/* =============编辑器部分================== */}

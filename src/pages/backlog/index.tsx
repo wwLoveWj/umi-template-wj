@@ -1,13 +1,13 @@
 import React from "react";
 import { WjForm } from "@/components/WjForm";
 import { history } from "umi";
-import WjTable from "@/components/WjTable";
+import WjTable, { WjTableColumns } from "@/components/WjTable";
 import {
   ArticleInfoListQueryAPI,
   ArticleInfoDelAPI,
 } from "@/service/api/article";
 export default function Index() {
-  const columns: any[] = [
+  const columns: WjTableColumns = [
     {
       dataIndex: "taskName",
       title: "待办事项",
@@ -47,25 +47,11 @@ export default function Index() {
   ];
 
   return (
-    <div>
-      待办管理
-      <WjForm
-        formConfigList={columns?.filter((item) => item?.search)}
-        // btnConfig={{
-        //   submitTxt: "提交",
-        //   cancelTxt: "取消",
-        //   onCancel: () => {
-        //     debugger;
-        //     history.push("/article");
-        //   },
-        // }}
-      />
-      <WjTable
-        columns={columns}
-        request={{ url: ArticleInfoListQueryAPI, params: {} }}
-        rowKey="editorId"
-        // batchOpertions={[{ label: "批量上传" }]}
-      />
-    </div>
+    <WjTable
+      columns={columns}
+      request={{ url: ArticleInfoListQueryAPI, params: {} }}
+      rowKey="editorId"
+      // batchOpertions={[{ label: "批量上传" }]}
+    />
   );
 }

@@ -1,6 +1,5 @@
 .fileUpload {
   display: flex;
-  flex-direction: column;
 }
 .fileUpload .fileUploadContent {
   border: 1px dashed #ccc;
@@ -12,6 +11,7 @@
   height: 100px;
   cursor: pointer;
   position: relative;
+  font-size: 30px;
 }
 .fileUpload .fileUploadContent .clearImg {
   position: absolute;
@@ -20,6 +20,8 @@
 }
 .imgList {
   display: flex;
+  width: 100%;
+  box-sizing: border-box;
 }
 .imgList .imgCol {
   width: 100px;

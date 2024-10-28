@@ -67,4 +67,16 @@ declare namespace API {
     status: string;
     checked: boolean;
   }
+  // ==============================图片上传======================
+  interface ImageUploadType {
+    id: number;
+    createTime: string;
+    originalname: string;
+    filename: string;
+    imgId: string;
+    imgPath: string;
+    imgUrl: string;
+    imgType: string;
+    descrption: string;
+  }
 }

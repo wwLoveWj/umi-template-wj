@@ -3,11 +3,13 @@
   width: 100%;
   scroll-behavior: smooth;
   margin-top: 12px;
+
   .catalogue {
     width: 200px;
     margin-left: 20px;
     // border: 1px solid #ccc;
   }
+
   .content {
     flex: 1;
   }
@@ -15,39 +17,56 @@
 
 @media screen and (max-width: 900px) {
   .catalogue {
-    display: none !important; /* 添加 !important 以确保覆盖其他样式 */
+    display: none !important;
+    /* 添加 !important 以确保覆盖其他样式 */
   }
 }
+
 .table-of-title {
   //   background-color: red;
 }
+
 .table-of-contents {
   color: yellow;
+
   //   background-color: red;
   li:hover {
     color: #95c92c;
   }
+
   .active {
     font-weight: bold;
     color: #95c92c;
   }
 }
+
 // 文章标题
 .user-box {
   display: flex;
   justify-content: space-between;
   position: sticky;
   top: 12px;
+  z-index: 99999;
+  width: 100%;
+  background: #fff;
+
   input {
     position: sticky;
     top: 12px;
-    width: 80%;
+    width: calc(100% - 220px);
     padding: 10px 0;
     color: green;
     border: none;
     border-bottom: 1px solid #ccc;
     outline: none;
     font-size: 36px;
+  }
+
+  .upload-btn {
+    width: 200;
+    margin-left: 20;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 

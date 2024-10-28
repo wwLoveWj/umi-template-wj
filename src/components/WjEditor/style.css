@@ -1,0 +1,75 @@
+.allInfo {
+  display: flex;
+  width: 100%;
+  scroll-behavior: smooth;
+  margin-top: 12px;
+}
+.allInfo .catalogue {
+  width: 200px;
+  margin-left: 20px;
+}
+.allInfo .content {
+  flex: 1;
+}
+@media screen and (max-width: 900px) {
+  .catalogue {
+    display: none !important;
+    /* 添加 !important 以确保覆盖其他样式 */
+  }
+}
+.table-of-contents {
+  color: yellow;
+}
+.table-of-contents li:hover {
+  color: #95c92c;
+}
+.table-of-contents .active {
+  font-weight: bold;
+  color: #95c92c;
+}
+.user-box {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 12px;
+  z-index: 99999;
+  width: 100%;
+  background: #fff;
+}
+.user-box input {
+  position: sticky;
+  top: 12px;
+  width: calc(100% - 220px);
+  padding: 10px 0;
+  color: green;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  font-size: 36px;
+}
+.user-box .upload-btn {
+  width: 200;
+  margin-left: 20;
+  display: flex;
+  justify-content: flex-end;
+}
+#typing {
+  font: bold 200% Consolas, Monaco, monospace;
+  border-right: 0.1em solid;
+  width: 16.5em;
+  width: 26ch;
+  margin: 2em 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3s steps(26, end), cursor-blink 0.3s step-end infinite alternate;
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+@keyframes cursor-blink {
+  50% {
+    border-color: transparent;
+  }
+}

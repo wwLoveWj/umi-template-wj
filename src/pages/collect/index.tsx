@@ -83,7 +83,6 @@ export default function Index() {
 
   return (
     <div>
-      收藏管理
       <WjForm formConfigList={formConfigList1} />
     </div>
   );
