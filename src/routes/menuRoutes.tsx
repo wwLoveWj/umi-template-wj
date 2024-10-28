@@ -11,6 +11,13 @@ import {
   HomeOutlined,
   AudioOutlined,
   SettingOutlined,
+  ThunderboltOutlined,
+  FolderOpenOutlined,
+  FileTextOutlined,
+  FileImageOutlined,
+  CloudUploadOutlined,
+  HeartOutlined,
+  PushpinOutlined,
 } from "@ant-design/icons";
 
 export const menuRoutes: API.MenuRoutesType[] = [
@@ -51,7 +58,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
     key: "collect",
     title: "收藏管理",
     path: "/collect",
-    icon: HomeOutlined,
+    icon: HeartOutlined,
     routes: [
       {
         path: "/collect",
@@ -131,21 +138,21 @@ export const menuRoutes: API.MenuRoutesType[] = [
     key: "backlog",
     title: "待办管理",
     path: "/backlog",
-    icon: BellOutlined,
+    icon: PushpinOutlined,
     component: "./backlog/index",
   },
   {
     key: "excel",
     title: "Excel管理",
     path: "/excel",
-    icon: BellOutlined,
+    icon: FileTextOutlined,
     component: "./excel/index",
   },
   {
     key: "upload",
     title: "文件上传",
     path: "/upload",
-    icon: BellOutlined,
+    icon: CloudUploadOutlined,
     component: "./upload/index",
   },
   // {

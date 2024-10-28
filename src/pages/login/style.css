@@ -19,38 +19,72 @@
 }
 .loginPage .container .content {
   padding: 0 25px;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  display: flex;
+  align-items: center;
   height: 100%;
 }
 .loginPage .container .content .mainLeft {
   display: flex;
   flex-direction: column;
-  height: 60%;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1.2;
 }
 .loginPage .container .content .mainLeft h1 {
-  font-size: 6rem;
+  font-size: 7rem;
   font-weight: 800;
   color: #fff;
-  letter-spacing: 5px;
+  letter-spacing: 15px;
+  margin-top: 60px;
 }
 .loginPage .container .content .mainLeft h1 .colorChg {
   color: #00ffff;
 }
 .loginPage .container .content .mainLeft .formCard {
   margin-top: 20px;
-  position: relative;
-  flex: 1;
+  width: 60%;
   border-radius: 0 0 6px 6px;
+  margin-bottom: 30px;
+}
+.loginPage .container .content .mainLeft .formCard .loginInfoCheck {
+  display: flex;
+  justify-content: space-between;
+}
+.loginPage .container .content .mainLeft .formCard .loginInfoCheck .checkPwd {
+  color: #fff;
+}
+.loginPage .container .content .mainLeft .formCard .loginInfoCheck .forgetPwd {
+  cursor: pointer;
+  color: #fff;
+}
+.loginPage .container .content .mainLeft .formCard .loginInfoCheck .forgetPwd:hover {
+  color: #00ffff;
+}
+.loginPage .container .content .mainLeft .formCard .loginInput {
+  outline: none;
+  background: transparent;
+  border: none;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  color: #fff;
+  padding: 15px 20px;
+}
+.loginPage .container .content .mainLeft .formCard :global .my-template-umi-ant-form-horizontal .my-template-umi-ant-form-item-control {
+  margin-bottom: 12px;
+}
+.loginPage .container .content .mainLeft .formCard :global .my-template-umi-ant-checkbox-inner {
+  background: transparent;
 }
 .loginPage .container .content .mainLeft .formCard .submitItem {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  padding-bottom: 16px;
+  background: #00ffff;
+  border-radius: 5px;
+  padding: 20px;
 }
 .loginPage .container .content .mainRight {
   height: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;

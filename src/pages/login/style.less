@@ -1,7 +1,6 @@
 .loginPage {
     width: 100%;
     height: 100vh;
-    // background: url('./img/newloginBg.gif') no-repeat;
     background: url('../../assets/imgs/lake.jpg') no-repeat;
     // background-color: rgb(218, 245, 255);
     background-size: cover;
@@ -21,20 +20,26 @@
 
         .content {
             padding: 0 25px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            // display: grid;
+            // grid-template-columns: 1.2fr 1fr;
+            display: flex;
+            align-items: center;
             height: 100%;
 
             .mainLeft {
                 display: flex;
                 flex-direction: column;
-                height: 60%;
+                align-items: center;
+                justify-content: space-between;
+                height: 100%;
+                flex: 1.2;
 
                 h1 {
-                    font-size: 6rem;
+                    font-size: 7rem;
                     font-weight: 800;
                     color: #fff;
-                    letter-spacing: 5px;
+                    letter-spacing: 15px;
+                    margin-top: 60px;
 
                     .colorChg {
                         color: rgb(0, 255, 255);
@@ -43,30 +48,100 @@
 
                 .formCard {
                     margin-top: 20px;
-                    position: relative;
-                    flex: 1;
+                    width: 60%;
+                    // position: relative;
                     // margin-bottom: 20px;
                     border-radius: 0 0 6px 6px;
+                    margin-bottom: 30px;
 
+                    .loginInfoCheck {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .checkPwd {
+                            color: #fff;
+                        }
+
+                        .forgetPwd {
+                            cursor: pointer;
+                            color: #fff;
+                        }
+
+                        .forgetPwd:hover {
+                            color: rgb(0, 255, 255);
+                        }
+                    }
+
+                    .loginInput {
+                        outline: none;
+                        background: transparent;
+                        border: none;
+                        border: 1px solid rgb(211, 211, 211, 0.2);
+                        border-radius: 5px;
+                        color: #fff;
+                        // font-size: 1em;
+                        padding: 15px 20px;
+
+                    }
+
+                    :global {
+                        .my-template-umi-ant-form-horizontal .my-template-umi-ant-form-item-control {
+                            margin-bottom: 12px;
+                        }
+
+                        // 勾选框去色
+                        .my-template-umi-ant-checkbox-inner {
+                            background: transparent;
+                        }
+
+                        // 想要实现失焦placeholder自动上浮
+                        // .my-template-umi-ant-input::placeholder {
+                        //     color: rgba(255, 255, 255, 0.25);
+                        //     letter-spacing: 0.1em;
+                        //     padding: 10px;
+                        //     font-size: 1em;
+                        //     text-transform: uppercase;
+                        //     pointer-events: none;
+                        //     transition: 0.5s;
+                        //     position: absolute;
+                        //     left: 0;
+                        // }
+
+                        // // .my-template-umi-ant-input:valid::placeholder,
+                        // .my-template-umi-ant-input:focus::placeholder {
+                        //     color: #1d2b3a;
+                        //     font-size: 0.65em;
+                        //     transform: translateX(10px) translateY(-7px);
+                        //     padding: 0 10px;
+                        //     background: #00dfc4;
+                        //     border-radius: 2px;
+                        //     // border-left: 1px solid #00dfc4;
+                        //     // border-right: 1px solid #00dfc4;
+                        // }
+                    }
+
+                    // 登录按钮的样式
                     .submitItem {
-                        position: absolute;
-                        bottom: 0;
                         width: 100%;
-                        padding-bottom: 16px;
+                        background: rgb(0, 255, 255);
+                        border-radius: 5px;
+                        padding: 20px;
                     }
                 }
             }
 
+            // 右侧地球的样式
             .mainRight {
                 height: 100%;
+                flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
-
                 img {
                     width: 90%;
                     animation: rotatePlanet 120s linear infinite;
+                    // 围绕地球img发光
                     filter: drop-shadow(0 0 10px rgb(0, 255, 255)) drop-shadow(0 0 20px rgb(0, 255, 255)) drop-shadow(0 0 40px rgb(0, 255, 255)) drop-shadow(0 0 100px rgb(0, 255, 255));
                 }
 
@@ -80,8 +155,6 @@
                     }
                 }
             }
-
-
         }
     }
 }

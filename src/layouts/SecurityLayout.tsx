@@ -1,6 +1,6 @@
 // import { Link, Outlet } from "umi";
 import styles from "./index.less";
-// import { removeToken } from "@/utils/localToken";
+import { removeToken } from "@/utils/localToken";
 // import { UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { message, notification } from "antd";
@@ -17,12 +17,18 @@ const menus =
     ?.find((route) => route.path === "/")
     ?.routes?.filter((item: any) => !item.redirect) || [];
 export default function Layout() {
-  // const mailInfo = storage.get("login-info");
   // const { pathname } = useLocation();
+
+  const clearLocalStorage = () => {
+    storage.del("login-info");
+    storage.del("menuList");
+    removeToken();
+  };
   // 获取当前项目根节点
   const homeWrapper = document.getElementById(
     PROJECT_CONFIG?.NAME
   ) as HTMLElement;
+  // 监听长时间不操作的用户自动退出登录
   const ChangeUserOperation = () => {
     const callEvent = () => {
       localStorage.setItem("lastTime", new Date().getTime().toString());
@@ -45,7 +51,7 @@ export default function Layout() {
       //   "nowTime----------------------------------",
       //   nowTime
       // );
-      if (nowTime - _lastTime > 1000 * 1000) {
+      if (nowTime - _lastTime > 1000 * 3600 * 24) {
         // console.log(
         //   "当前时间：",
         //   nowTime,
@@ -61,15 +67,15 @@ export default function Layout() {
         clearInterval(CheckOpartionTimer);
 
         // 延迟一段时间后再进行导航
-        setTimeout(() => {
-          // 断开连接，退出
-          history.push("/login");
-        }, 2000); // 延迟2秒
+        // setTimeout(() => {
+        //   // 断开连接，退出
+        //   history.push("/login");
+        // }, 2000); // 延迟2秒
       }
     }, 1000);
     return () => {
       clearInterval(CheckOpartionTimer);
-      localStorage.clear();
+      clearLocalStorage();
       homeWrapper.removeEventListener("click", function () {});
       homeWrapper.removeEventListener("keydown", function () {});
       homeWrapper.removeEventListener("mouseover", function () {});
@@ -101,9 +107,6 @@ export default function Layout() {
         <a
           onClick={() => {
             history.push("/login");
-            storage.del("login-info");
-            storage.del("menuList");
-            localStorage.clear();
           }}
         >
           退出登录
