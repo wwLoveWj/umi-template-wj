@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Button,
@@ -70,47 +70,25 @@ const Index = () => {
     },
   });
   // 创建定时任务队列
-  const reminderTimeTaskFn = useRequest(
-    (params: {
-      userEmail: string;
-      reminderContent: string;
-      reminderTime: string;
-      taskId: string;
-      reminderPattern: string;
-      interval: string;
-    }) => reminderTimeTaskAPI(params),
-    {
-      debounceWait: 100,
-      manual: true,
-      onSuccess: () => {
-        queryQueryTaskInfo.run();
-        // 语音提示用户任务
-        // const utterThis = new window.SpeechSynthesisUtterance(taskDetails.task);
-        // window.speechSynthesis.speak(utterThis);
-      },
-    }
-  );
+  const reminderTimeTaskFn = useRequest(reminderTimeTaskAPI, {
+    debounceWait: 100,
+    manual: true,
+    onSuccess: () => {
+      queryQueryTaskInfo.run();
+      // 语音提示用户任务
+      // const utterThis = new window.SpeechSynthesisUtterance(taskDetails.task);
+      // window.speechSynthesis.speak(utterThis);
+    },
+  });
   // 任务定时提醒接口
-  const reminderTaskFn = useRequest(
-    (params: {
-      userEmail: string;
-      reminderContent: string;
-      reminderTime: string;
-      taskId: string;
-      reminderPattern: string;
-      interval: string;
-    }) => reminderTaskAPI(params),
-    {
-      debounceWait: 100,
-      manual: true,
-      onSuccess: (res) => {
-        if (res) {
-          reminderTimeTaskFn.run(res.data);
-        }
-        queryQueryTaskInfo.run();
-      },
-    }
-  );
+  const reminderTaskFn = useRequest(reminderTaskAPI, {
+    manual: true,
+    onSuccess: (res) => {
+      if (res?.data?.userEmail?.length > 0) {
+        reminderTimeTaskFn.run(res.data);
+      }
+    },
+  });
   //   创建任务信息卡片
   const createReminderTask = useRequest(
     (task: string) =>
@@ -145,7 +123,15 @@ const Index = () => {
     },
   });
   //   发送任务提醒
-  const getReminderTime = (param: any) => {
+  const getReminderTime = (param: {
+    userEmail: string;
+    reminderContent?: string;
+    reminderTime: string;
+    taskId: string;
+    task: string;
+    reminderPattern: string;
+    interval: string;
+  }) => {
     const { userEmail, reminderTime, reminderPattern, interval, task, taskId } =
       param;
     reminderTaskFn.run({
@@ -217,7 +203,12 @@ const Index = () => {
   const onSearchTask: SearchProps["onSearch"] = (value) => {
     queryQueryTaskInfo.run({ taskName: value });
   };
-
+  // 当子级全选时勾选中全选按钮
+  useEffect(() => {
+    if (taskList?.length > 0 && taskList?.every((item) => item?.checked)) {
+      setAllChecked(true);
+    }
+  }, [taskList]);
   return (
     <div className={styles.taskInfo}>
       <Row style={{ padding: "12px 12px 0" }} gutter={[16, 12]}>

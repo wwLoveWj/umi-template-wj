@@ -32,6 +32,13 @@ export const reminderTaskAPI = (
   return request.post("/reminder/task", params);
 };
 // 创建定时任务
-export const reminderTimeTaskAPI = (params = {}): Promise<any> => {
+export const reminderTimeTaskAPI = (params: {
+  userEmail: string;
+  reminderContent: string;
+  reminderTime: string;
+  taskId: string;
+  reminderPattern: string;
+  interval: string;
+}): Promise<any> => {
   return request.post("/reminder/time", params);
 };

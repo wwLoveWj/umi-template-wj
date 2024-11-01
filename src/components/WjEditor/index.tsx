@@ -55,10 +55,10 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
       debounceWait: 100,
       manual: true,
       onSuccess: (res: EditorTxtType[]) => {
-        // editor.restoreSelection(); //恢复选区
         setHtml(res[0]?.editorContent);
         setTitle(res[0]?.title);
         editorConfig.readOnly = true;
+        editor && editor.restoreSelection(); //恢复选区
         editor && editor.focus(true);
       },
     }
@@ -92,7 +92,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
         editorContent: editor?.getHtml(),
         editorKey: !isEditMode ? "editor-add" : editorId,
         title,
-        // action,//TODO: 编辑器操作类型，用于判断是否更新数据库
+        isEditMode, //编辑器操作类型，用于判断是否更新数据库
       })
     );
   };
@@ -169,7 +169,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
                     editorContent: editor.getHtml(),
                     editorKey: !isEditMode ? "editor-add" : editorId,
                     title,
-                    // action,
+                    isEditMode,
                   })
                 );
               }

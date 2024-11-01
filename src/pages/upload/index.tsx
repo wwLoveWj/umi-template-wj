@@ -66,7 +66,7 @@ const UploadPage = ({
   return (
     <>
       <Row className={styles?.imgList} gutter={10}>
-        {imageUrlList?.map((item) => (
+        {imageUrlList?.map((item: API.ImageUploadType) => (
           <Col key={item?.imgId} className={styles?.imgCol}>
             <img src={item?.imgUrl} alt="文件上传图片" />
           </Col>
