@@ -17,6 +17,7 @@
     "ahooks": "^3.8.0",
     "antd": "^5.18.0",
     "axios": "^1.7.2",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.11",
     "jsencrypt": "^3.3.2",
     "lodash-es": "^4.17.21",

@@ -133,3 +133,8 @@ export const getCurrentTime = function (milliseconds?: string) {
     year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
   );
 };
+
+export const formatDate = (timestamp: string) => {
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+};
