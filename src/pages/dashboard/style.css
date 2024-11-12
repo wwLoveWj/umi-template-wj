@@ -1,0 +1,195 @@
+.console {
+  padding-bottom: 15px;
+}
+.console .region,
+.console .dynamic {
+  background: var(--art-main-bg-color);
+  border-radius: 16px;
+}
+.console .column {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--console-margin);
+  background-color: transparent !important;
+}
+.todo-list {
+  box-sizing: border-box;
+  flex: 1;
+  padding: 0 25px;
+  margin-left: var(--console-margin);
+}
+.todo-list .card-header .title p span {
+  color: red !important;
+}
+.todo-list .list {
+  height: calc(100% - 100px);
+  margin-top: 10px;
+  overflow: hidden;
+}
+.todo-list .list > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--art-border-color);
+}
+.todo-list .list > div p {
+  font-size: 13px;
+}
+.todo-list .list > div .title {
+  font-size: 14px;
+}
+.todo-list .list > div .date {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 400;
+}
+.dynamic {
+  box-sizing: border-box;
+  flex: 1;
+  padding: 0 25px;
+  margin-left: var(--console-margin);
+}
+.dynamic .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0 0;
+}
+.dynamic .list {
+  height: calc(100% - 100px);
+  margin-top: 10px;
+  overflow: hidden;
+}
+.dynamic .list > div {
+  height: 70px;
+  overflow: hidden;
+  line-height: 70px;
+  border-bottom: 1px solid var(--art-border-color);
+}
+.dynamic .list > div span {
+  font-size: 13px;
+}
+.dynamic .list > div .user {
+  font-weight: 500;
+  color: var(--art-text-gray-800);
+}
+.dynamic .list > div .type {
+  margin: 0 8px;
+}
+.dynamic .list > div .target {
+  color: var(--main-color);
+}
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + var(--console-margin));
+  margin-left: calc(0px - var(--console-margin));
+  background-color: transparent !important;
+}
+.card li {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(25% - var(--console-margin));
+  height: 90px;
+  padding: 0 18px;
+  margin: 0 0 0 var(--console-margin);
+  background: var(--art-main-bg-color);
+  border-radius: 14px;
+}
+.card li .iconfont {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  bottom: 0;
+  width: 46px;
+  height: 46px;
+  margin: auto;
+  overflow: hidden;
+  font-size: 20px;
+  line-height: 46px;
+  color: #fff !important;
+  text-align: center;
+  background-color: #2c90ff;
+  border-radius: 12px;
+}
+.card li .des {
+  display: block;
+  height: 14px;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 14px;
+}
+.card li > div {
+  display: flex;
+  align-items: center;
+}
+.card li > div .number {
+  display: block;
+  margin-top: 5px;
+  font-size: 28px;
+  font-weight: 400;
+}
+.card li > div .change {
+  display: block;
+  margin: 13px 0 0 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.dark .region .chart {
+  background: none;
+}
+.region {
+  box-sizing: border-box;
+  width: 42%;
+  height: 420px;
+  padding: 16px;
+}
+.region .chart {
+  box-sizing: border-box;
+  width: 100%;
+  height: 220px;
+  padding: 20px 0 20px 20px;
+  background-image: linear-gradient(90deg, var(--art-primary-active), var(--art-primary-active), var(--art-primary-active));
+  border-radius: 8px;
+}
+.region .text {
+  margin-left: 3px;
+}
+.region .text h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.region .text p {
+  margin-top: 5px;
+  font-size: 14px;
+}
+.region .text p span {
+  color: #52c41a !important;
+}
+.region .text p:last-of-type {
+  height: 42px;
+  margin-top: 5px;
+}
+.region .list {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 3px;
+}
+.region .list > div {
+  flex: 1;
+}
+.region .list > div p {
+  font-weight: 400;
+}
+.region .list > div p:first-of-type {
+  font-size: 24px;
+  color: var(--art-gray-900);
+}
+.region .list > div p:last-of-type {
+  font-size: 13px;
+}
