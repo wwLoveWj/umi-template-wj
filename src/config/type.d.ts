@@ -1,3 +1,7 @@
+// 系统主题样式（light | dark）
+export interface SystemThemeType {
+  className: string; // className
+}
 // 定义包含多个主题的类型
 export type SystemThemeTypes = {
   [key in Exclude<SystemThemeEnum, SystemThemeEnum.AUTO>]: SystemThemeType;

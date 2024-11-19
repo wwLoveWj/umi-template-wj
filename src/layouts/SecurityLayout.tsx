@@ -10,8 +10,9 @@ import { storage } from "@/utils/storage";
 import { PROJECT_CONFIG } from "@/constants/constant";
 import { WjLayout, WjDrawer } from "magical-antd-ui";
 import routes from "@/routes"; // 配置的菜单项
-import Setting from "./Setting";
-import { ElementPlusTheme } from "@/config/setting";
+import { Setting } from "./Setting";
+import ThemeSetting from "./Setting/ThemeSetting";
+import { ElementPlusTheme, SystemThemeEnum } from "@/config/setting";
 // 获取到所有的菜单数据进行处理
 const menus =
   routes
@@ -20,7 +21,11 @@ const menus =
 const systemThemeColor = ElementPlusTheme.primary;
 export default function Layout() {
   // const { pathname } = useLocation();
-  const { currentTheme, setCurrentTheme } = useModel("themeColor");
+  const [currentTheme, setCurrentTheme] = useState(
+    JSON.parse(
+      localStorage?.getItem("systemColor") || `{systemThemeMode:light}`
+    )?.systemThemeMode
+  );
   const [showSettingGuide] = useState(true);
 
   const clearLocalStorage = () => {
@@ -132,6 +137,11 @@ export default function Layout() {
       ),
     },
   ];
+
+  // 监听更改主题颜色
+  const onChgTheme = (theme: SystemThemeEnum) => {
+    setCurrentTheme(theme);
+  };
   return (
     <div>
       <WjLayout
@@ -149,7 +159,10 @@ export default function Layout() {
         extraRender={
           <div>
             {/* 设置  */}
-            <div className="btn-box" onClick={() => WjDrawer.open(Setting)}>
+            <div
+              className="btn-box"
+              onClick={() => WjDrawer.open(Setting, { onChgTheme })}
+            >
               {showSettingGuide && (
                 <Popover
                   content={
@@ -176,6 +189,7 @@ export default function Layout() {
           </div>
         }
       />
+      <ThemeSetting />
     </div>
   );
 }
