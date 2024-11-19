@@ -1,4 +1,7 @@
+import "@/styles/reset.scss"; // 重置HTML样式
+import "@/styles/dark.scss"; // 系统主题
 import "./global.less";
+// import "@/assets/icons/icons/iconfont.css";
 
 import { ConfigProvider } from "antd";
 import Package from "../package.json";

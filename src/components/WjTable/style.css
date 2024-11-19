@@ -3,7 +3,7 @@
   display: flex;
 }
 .tableLayout {
-  background: #fff;
+  background: var(--art-main-bg-color);
   padding: 12px;
 }
 .tableLayout :global .my-template-umi-ant-table-thead > tr > th {

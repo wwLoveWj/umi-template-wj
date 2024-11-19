@@ -1,3 +1,4 @@
+import { message } from "antd";
 // 系统主色
 export const SystemMainColor = [
   "#1485FF",
@@ -13,6 +14,22 @@ export function getCssVariable(str: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(str);
 }
 
+/**
+ * hex颜色转rgb颜色
+ * @param str 颜色值字符串
+ * @returns 返回处理后的颜色值
+ */
+export function hexToRgb(str: any) {
+  let hexs: any = "";
+  const reg = /^#?[0-9A-Fa-f]{6}$/;
+  if (!reg.test(str)) return message.warning("输入错误的hex");
+  str = str.replace("#", "");
+
+  hexs = str.match(/../g);
+
+  for (let i = 0; i < 3; i++) hexs[i] = parseInt(hexs[i], 16);
+  return hexs;
+}
 // 将hex颜色转成rgb  例如(#F55442, 1)
 export function hexToRgba(
   hex: string,
@@ -28,7 +45,6 @@ export function hexToRgba(
       .map((char) => char.repeat(2))
       .join("");
   }
-  debugger;
   // 验证 hex 格式
   if (!/^[0-9A-F]{6}$/.test(hex)) {
     throw new Error("Invalid hex color format");
@@ -62,6 +78,17 @@ const colorList = [
   "#F5E1FF",
   "#E1E6FE",
 ];
+
+export const SystemGradientColor = [
+  "linear-gradient(310deg, #50D0FF, #50A3FF)",
+  "linear-gradient(310deg, #998DF3, #B48DF3)",
+  "linear-gradient(310deg, #7AA2FF, #7A7FFF)",
+  "linear-gradient(310deg, #7EC041, #60C041)",
+  "linear-gradient(310deg, #6ACFFC, #38C0FC)",
+  "linear-gradient(310deg, #FFAB4D, #F9901F)",
+  "linear-gradient(310deg, #FF99D3, #FF80C8)",
+];
+
 let lastColor: string | null = null;
 export const randomColor = () => {
   let newColor: string;
@@ -74,3 +101,35 @@ export const randomColor = () => {
   lastColor = newColor;
   return newColor;
 };
+
+/**
+ * 加深颜色值
+ * @param color 颜色值字符串
+ * @param level 加深的程度，限0-1之间
+ * @returns 返回处理后的颜色值
+ */
+export function getDarkColor(color: string, level: number) {
+  const reg = /^#?[0-9A-Fa-f]{6}$/;
+  if (!reg.test(color)) return message.warning("输入错误的hex颜色值");
+  const rgb = hexToRgb(color);
+  for (let i = 0; i < 3; i++)
+    rgb[i] = Math.round(20.5 * level + rgb[i] * (1 - level));
+  return rgbToHex(rgb[0], rgb[1], rgb[2]);
+}
+
+/**
+ * 变浅颜色值
+ * @param color 颜色值字符串
+ * @param level 加深的程度，限0-1之间
+ * @returns 返回处理后的颜色值
+ */
+export function getLightColor(color: string, level: number) {
+  const reg = /^#?[0-9A-Fa-f]{6}$/;
+  if (!reg.test(color)) return message.warning("输入错误的hex颜色值");
+  const rgb = hexToRgb(color);
+
+  for (let i = 0; i < 3; i++) {
+    rgb[i] = Math.round(255 * level + rgb[i] * (1 - level));
+  }
+  return rgbToHex(rgb[0], rgb[1], rgb[2]);
+}

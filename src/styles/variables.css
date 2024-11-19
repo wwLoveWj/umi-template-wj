@@ -1,4 +1,7 @@
 :root {
+  --console-margin: 20px;
+  --el-color-primary: #38C0FC;
+  --main-color: var(--el-color-primary);
   --art-primary: #1B84FF;
   --art-success: #17C653;
   --art-warning: #F6C000;
@@ -105,7 +108,4 @@ html.dark {
   --art-root-card-border-color: #1E2027;
   --art-bg-color: #070707;
   --art-main-bg-color: #161618;
-}
-:root {
-  --console-margin: 20px;
 }

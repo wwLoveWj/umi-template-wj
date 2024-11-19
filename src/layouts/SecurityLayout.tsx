@@ -1,23 +1,27 @@
 // import { Link, Outlet } from "umi";
 import styles from "./index.less";
 import { removeToken } from "@/utils/localToken";
-// import { UserOutlined } from "@ant-design/icons";
+import { SettingOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { message, notification } from "antd";
-import React, { useEffect } from "react";
-import { history, useLocation } from "umi";
+import { message, notification, Popover } from "antd";
+import React, { useEffect, useState } from "react";
+import { history, useLocation, useModel } from "umi";
 import { storage } from "@/utils/storage";
 import { PROJECT_CONFIG } from "@/constants/constant";
-import { WjLayout } from "magical-antd-ui";
+import { WjLayout, WjDrawer } from "magical-antd-ui";
 import routes from "@/routes"; // 配置的菜单项
-
+import Setting from "./Setting";
+import { ElementPlusTheme } from "@/config/setting";
 // 获取到所有的菜单数据进行处理
 const menus =
   routes
     ?.find((route) => route.path === "/")
     ?.routes?.filter((item: any) => !item.redirect) || [];
+const systemThemeColor = ElementPlusTheme.primary;
 export default function Layout() {
   // const { pathname } = useLocation();
+  const { currentTheme, setCurrentTheme } = useModel("themeColor");
+  const [showSettingGuide] = useState(true);
 
   const clearLocalStorage = () => {
     storage.del("login-info");
@@ -135,7 +139,42 @@ export default function Layout() {
         avatarItems={avatarItems}
         // rolesList={rolesList}
         routes={menus}
+        home="/home"
         projectName={PROJECT_CONFIG.TITLE}
+        headerStyle={{
+          // background: `var(--art-bg-color)`,
+          color: `var(--art-text-gray-700)`,
+        }}
+        themeMenu={currentTheme}
+        extraRender={
+          <div>
+            {/* 设置  */}
+            <div className="btn-box" onClick={() => WjDrawer.open(Setting)}>
+              {showSettingGuide && (
+                <Popover
+                  content={
+                    <p>
+                      点击这里查看
+                      <span style={{ color: systemThemeColor }}>主题风格</span>
+                      、
+                      <span style={{ color: systemThemeColor }}>
+                        开启顶栏菜单
+                      </span>
+                      等更多配置
+                    </p>
+                  }
+                  title="Title"
+                >
+                  <>
+                    <div className="btn setting-btn">
+                      <SettingOutlined />
+                    </div>
+                  </>
+                </Popover>
+              )}
+            </div>
+          </div>
+        }
       />
     </div>
   );

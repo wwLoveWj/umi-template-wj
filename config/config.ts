@@ -7,7 +7,7 @@ export default defineConfig({
   mountElementId: PROJECT_CONFIG.NAME,
   // history: { type: "hash" },
   // initialState: {},
-  // model: {}, // 使用useModel需要这个配置
+  model: {}, // 使用useModel需要这个配置
   // locale: {},
   // icons: {},
   // mfsu默认开启，需要开启按需加载 extraBabelPlugins，注意！！在本地qiankun下调试的时候需要关闭按需加载
