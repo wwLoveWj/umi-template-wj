@@ -1,0 +1,73 @@
+.comment-module {
+  margin-top: 40px;
+}
+.comment-module .comment-item .comment-header,
+.comment-module .reply-item .comment-header {
+  display: flex;
+  align-items: center;
+}
+.comment-module .comment-item .comment-header .avatar,
+.comment-module .reply-item .comment-header .avatar {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #fff;
+  text-align: center;
+  background-color: var(--main-color);
+  border-radius: 50%;
+}
+.comment-module .comment-item .comment-header .name,
+.comment-module .reply-item .comment-header .name {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+.comment-module .comment-item .content,
+.comment-module .reply-item .content {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--art-gray-800);
+}
+.comment-module .comment-item .comment-info,
+.comment-module .reply-item .comment-info,
+.comment-module .comment-item .reply-info,
+.comment-module .reply-item .reply-info {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  margin-top: 10px;
+}
+.comment-module .comment-item .comment-info .date,
+.comment-module .reply-item .comment-info .date,
+.comment-module .comment-item .reply-info .date,
+.comment-module .reply-item .reply-info .date {
+  font-size: 12px;
+  color: var(--art-gray-500);
+}
+.comment-module .comment-item .comment-info .btn-text,
+.comment-module .reply-item .comment-info .btn-text,
+.comment-module .comment-item .reply-info .btn-text,
+.comment-module .reply-item .reply-info .btn-text {
+  margin-left: 20px;
+  font-size: 12px;
+  color: var(--art-gray-800);
+  cursor: pointer;
+  user-select: none;
+}
+.comment-module .comment-item .comment-info .btn-text:hover,
+.comment-module .reply-item .comment-info .btn-text:hover,
+.comment-module .comment-item .reply-info .btn-text:hover,
+.comment-module .reply-item .reply-info .btn-text:hover {
+  color: var(--main-color);
+}
+.comment-module .comment-replies {
+  padding-left: 10px;
+}
+.comment-module .comment-replies .reply-item {
+  margin-top: 20px;
+}

@@ -1,0 +1,55 @@
+.comment-module .comment-header {
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--art-gray-900);
+}
+.comment-module .comment-item-outside {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--art-border-dashed-color);
+}
+.comment-module form {
+  margin-bottom: 40px !important;
+}
+.comment-module :deep(form) {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding-bottom: 50px;
+  margin: auto;
+}
+.comment-module :deep(form) > div input,
+.comment-module :deep(form) > div textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid var(--art-border-dashed-color);
+  outline: none;
+}
+.comment-module :deep(form) > div input {
+  height: 36px;
+  padding-left: 10px;
+}
+.comment-module :deep(form) > div textarea {
+  height: 100px;
+  padding: 10px;
+}
+.comment-module :deep(form) > div .btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  margin-top: 15px;
+  font-size: 14px;
+  line-height: 30px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--main-color);
+  border: 0;
+  border-radius: 4px;
+}
