@@ -70,6 +70,20 @@ html.dark {
   // .my-template-umi-ant-form-item-control-input-content{
   //   background: var(--art-bg-color) !important;
   // }
+  // 面包屑
+  .my-template-umi-ant-breadcrumb-separator {
+    color: var(--art-gray-900) !important;
+  }
+
+  // .my-template-umi-ant-breadcrumb-link .disabled-breadcrumb-item {
+  //   color: var(--art-gray-900) !important;
+  // }
+
+  .my-template-umi-ant-breadcrumb a {
+    color: var(--art-gray-900) !important;
+  }
+
+  // =============================================================
   // 除菜单外内容区域
   .my-template-umi-ant-layout {
     background: var(--art-bg-color) !important;
