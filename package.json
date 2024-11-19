@@ -16,9 +16,12 @@
     "antd": "^5.18.0",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
+    "echarts": "^5.5.1",
     "jsencrypt": "^3.3.2",
     "lodash-es": "^4.17.21",
-    "magical-antd-ui": "^0.0.30",
+    "magical-antd-ui": "0.0.34",
+    "md5": "^2.3.0",
+    "react-schema-render": "^0.0.5",
     "umi": "^4.3.25",
     "vstores": "^0.0.17"
   },
@@ -26,6 +29,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@umijs/plugins": "4.2.10",
+    "sass": "^1.80.6",
     "typescript": "^5.0.3"
   }
 }

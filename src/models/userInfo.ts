@@ -1,20 +1,20 @@
-import { verify } from "@/service/api/user";
-import { toLoginPage } from "@/utils";
-import { useRequest } from "ahooks";
+// import { verify } from "@/service/api/user";
+// import { toLoginPage } from "@/utils";
+// import { useRequest } from "ahooks";
 
-// 获取用户信息
-const useUserInfo = () => {
-  const { data } = useRequest(async () => {
-    try {
-      const res = await verify();
-      return res;
-    } catch (e) {
-      toLoginPage();
-    }
-  });
-  return {
-    userInfo: data ?? {},
-  };
-};
+// // 获取用户信息
+// const useUserInfo = () => {
+//   const { data } = useRequest(async () => {
+//     try {
+//       const res = await verify();
+//       return res;
+//     } catch (e) {
+//       toLoginPage();
+//     }
+//   });
+//   return {
+//     userInfo: data ?? {},
+//   };
+// };
 
-export default useUserInfo;
+// export default useUserInfo;
