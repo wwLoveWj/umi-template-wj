@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { getCssVariable } from "@/utils/color";
 import * as echarts from "echarts";
-import "../style.less";
+import "./style.less";
 
 const list = [
   { name: "总用户量", num: "32k" },
@@ -81,25 +81,27 @@ export default function ActiveUser() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className="region active-user console-box">
+    <div className="region">
       <div className="chart" ref={chartRef}></div>
-      <div className="text">
-        <h3 className="custom-text box-title">用户概述</h3>
-        <p className="custom-text subtitle">
-          比上周 <span>+23%</span>
-        </p>
-        <p className="custom-text subtitle">
-          我们为您创建了多个选项，可将它们组合在一起并定制为像素完美的页面
-        </p>
-      </div>
-      <div className="list">
-        {list?.map((item, index) => (
-          <div key={index}>
-            <p>{item.num}</p>
-            <p className="custom-text subtitle">{item.name}</p>
-          </div>
-        ))}
-      </div>
+      <>
+        <div className="text">
+          <h3 className="custom-text box-title">用户概述</h3>
+          <p className="custom-text subtitle">
+            比上周 <span>+23%</span>
+          </p>
+          <p className="custom-text subtitle">
+            我们为您创建了多个选项，可将它们组合在一起并定制为像素完美的页面
+          </p>
+        </div>
+        <div className="list">
+          {list?.map((item, index) => (
+            <div key={index}>
+              <p>{item.num}</p>
+              <p className="custom-text subtitle">{item.name}</p>
+            </div>
+          ))}
+        </div>
+      </>
     </div>
   );
 }

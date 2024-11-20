@@ -67,9 +67,29 @@ html.dark {
   }
 
   // ===============================自定义==================================
-  // .my-template-umi-ant-form-item-control-input-content{
-  //   background: var(--art-bg-color) !important;
+  .my-template-umi-ant-form-item-control-input-content {
+    background: var(--art-bg-color) !important;
+  }
+
+  .my-template-umi-ant-input-affix-wrapper,
+  .my-template-umi-ant-input-number,
+  .my-template-umi-ant-select-selector,
+  .my-template-umi-ant-picker,
+  .my-template-umi-ant-picker-range {
+    background: var(--art-main-bg-color) !important;
+
+    input::placeholder,
+    textarea::placeholder,
+    .my-template-umi-ant-select-selection-placeholder {
+      color: var(--art-gray-500);
+    }
+  }
+
+  // antd的样式
+  // .my-template-umi-ant-btn {
+  //   color: var(--art-gray-500);
   // }
+
   // 面包屑
   .my-template-umi-ant-breadcrumb-separator {
     color: var(--art-gray-900) !important;
@@ -116,6 +136,12 @@ html.dark {
   }
 
   // 菜单区域
+  .my-template-umi-ant-menu {
+    .my-template-umi-ant-menu-sub {
+      background: var(--art-main-bg-color) !important;
+    }
+  }
+
   .sider-area-menu {
     background: var(--art-main-bg-color);
     color: var(--art-gray-900) !important;

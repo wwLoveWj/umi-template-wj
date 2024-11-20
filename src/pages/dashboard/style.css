@@ -5,6 +5,7 @@
 .console .dynamic {
   background: var(--art-main-bg-color);
   border-radius: 16px;
+  border: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
 }
 .console .column {
   display: flex;
@@ -81,15 +82,19 @@
 .dynamic .list > div .target {
   color: var(--main-color);
 }
-.card {
+.cardDash {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   width: calc(100% + var(--console-margin));
   margin-left: calc(0px - var(--console-margin));
+  margin-bottom: 20px;
   background-color: transparent !important;
 }
-.card li {
+.cardDash .console-box-2 {
+  border: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
+}
+.cardDash li {
   position: relative;
   box-sizing: border-box;
   width: calc(25% - var(--console-margin));
@@ -99,7 +104,7 @@
   background: var(--art-main-bg-color);
   border-radius: 14px;
 }
-.card li .iconfont {
+.cardDash li .iconfont {
   position: absolute;
   top: 0;
   right: 15px;
@@ -115,7 +120,7 @@
   background-color: #2c90ff;
   border-radius: 12px;
 }
-.card li .des {
+.cardDash li .des {
   display: block;
   height: 14px;
   margin-top: 20px;
@@ -123,17 +128,17 @@
   font-weight: 500;
   line-height: 14px;
 }
-.card li > div {
+.cardDash li > div {
   display: flex;
   align-items: center;
 }
-.card li > div .number {
+.cardDash li > div .number {
   display: block;
   margin-top: 5px;
   font-size: 28px;
   font-weight: 400;
 }
-.card li > div .change {
+.cardDash li > div .change {
   display: block;
   margin: 13px 0 0 10px;
   font-size: 13px;

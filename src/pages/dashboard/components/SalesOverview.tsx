@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { getCssVariable, hexToRgba } from "@/utils/color";
 import classNames from "classnames";
-import style from "./sale.less";
-import "../style.less";
+// import style from "./sale.less";
+import "./style.less";
 
 export default function SalesOverview() {
   const chartRef = useRef<HTMLDivElement | null>(null);
@@ -103,8 +103,8 @@ export default function SalesOverview() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className={classNames(style.region, "sales-overview", "console-box")}>
-      <div className={style.cardHeader}>
+    <div className="region">
+      <div className={"cardHeader"}>
         <div className="title">
           <h4 className="custom-text box-title">访问量</h4>
           <p className="custom-text subtitle">
@@ -112,7 +112,7 @@ export default function SalesOverview() {
           </p>
         </div>
       </div>
-      <div className={style.chart} ref={chartRef}></div>
+      <div className={"chart"} ref={chartRef}></div>
     </div>
   );
 }

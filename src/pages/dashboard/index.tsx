@@ -4,21 +4,28 @@ import ActiveUser from "./components/ActiveUser";
 import TodoList from "./components/TodoList";
 import Dynamic from "./components/Dynamic";
 import SalesOverview from "./components/SalesOverview";
-import "./style.less";
+import styles from "./style.less";
+import { Row, Col } from "antd";
 
 export default function Index() {
   return (
-    <div className="console">
+    <div className={styles.console}>
       <CardList></CardList>
-      <div className="column column2">
-        <ActiveUser></ActiveUser>
-        <SalesOverview></SalesOverview>
-      </div>
-      <div className="column column3">
+      <Row gutter={20}>
+        <Col span={12}>
+          <ActiveUser></ActiveUser>
+        </Col>
+        <Col span={12}>
+          <SalesOverview></SalesOverview>
+        </Col>
         {/* <NewUser></NewUser> */}
-        <Dynamic></Dynamic>
-        <TodoList></TodoList>
-      </div>
+        <Col span={12}>
+          <Dynamic></Dynamic>
+        </Col>
+        <Col span={12}>
+          <TodoList></TodoList>
+        </Col>
+      </Row>
     </div>
   );
 }

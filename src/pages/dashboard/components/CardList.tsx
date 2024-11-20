@@ -48,7 +48,10 @@ const dataList = [
 export default function CardList() {
   const showWorkTab = true;
   return (
-    <ul className="card" style={{ marginTop: showWorkTab ? "0" : "10px" }}>
+    <ul
+      className={"cardDash"}
+      style={{ marginTop: showWorkTab ? "0" : "10px" }}
+    >
       {dataList?.map((item, index) => (
         <li className="console-box-2" key={index}>
           <span className="des custom-text subtitle">{item.des}</span>
