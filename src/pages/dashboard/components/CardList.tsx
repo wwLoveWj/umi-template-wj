@@ -62,6 +62,7 @@ export default function CardList() {
                     :duration="1000"
                     separator=""
                     ></CountTo> */}
+            <div className="number custom-text box-title">{item.num}</div>
             <span
               className="change"
               style={{

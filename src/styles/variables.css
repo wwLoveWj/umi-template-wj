@@ -57,6 +57,7 @@
   --art-main-bg-color: #FFFFFF;
 }
 html.dark {
+  --dark-border-color: #006AE6;
   --art-primary: #006AE6;
   --art-success: #00A261;
   --art-warning: #C59A00;

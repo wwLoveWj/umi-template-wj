@@ -15,6 +15,16 @@
       border-radius: 16px;
       border: 1px solid rgba(var(--art-gray-300-rgb), .6) !important;
 
+      // 主标题
+      .box-title {
+          color: var(--art-gray-900) !important;
+      }
+
+      // 副标题
+      .subtitle {
+          color: var(--art-gray-600) !important;
+      }
+
       .chart {
           box-sizing: border-box;
           width: 100%;

@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList";
 import Dynamic from "./components/Dynamic";
 import SalesOverview from "./components/SalesOverview";
 import styles from "./style.less";
+import classNames from "classnames";
 import { Row, Col } from "antd";
 
 export default function Index() {
@@ -20,9 +21,15 @@ export default function Index() {
         </Col>
         {/* <NewUser></NewUser> */}
         <Col span={12}>
-          <Dynamic></Dynamic>
+          <div
+            className={classNames(styles?.region, styles?.rightTodo)}
+            style={{ width: "100%" }}
+          >
+            666
+          </div>
         </Col>
-        <Col span={12}>
+        <Col span={12} className={styles?.rightTodo}>
+          <Dynamic></Dynamic>
           <TodoList></TodoList>
         </Col>
       </Row>

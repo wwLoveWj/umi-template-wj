@@ -13,6 +13,12 @@
   margin-top: var(--console-margin);
   background-color: transparent !important;
 }
+.console .rightTodo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--console-margin);
+  background-color: transparent !important;
+}
 .todo-list {
   box-sizing: border-box;
   flex: 1;
@@ -117,7 +123,6 @@
   line-height: 46px;
   color: #fff !important;
   text-align: center;
-  background-color: #2c90ff;
   border-radius: 12px;
 }
 .cardDash li .des {
