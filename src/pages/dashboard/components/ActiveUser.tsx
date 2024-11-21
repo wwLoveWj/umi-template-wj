@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { getCssVariable } from "@/utils/color";
 import * as echarts from "echarts";
-import "./style.less";
+import "./active.scss";
 
 const list = [
   { name: "总用户量", num: "32k" },
@@ -11,10 +11,15 @@ const list = [
 ];
 export default function ActiveUser() {
   const chartRef = useRef<HTMLDivElement | null>(null);
+  const [currentTheme, setCurrentTheme] = useState(
+    JSON.parse(
+      localStorage?.getItem("systemColor") || `{systemThemeType:light}`
+    )?.systemThemeType
+  );
   //   const { setOptions, removeResize, resize } = useECharts(
   //     chartRef as Ref<HTMLDivElement>
   //   );
-  const isDark = false;
+  const isDark = currentTheme === "dark";
 
   const createChart = (chartInstance) => {
     chartInstance?.setOption({
@@ -81,7 +86,7 @@ export default function ActiveUser() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className="region">
+    <div className="region-activeUser console-box">
       <div className="chart" ref={chartRef}></div>
       <>
         <div className="text">

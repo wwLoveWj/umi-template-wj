@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./style.less";
 import ThemeSetting from "./ThemeSetting";
 import ThemeColor from "./ThemeColor";
+import ThemeShadow from "./ThemeShadow";
 import { SystemThemeEnum, ElementPlusTheme } from "@/config/setting";
 
 const MyDrawerChild = ({
@@ -36,6 +37,7 @@ const MyDrawerChild = ({
           mainColor={mainColor}
         />
         <ThemeColor onChgMainTheme={onChgMainTheme} />
+        <ThemeShadow />
       </div>
     </WjDrawer>
   );

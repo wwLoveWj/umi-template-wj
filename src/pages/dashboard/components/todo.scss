@@ -1,0 +1,85 @@
+.todo-list {
+    box-sizing: border-box;
+    flex: 1;
+    padding: 0 25px;
+    margin-left: var(--console-margin);
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 25px 5px 0;
+
+        .title {
+            h4 {
+                font-size: 18px;
+                font-weight: 500;
+                color: var(--art-text-gray-800);
+            }
+
+            p {
+                margin-top: 3px;
+                font-size: 13px;
+
+                span {
+                    margin-left: 10px;
+                    color: red;
+                }
+            }
+        }
+    }
+
+    // 主标题
+    .box-title {
+        color: var(--art-gray-900) !important;
+    }
+
+    // 副标题
+    .subtitle {
+        color: var(--art-gray-600) !important;
+    }
+
+    .list {
+        height: calc(100% - 100px);
+        margin-top: 10px;
+        overflow: hidden;
+
+        >div {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 70px;
+            overflow: hidden;
+            // border-bottom: 1px solid #EBEEF5;
+            border-bottom: 1px solid var(--art-border-color);
+
+            p {
+                font-size: 13px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+
+            .date {
+                margin-top: 6px;
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .el-checkbox {
+                position: absolute;
+                top: 0;
+                right: 10px;
+                bottom: 0;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.region {
+    background: var(--art-main-bg-color);
+    border-radius: 16px;
+    border: 1px solid rgba(var(--art-gray-300-rgb), .6) !important;
+}

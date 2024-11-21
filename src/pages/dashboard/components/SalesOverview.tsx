@@ -1,13 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import { getCssVariable, hexToRgba } from "@/utils/color";
 import classNames from "classnames";
 // import style from "./sale.less";
-import "./style.less";
+import "./sales.scss";
 
 export default function SalesOverview() {
   const chartRef = useRef<HTMLDivElement | null>(null);
-  const isLight = true;
+  const [currentTheme, setCurrentTheme] = useState(
+    JSON.parse(
+      localStorage?.getItem("systemColor") || `{systemThemeType:light}`
+    )?.systemThemeType
+  );
+  const isLight = currentTheme === "light";
   const createChart = (chartInstance) => {
     chartInstance?.setOption({
       grid: {
@@ -103,7 +108,7 @@ export default function SalesOverview() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className="region">
+    <div className="region-sales console-box">
       <div className={"cardHeader"}>
         <div className="title">
           <h4 className="custom-text box-title">访问量</h4>

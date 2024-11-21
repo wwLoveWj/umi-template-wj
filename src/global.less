@@ -51,7 +51,7 @@ ul {
 /*---滚动框背景样式--*/
 
 ::-webkit-scrollbar-track-piece {
-  background-color: #fff;
+  // background-color: #fff;
   -webkit-border-radius: 0;
 }
 
@@ -64,4 +64,33 @@ ul {
   padding: 12px;
   background: var(--art-main-bg-color);
   height: 100%;
+}
+
+// ✅ 盒子边框 ｜ 盒子阴影
+[data-box-mode='border-mode'] {
+
+  .page-content,
+  .worktab .scroll-view .tabs li,
+  .console-box,
+  .console-box-2 {
+    border: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
+  }
+
+  .menu-left {
+    border-right: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
+  }
+}
+
+[data-box-mode='shadow-mode'] {
+
+  .page-content,
+  .worktab .scroll-view .tabs li,
+  .console-box,
+  .console-box-2 {
+    box-shadow: 0 4px 20px rgb(0 0 0 / 3%);
+  }
+
+  .menu-left {
+    border-right: none;
+  }
 }
