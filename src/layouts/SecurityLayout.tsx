@@ -1,5 +1,5 @@
 // import { Link, Outlet } from "umi";
-import styles from "./index.less";
+import "./index.less";
 import { removeToken } from "@/utils/localToken";
 import { SettingOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -152,7 +152,7 @@ export default function Layout() {
         home="/home"
         projectName={PROJECT_CONFIG.TITLE}
         headerStyle={{
-          // background: `var(--art-bg-color)`,
+          background: `var(--art-main-bg-color)`,
           color: `var(--art-text-gray-700)`,
         }}
         themeMenu={currentTheme}
@@ -165,18 +165,18 @@ export default function Layout() {
             >
               {showSettingGuide && (
                 <Popover
-                  content={
-                    <p>
-                      点击这里查看
-                      <span style={{ color: systemThemeColor }}>主题风格</span>
-                      、
-                      <span style={{ color: systemThemeColor }}>
-                        开启顶栏菜单
-                      </span>
-                      等更多配置
-                    </p>
-                  }
-                  title="Title"
+                // content={
+                //   <p>
+                //     点击这里查看
+                //     <span style={{ color: systemThemeColor }}>主题风格</span>
+                //     、
+                //     <span style={{ color: systemThemeColor }}>
+                //       开启顶栏菜单
+                //     </span>
+                //     等更多配置
+                //   </p>
+                // }
+                // title="Title"
                 >
                   <>
                     <div className="btn setting-btn">
@@ -189,7 +189,9 @@ export default function Layout() {
           </div>
         }
       />
-      <ThemeSetting />
+      <div style={{ display: "none" }}>
+        <ThemeSetting />
+      </div>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 :root {
+  --border-line-color: #363637;
   --console-margin: 20px;
-  --el-color-primary: #38C0FC;
-  --main-color: var(--el-color-primary);
+  --antd-color-primary: #38C0FC;
+  --main-color: var(--antd-color-primary);
   --art-primary: #1B84FF;
   --art-success: #17C653;
   --art-warning: #F6C000;

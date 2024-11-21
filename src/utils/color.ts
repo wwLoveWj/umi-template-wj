@@ -133,3 +133,63 @@ export function getLightColor(color: string, level: number) {
   }
   return rgbToHex(rgb[0], rgb[1], rgb[2]);
 }
+
+// 变深颜色值
+export function chgDarkColor(color: string, level: number): string {
+  const rgb = hexToRgb(color);
+  const newRgb = rgb.map((value: number) => Math.floor(value * (1 - level)));
+  return rgbToHex(newRgb[0], newRgb[1], newRgb[2]);
+}
+// 变浅颜色值
+export function chgLightColor(
+  color: string,
+  level: number,
+  isDark: boolean = false
+): string {
+  if (isDark) {
+    return chgDarkColor(color, level);
+  } else {
+    const rgb = hexToRgb(color);
+    const newRgb = rgb.map((value: number) =>
+      Math.floor((255 - value) * level + value)
+    );
+    return rgbToHex(newRgb[0], newRgb[1], newRgb[2]);
+  }
+}
+// 处理 Element Plus 主题颜色
+export function handleElementThemeColor(
+  theme: string,
+  isDark: boolean = false
+): void {
+  document.documentElement.style.setProperty("--antd-color-primary", theme);
+  for (let i = 1; i <= 9; i++) {
+    document.documentElement.style.setProperty(
+      `--antd-color-primary-light-${i}`,
+      `${chgLightColor(theme, i / 10, isDark)}`
+    );
+  }
+  for (let i = 1; i <= 9; i++) {
+    document.documentElement.style.setProperty(
+      `--antd-color-primary-dark-${i}`,
+      `${getDarkColor(theme, i / 10)}`
+    );
+  }
+}
+
+// 颜色混合
+export function colourBlend(c1: string, c2: string, ratio: any) {
+  ratio = Math.max(Math.min(Number(ratio), 1), 0);
+  const r1 = parseInt(c1.substring(1, 3), 16);
+  const g1 = parseInt(c1.substring(3, 5), 16);
+  const b1 = parseInt(c1.substring(5, 7), 16);
+  const r2 = parseInt(c2.substring(1, 3), 16);
+  const g2 = parseInt(c2.substring(3, 5), 16);
+  const b2 = parseInt(c2.substring(5, 7), 16);
+  let r: any = Math.round(r1 * (1 - ratio) + r2 * ratio);
+  let g: any = Math.round(g1 * (1 - ratio) + g2 * ratio);
+  let b: any = Math.round(b1 * (1 - ratio) + b2 * ratio);
+  r = ("0" + (r || 0).toString(16)).slice(-2);
+  g = ("0" + (g || 0).toString(16)).slice(-2);
+  b = ("0" + (b || 0).toString(16)).slice(-2);
+  return "#" + r + g + b;
+}

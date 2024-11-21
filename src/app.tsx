@@ -1,4 +1,5 @@
 import "@/styles/reset.scss"; // 重置HTML样式
+import "@/styles/antd-ui.scss"; // 优化element样式
 import "@/styles/dark.scss"; // 系统主题
 import "./global.less";
 // import "@/assets/icons/icons/iconfont.css";

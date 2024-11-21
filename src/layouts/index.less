@@ -1,10 +1,19 @@
-.navs {
-  ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-  }
-  li {
-    margin-right: 1em;
-  }
-}
+ .setting-btn {
+   cursor: pointer;
+ }
+
+ .setting-btn:hover {
+   span {
+     animation: rotate180 0.5s;
+   }
+ }
+
+ @keyframes rotate180 {
+   0% {
+     transform: rotate(0);
+   }
+
+   100% {
+     transform: rotate(180deg);
+   }
+ }

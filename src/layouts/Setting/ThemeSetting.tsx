@@ -1,5 +1,6 @@
 import { WjDrawer } from "magical-antd-ui";
 import React, { useEffect, useState } from "react";
+import { useModel } from "umi";
 import {
   SettingThemeList,
   ThemeList,
@@ -15,10 +16,13 @@ import classNames from "classnames";
 const ThemeSetting = ({
   isAutoClose,
   onChgTheme,
+  mainColor,
 }: {
   onChgTheme?: (theme: SystemThemeEnum) => void;
   isAutoClose?: () => void;
+  mainColor?: string;
 }) => {
+  // const { systemThemeColor, setSystemThemeColor } = useModel("themeColor");
   const [currentTheme, setCurrentTheme] = useState(
     JSON.parse(
       localStorage?.getItem("systemColor") || `{systemThemeType:light}`
@@ -78,11 +82,11 @@ const ThemeSetting = ({
     }
 
     // 设置按钮颜色加深或变浅
-    let primary = ElementPlusTheme.primary;
+    let primary = mainColor || ElementPlusTheme?.primary;
 
     for (let i = 1; i <= 9; i++) {
       document.documentElement.style.setProperty(
-        `--el-color-primary-light-${i}`,
+        `--antd-color-primary-light-${i}`,
         isDark
           ? `${getDarkColor(primary, i / 10)}`
           : `${getLightColor(primary, i / 10)}`
@@ -113,7 +117,7 @@ const ThemeSetting = ({
     initSystemTheme();
   }, []);
   return (
-    <div className="drawer-con">
+    <div>
       <p className="title">主题风格</p>
       <div className="theme-wrap">
         {SettingThemeList?.map((item, index) => (

@@ -1,0 +1,14 @@
+.setting-btn {
+  cursor: pointer;
+}
+.setting-btn:hover span {
+  animation: rotate180 0.5s;
+}
+@keyframes rotate180 {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}

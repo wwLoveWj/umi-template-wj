@@ -10,7 +10,7 @@ $background-color: #070707;
 html.dark {
   // ✅ element-plus
   // --el-bg-color: $background-color;
-  --el-text-color-regular: $font-color;
+  --antd-text-color-regular: $font-color;
 
   // ✅ 富文本编辑器
   // 工具栏背景颜色
@@ -66,11 +66,70 @@ html.dark {
     // background: var(--art-main-bg-color);
   }
 
-  // ===============================自定义==================================
-  .my-template-umi-ant-form-item-control-input-content {
+  .my-template-umi-ant-checkbox-wrapper {
+    color: var(--art-gray-900) !important;
+  }
+
+  // 跟随主按钮色样式
+  .my-template-umi-ant-tabs-tab-active {
+    color: var(--main-color) !important;
+  }
+
+  .my-template-umi-ant-menu-item-selected,
+  .my-template-umi-ant-alert-info {
+    color: var(--art-gray-900) !important;
+    background: var(--main-color) !important;
+  }
+
+  .my-template-umi-ant-switch-inner-unchecked {
+    background: rbga(0, 0, 0, 0.4)
+  }
+
+  .my-template-umi-ant-btn-primary {
+    color: var(--art-gray-900) !important;
+    background: var(--main-color) !important;
+  }
+
+  .my-template-umi-ant-btn-color-dangerous:disabled {
+    color: var(--art-gray-900) !important;
     background: var(--art-bg-color) !important;
   }
 
+  .my-template-umi-ant-btn-color-dangerous {
+    background: red !important;
+  }
+
+  .my-template-umi-ant-btn-variant-link {
+    background: transparent !important;
+  }
+
+  // .my-template-umi-ant-btn-link {}
+
+  // 列表中的a链接
+  .my-template-umi-ant-space-item {
+    a {
+      color: var(--main-color) !important;
+    }
+  }
+
+  // 列表中的删除按钮样式
+  // .my-template-umi-ant-btn-variant-link {
+  //   color: var(--art-gray-900) !important;
+  // }
+
+  // 默认的default按钮色
+  .my-template-umi-ant-btn-default {
+    color: #070707;
+    background: var(--art-gray-900) !important;
+  }
+
+  // ===============================自定义==================================
+  .my-template-umi-ant-form-item-control-input-content {
+    background: var(--art-bg-color) !important;
+    // border: 1px solid var(--border-line-color) !important;
+  }
+
+  // 输入框的背景色
   .my-template-umi-ant-input-affix-wrapper,
   .my-template-umi-ant-input-number,
   .my-template-umi-ant-select-selector,
@@ -83,6 +142,16 @@ html.dark {
     .my-template-umi-ant-select-selection-placeholder {
       color: var(--art-gray-500);
     }
+  }
+
+  // 选择select选中的值
+  .my-template-umi-ant-select-selector {
+    color: var(--art-gray-900) !important;
+  }
+
+  // 表格分页
+  .my-template-umi-ant-select-selection-item {
+    color: var(--art-gray-900) !important;
   }
 
   // antd的样式
@@ -118,21 +187,46 @@ html.dark {
   // 卡片Card
   .my-template-umi-ant-card-body {
     background: var(--art-main-bg-color);
-    // border: 1px solid var(--art-gray-900);
-  }
-
-  .my-template-umi-ant-table-body {
-    background: var(--art-main-bg-color);
+    // border: 1px solid var(--border-line-color);
   }
 
   // 表格区域
-  :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-table-wrapper .my-template-umi-ant-table.my-template-umi-ant-table-small .my-template-umi-ant-table-tbody>tr>td {
+  .my-template-umi-ant-table-body,
+  .my-template-umi-ant-table-thead {
     background: var(--art-main-bg-color);
+
+    .my-template-umi-ant-table-cell-scrollbar {
+      width: 0px;
+    }
+  }
+
+  .my-template-umi-ant-table-container {
+    // border: 1px solid var(--border-line-color);
+    box-shadow: 10px 10px 30px rgb(255 255 255 / 10%) !important;
+  }
+
+  :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-table-wrapper .my-template-umi-ant-table-container table>thead>tr:first-child>*:first-child {
+    border-start-start-radius: 0px !important;
+  }
+
+  :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-table-wrapper .my-template-umi-ant-table.my-template-umi-ant-table-small .my-template-umi-ant-table-tbody>tr>td {
+    background: #141414;
     color: var(--art-gray-900) !important;
+    border-bottom: 1px solid var(--border-line-color);
   }
 
   :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-form-item .my-template-umi-ant-form-item-label>label {
     color: var(--art-gray-900) !important;
+  }
+
+  // 头部面包屑
+  .user-page-tabs {
+    background: var(--art-main-bg-color);
+
+    .my-template-umi-ant-tabs-tab {
+      color: var(--art-gray-900) !important;
+      background: var(--art-main-bg-color);
+    }
   }
 
   // 菜单区域
@@ -160,14 +254,6 @@ html.dark {
       .my-template-umi-ant-menu-item:not(.my-template-umi-ant-menu-item-selected):hover {
         background: rgba(var(--art-gray-200-rgb), 0.6) !important;
       }
-    }
-  }
-
-  // 头部面包屑
-  .user-page-tabs {
-    .my-template-umi-ant-tabs-tab {
-      color: var(--art-gray-900) !important;
-      background: var(--art-main-bg-color);
     }
   }
 
@@ -289,6 +375,54 @@ html.dark {
 // 菜单区域
 .sider-area-menu {
   background: var(--art-main-bg-color);
+}
+
+// 头部面包屑
+// .user-page-tabs {
+//   background: var(--art-main-bg-color);
+
+//   .my-template-umi-ant-tabs-tab {
+//     color: var(--art-gray-900) !important;
+//     background: var(--art-main-bg-color);
+//   }
+// }
+// 跟随主按钮色样式
+.my-template-umi-ant-tabs-tab-active {
+  color: var(--main-color) !important;
+}
+
+.my-template-umi-ant-menu-item-selected,
+// .my-template-umi-ant-menu-submenu-selected,
+.my-template-umi-ant-alert-info,
+.my-template-umi-ant-alert-icon {
+  color: var(--main-color) !important;
+  background: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-menu-light .my-template-umi-ant-menu-submenu-selected>.my-template-umi-ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-menu-light>.my-template-umi-ant-menu .my-template-umi-ant-menu-submenu-selected>.my-template-umi-ant-menu-submenu-title {
+  color: var(--main-color) !important;
+}
+
+// 权限checkbox
+:where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-checkbox-checked .my-template-umi-ant-checkbox-inner {
+  background: var(--main-color) !important;
+  border: 1px solid var(--main-color) !important;
+}
+
+.my-template-umi-ant-btn-primary {
+  color: #fff !important;
+  background: var(--main-color) !important;
+}
+
+.my-template-umi-ant-space-item {
+  a {
+    color: var(--main-color) !important;
+  }
+}
+
+.my-template-umi-ant-btn-color-dangerous {
+  background: red !important;
 }
 
 // 移动端文字颜色
