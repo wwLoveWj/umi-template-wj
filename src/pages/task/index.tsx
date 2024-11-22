@@ -34,6 +34,7 @@ import dayjs from "dayjs";
 import "./style.less";
 import { MsModal } from "magical-antd-ui";
 import classNames from "classnames";
+import WjCheckBox from "@/components/WjCheckBox";
 
 const IntervalUnit = new Map([
   ["second", "秒"],
@@ -339,12 +340,13 @@ const Index = () => {
               alignItems: "center",
             }}
           >
-            <Switch
+            {/* <Switch
               checkedChildren="开启"
               unCheckedChildren="关闭"
               defaultChecked
               onChange={onChangeSwitch}
-            />
+            /> */}
+            <WjCheckBox onChange={onChangeSwitch} />
           </div>
         </div>
       )}
