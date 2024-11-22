@@ -27,3 +27,47 @@
      transform: rotate(180deg);
    }
  }
+
+
+ // ----------------------通知图标的动画样式-----------------------
+ .btn {
+   display: block;
+   width: 38px;
+   height: 38px;
+   line-height: 38px;
+   text-align: center;
+   cursor: pointer;
+   border-radius: 6px;
+   transition: all 0.2s;
+ }
+
+ .btn:hover {
+   color: var(--art-primary);
+   background-color: rgba(var(--art-gray-200-rgb), 0.7);
+ }
+
+ .notice-button {
+   display: block;
+   font-size: 19px;
+ }
+
+ .notice-button:hover {
+   animation: shake 0.5s ease-in-out;
+ }
+
+ // TODO:通知的动画
+ @keyframes shake {
+
+   0%,
+   100% {
+     transform: rotate(0);
+   }
+
+   25% {
+     transform: rotate(-10deg);
+   }
+
+   75% {
+     transform: rotate(10deg);
+   }
+ }

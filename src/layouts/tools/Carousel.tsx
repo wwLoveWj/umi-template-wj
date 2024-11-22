@@ -1,11 +1,11 @@
 import React from "react";
-import "./style.less";
+import styles from "./style.less";
 export default function Carousel() {
   return (
-    <div className="sound">
+    <div className={styles.sound}>
       <svg
         t="1706691814487"
-        class="icon"
+        className={styles?.icon}
         viewBox="0 0 1024 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ export default function Carousel() {
         ></path>
       </svg>
       <li>
-        <p className="text">
+        <p className={styles.carouselText}>
           欢迎来到「创世纪」，一个小小的赞和留言也是作者最大的动力
         </p>
       </li>

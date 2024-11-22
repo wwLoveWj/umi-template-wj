@@ -1,0 +1,189 @@
+.notice {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 350px;
+  height: 450px;
+  overflow: hidden;
+  background: var(--art-main-bg-color);
+  border: 1px solid var(--art-border-color);
+  border-radius: 10px;
+  box-shadow: 0 8px 26px -4px hsla(0, 0%, 8%, 0.15), 0 8px 9px -5px hsla(0, 0%, 8%, 0.06);
+  transition: all 0.2s;
+  transform-origin: center top 0;
+  will-change: top, left;
+}
+.notice .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin-top: 15px;
+}
+.notice .header span {
+  font-size: 12px;
+}
+.notice .header .text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--art-gray-800);
+}
+.notice .header .read-btn {
+  padding: 4px 6px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 6px;
+}
+.notice .header .read-btn:hover {
+  background-color: var(--art-gray-200);
+}
+.notice .bar {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  line-height: 50px;
+  border-bottom: 1px solid var(--art-border-color);
+}
+.notice .bar li {
+  height: 48px;
+  margin-right: 20px;
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--art-gray-700);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.notice .bar li:last-of-type {
+  margin-right: 0;
+}
+.notice .bar li:hover {
+  color: var(--art-gray-900);
+}
+.notice .bar li.active {
+  color: var(--main-color) !important;
+  border-bottom: 2px solid var(--main-color);
+}
+.notice .content {
+  width: 100%;
+  height: calc(100% - 95px);
+  margin: 0 15px;
+}
+.notice .content .scroll {
+  height: 100%;
+  overflow-y: scroll;
+}
+.notice .content .scroll .notice-list li {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.notice .content .scroll .notice-list li .icon {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 8px;
+}
+.notice .content .scroll .notice-list li .icon i {
+  font-size: 18px;
+  color: #fff !important;
+  background: transparent !important;
+}
+.notice .content .scroll .notice-list li .text {
+  width: calc(100% - 45px);
+  margin-left: 15px;
+}
+.notice .content .scroll .notice-list li .text h4 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--art-gray-900);
+}
+.notice .content .scroll .notice-list li .text p {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--art-gray-500);
+}
+.notice .content .scroll .notice-list li:hover {
+  background-color: var(--art-gray-100);
+}
+.notice .content .scroll .notice-list li:last-of-type {
+  border-bottom: 0;
+}
+.notice .content .scroll .user-list li {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.notice .content .scroll .user-list li .avatar {
+  width: 36px;
+  height: 36px;
+}
+.notice .content .scroll .user-list li .avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+.notice .content .scroll .user-list li .text {
+  width: calc(100% - 45px);
+  margin-left: 15px;
+}
+.notice .content .scroll .user-list li .text h4 {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--art-gray-900);
+}
+.notice .content .scroll .user-list li .text p {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--art-gray-500);
+}
+.notice .content .scroll .user-list li:hover {
+  background-color: var(--art-gray-100);
+}
+.notice .content .scroll .user-list li:last-of-type {
+  border-bottom: 0;
+}
+.notice .content .scroll .base li {
+  box-sizing: border-box;
+  padding: 15px 20px;
+}
+.notice .content .scroll .base li p {
+  font-size: 12px;
+  color: var(--art-gray-500);
+}
+.notice .content .scroll .base li:last-of-type {
+  border-bottom: 0;
+}
+.notice .content .scroll .empty-tips {
+  position: relative;
+  top: 100px;
+  height: 100%;
+  color: var(--art-gray-500);
+  text-align: center;
+  background: transparent !important;
+}
+.notice .content .scroll .empty-tips i {
+  font-size: 60px;
+}
+.notice .content .scroll .empty-tips p {
+  margin-top: 15px;
+  font-size: 12px;
+  background: transparent !important;
+}
+.notice .content .scroll::-webkit-scrollbar {
+  width: 5px !important;
+}
+.dark .notice ::-webkit-scrollbar-track {
+  background-color: var(--art-main-bg-color);
+}
+.dark .notice ::-webkit-scrollbar-thumb {
+  background-color: #222 !important;
+}

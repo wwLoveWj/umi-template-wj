@@ -237,6 +237,11 @@ html.dark {
   }
 
   // =============================================================
+  // tab组件的tab样式
+  .my-template-umi-ant-tabs-tab-btn[aria-selected=false] {
+    color: var(--art-gray-900) !important;
+  }
+
   // 除菜单外内容区域
   .my-template-umi-ant-layout {
     background: var(--art-bg-color) !important;

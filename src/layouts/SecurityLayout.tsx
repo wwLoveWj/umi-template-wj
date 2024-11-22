@@ -1,7 +1,7 @@
 // import { Link, Outlet } from "umi";
 import "./index.less";
 import { removeToken } from "@/utils/localToken";
-import { SettingOutlined } from "@ant-design/icons";
+import { SettingOutlined, BellOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { message, notification, Popover } from "antd";
 import React, { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import routes from "@/routes"; // 配置的菜单项
 import { Setting } from "./Setting";
 import ThemeSetting from "./Setting/ThemeSetting";
 import Carousel from "./tools/Carousel";
+import Notice from "@/pages/home/notice";
 import { ElementPlusTheme, SystemThemeEnum } from "@/config/setting";
 // 获取到所有的菜单数据进行处理
 const menus =
@@ -21,6 +22,7 @@ const menus =
     ?.routes?.filter((item: any) => !item.redirect) || [];
 const systemThemeColor = ElementPlusTheme.primary;
 export default function Layout() {
+  const [showNotice, setShowNotice] = useState(false);
   // const { pathname } = useLocation();
   const [currentTheme, setCurrentTheme] = useState(
     JSON.parse(
@@ -188,9 +190,20 @@ export default function Layout() {
                 </Popover>
               )}
             </div>
+            {/* 通知  */}
+            <div
+              className="btn-box notice-btn"
+              onClick={() => setShowNotice(!showNotice)}
+            >
+              <div className="btn notice-button">
+                <BellOutlined />
+                <span className="count notice-btn"></span>
+              </div>
+            </div>
           </div>
         }
       />
+      <Notice show={showNotice} />
       <div style={{ display: "none" }}>
         <ThemeSetting />
       </div>
