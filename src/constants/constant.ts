@@ -3,7 +3,7 @@ import Package from "../../package.json";
 const PROJECT_CONFIG = {
   NAME: Package.name,
   VERSION: Package.version,
-  TITLE: "创建项目模板",
+  TITLE: "创世纪",
 };
 const STORAGE_PARAMS = {
   tokenKey: "system-token",

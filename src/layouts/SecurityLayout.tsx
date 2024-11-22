@@ -14,6 +14,7 @@ import { Setting } from "./Setting";
 import ThemeSetting from "./Setting/ThemeSetting";
 import Carousel from "./tools/Carousel";
 import Notice from "@/pages/home/notice";
+import LogoIndex from "./logo/index";
 import { ElementPlusTheme, SystemThemeEnum } from "@/config/setting";
 // 获取到所有的菜单数据进行处理
 const menus =
@@ -153,7 +154,12 @@ export default function Layout() {
         // rolesList={rolesList}
         routes={menus}
         home="/home"
-        projectName={PROJECT_CONFIG.TITLE}
+        projectName={
+          <div className="logo-title">
+            <LogoIndex />
+            <div>{PROJECT_CONFIG.TITLE}</div>
+          </div>
+        }
         headerStyle={{
           background: `var(--art-main-bg-color)`,
           color: `var(--art-text-gray-700)`,

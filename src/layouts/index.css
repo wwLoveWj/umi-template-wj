@@ -52,3 +52,9 @@
     transform: rotate(10deg);
   }
 }
+.logo-title {
+  display: flex;
+}
+.logo-title div {
+  font-size: 18px;
+}
