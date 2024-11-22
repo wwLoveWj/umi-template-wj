@@ -3,7 +3,7 @@ import * as echarts from "echarts";
 import { getCssVariable, hexToRgba } from "@/utils/color";
 import classNames from "classnames";
 // import style from "./sale.less";
-import "./sales.scss";
+import "./styles/sales.scss";
 
 export default function SalesOverview() {
   const chartRef = useRef<HTMLDivElement | null>(null);

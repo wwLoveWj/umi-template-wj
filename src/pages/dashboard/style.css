@@ -17,7 +17,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: var(--console-margin);
-  background-color: transparent !important;
 }
 .todo-list {
   box-sizing: border-box;

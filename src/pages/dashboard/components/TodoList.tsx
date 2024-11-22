@@ -1,5 +1,5 @@
 import React from "react";
-import "./todo.scss";
+import "./styles/todo.scss";
 
 const list = [
   {

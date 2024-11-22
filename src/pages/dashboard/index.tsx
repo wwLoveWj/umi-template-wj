@@ -12,13 +12,15 @@ export default function Index() {
   return (
     <div className={styles.console}>
       <CardList></CardList>
-      <Row gutter={20}>
+      <Row gutter={20} justify={"space-between"}>
         <Col span={12}>
           <ActiveUser></ActiveUser>
         </Col>
         <Col span={12}>
           <SalesOverview></SalesOverview>
         </Col>
+      </Row>
+      <Row gutter={20}>
         {/* <NewUser></NewUser> */}
         <Col span={12}>
           <div

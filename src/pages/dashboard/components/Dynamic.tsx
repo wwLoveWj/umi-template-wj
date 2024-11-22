@@ -1,5 +1,5 @@
 import React from "react";
-import "./dynamic.scss";
+import "./styles/dynamic.scss";
 const list = [
   {
     username: "中小鱼",

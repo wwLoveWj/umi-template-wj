@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { getCssVariable } from "@/utils/color";
 import * as echarts from "echarts";
-import "./active.scss";
+import "./styles/active.scss";
 
 const list = [
   { name: "总用户量", num: "32k" },
