@@ -63,10 +63,37 @@ html.dark {
 
   /* 让非 el- 开头的元素继承全局颜色、以及 pre code 元素的颜色 */
   [class]:not([class^='my-template-umi-ant-']):not(pre code *):not(.custom-text) {
-    // color: inherit !important;
-    color: var(--art-gray-900) !important;
+    color: inherit !important;
+    // color: var(--art-gray-900) !important;
     // background: var(--art-main-bg-color);
   }
+
+  // 搜索条件中的文字label
+  .my-template-umi-ant-col {
+    color: var(--art-gray-900) !important;
+  }
+
+  // drawer的弹窗样式
+  .my-template-umi-ant-drawer-content {
+    color: var(--art-gray-900) !important;
+    background: var(--art-main-bg-color);
+  }
+
+  .my-template-umi-ant-drawer-close {
+    color: var(--art-gray-900) !important;
+  }
+
+  // 右侧弹出通知的icon
+  :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-notification .my-template-umi-ant-notification-notice-wrapper .my-template-umi-ant-notification-notice-icon-error.anticon {
+    color: #ff4d4f !important;
+  }
+
+  // date组件的下拉,文字暂时不生效 TODO:
+  // my-template-umi-ant-picker-panel-container
+  // .my-template-umi-ant-picker-panel {
+  //   color: #fff !important;
+  //   background: var(--art-main-bg-color) !important;
+  // }
 
   .my-template-umi-ant-checkbox-wrapper {
     color: var(--art-gray-900) !important;
@@ -260,7 +287,7 @@ html.dark {
   // 头部面包屑
   .user-page-tabs {
     background: var(--art-main-bg-color);
-    // border-bottom: $border-color !important;
+    border-bottom: $border-color !important;
 
     .my-template-umi-ant-tabs-tab {
       color: var(--art-gray-900) !important;
@@ -469,83 +496,89 @@ html.dark {
   background: red !important;
 }
 
+.my-template-umi-ant-btn-color-dangerous:disabled {
+  color: var(--art-gray-900) !important;
+  background: var(--art-main-bg-color) !important;
+  border: $border-color !important;
+}
+
 // 对于表格中的link按钮
 .my-template-umi-ant-btn-variant-link {
   background: transparent !important;
 }
 
 // 头部面包屑
-.user-page-tabs {
-  background: var(--art-main-bg-color);
-  border-bottom: $border-color !important;
+// .user-page-tabs {
+//   background: var(--art-main-bg-color);
+//   border-bottom: $border-color !important;
 
-  .my-template-umi-ant-tabs-tab {
-    color: var(--art-gray-900) !important;
-    background: var(--art-main-bg-color);
-  }
+//   .my-template-umi-ant-tabs-tab {
+//     color: var(--art-gray-900) !important;
+//     background: var(--art-main-bg-color);
+//   }
 
-  height: 30px;
-  padding: 4px 8px;
-  overflow-y: hidden;
+//   height: 30px;
+//   padding: 4px 8px;
+//   overflow-y: hidden;
 
-  // :global {
-  .my-template-umi-ant-tabs {
-    height: 30px !important;
-    line-height: 30px !important;
-  }
+//   // :global {
+//   .my-template-umi-ant-tabs {
+//     height: 30px !important;
+//     line-height: 30px !important;
+//   }
 
-  .my-template-umi-ant-tabs-nav {
-    margin: 0 !important;
-  }
+//   .my-template-umi-ant-tabs-nav {
+//     margin: 0 !important;
+//   }
 
-  .my-template-umi-ant-tabs-nav::before {
-    border: 0 !important;
-  }
+//   .my-template-umi-ant-tabs-nav::before {
+//     border: 0 !important;
+//   }
 
-  .my-template-umi-ant-tabs-content-holder {
-    height: 0 !important;
-  }
+//   .my-template-umi-ant-tabs-content-holder {
+//     height: 0 !important;
+//   }
 
-  .my-template-umi-ant-tabs-tab {
-    height: 22px;
-    line-height: 22px;
-    // background: #ffffff !important;
-    border-radius: 2px;
-    padding: 0 8px !important;
-    border: 1px solid #d9d9d9 !important;
-  }
+//   .my-template-umi-ant-tabs-tab {
+//     height: 22px;
+//     line-height: 22px;
+//     // background: #ffffff !important;
+//     border-radius: 2px;
+//     padding: 0 8px !important;
+//     border: 1px solid #d9d9d9 !important;
+//   }
 
-  .my-template-umi-ant-tabs-tab-remove {
-    margin-left: 0px !important;
-  }
+//   .my-template-umi-ant-tabs-tab-remove {
+//     margin-left: 0px !important;
+//   }
 
-  .my-template-umi-ant-tabs-tab-remove:hover {
-    color: #1890ff !important;
-  }
+//   .my-template-umi-ant-tabs-tab-remove:hover {
+//     color: #1890ff !important;
+//   }
 
-  .my-template-umi-ant-tabs-tab-active {
-    border: 1px solid #1890ff !important;
+//   .my-template-umi-ant-tabs-tab-active {
+//     border: 1px solid #1890ff !important;
 
-    .my-template-umi-ant-tabs-tab-remove {
-      color: #1890ff !important;
-    }
-  }
+//     .my-template-umi-ant-tabs-tab-remove {
+//       color: #1890ff !important;
+//     }
+//   }
 
-  .my-template-umi-ant-tabs-tab+.my-template-umi-ant-tabs-tab {
-    margin: 0 0 0 8px;
-  }
+//   .my-template-umi-ant-tabs-tab+.my-template-umi-ant-tabs-tab {
+//     margin: 0 0 0 8px;
+//   }
 
-  .my-template-umi-ant-tabs-nav-more {
-    padding: 0px 16px !important;
-    height: 22px !important;
-    line-height: 22px !important;
-  }
+//   .my-template-umi-ant-tabs-nav-more {
+//     padding: 0px 16px !important;
+//     height: 22px !important;
+//     line-height: 22px !important;
+//   }
 
-  .my-template-umi-ant-tabs-ink-bar {
-    width: 0 !important;
-  }
+//   .my-template-umi-ant-tabs-ink-bar {
+//     width: 0 !important;
+//   }
 
-}
+// }
 
 .my-template-umi-ant-layout-sider-children {
   .logo {
@@ -568,6 +601,12 @@ html.dark {
 .my-template-umi-ant-layout-sider {
   border-right: $border-color !important;
 }
+
+// .my-template-umi-ant-space-item {
+//   a {
+//     color: var(--main-color) !important;
+//   }
+// }
 
 // 移动端文字颜色
 // @media screen and (max-width: $device-phone) {

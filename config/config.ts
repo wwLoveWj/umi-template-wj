@@ -12,13 +12,16 @@ export default defineConfig({
   // icons: {},
   // mfsu默认开启，需要开启按需加载 extraBabelPlugins，注意！！在本地qiankun下调试的时候需要关闭按需加载
   // mfsu: fasle,
-  // modifyVars: {
-  //   // hack: 'true; @import "~@/styles/common.less";',
-  //   "@ant-prefix": PROJECT_CONFIG.NAME + "-ant", // ant前缀 样式隔离
-  //   /* 自定义less变量 */
-  //   "@define-prefix": PROJECT_CONFIG.NAME,
-  //   "@prefix": PROJECT_CONFIG.NAME,
-  // },
+  lessLoader: {
+    javascriptEnabled: true,
+    modifyVars: {
+      // hack: 'true; @import "~@/styles/common.less";',
+      "@ant-prefix": PROJECT_CONFIG.NAME + "-ant", // ant前缀 样式隔离
+      /* 自定义less变量 */
+      "@define-prefix": PROJECT_CONFIG.NAME,
+      "@prefix": PROJECT_CONFIG.NAME,
+    },
+  },
   // qiankun: {
   //   slave: {},
   // },

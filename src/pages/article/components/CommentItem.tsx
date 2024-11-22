@@ -47,8 +47,11 @@ export default function CommentItem({
   return (
     <li className="comment-item">
       <div className="comment-main">
-        <div className="comment-header">
-          <div className="avatar" style={{ background: randomColor() }}>
+        <div className="comment-header custom-text">
+          <div
+            className="avatar custom-text"
+            style={{ background: randomColor() }}
+          >
             {comment.author.substring(0, 1)}
           </div>
           <strong className="name dark-text">{comment.author}</strong>

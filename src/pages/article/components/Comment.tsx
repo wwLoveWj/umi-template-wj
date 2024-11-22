@@ -154,13 +154,13 @@ export default function Comment() {
             >
               <p className="custom-text date">{item.date}</p>
               <p className="custom-text content">{item.content}</p>
-              <div className="bottom">
+              <div className="bottom custom-text">
                 <div className="left">
-                  <div className="drawer-open">
+                  <div className="drawer-open custom-text">
                     <LikeOutlined />
                     {item.collection}
                   </div>
-                  <div className="drawer-open">
+                  <div className="drawer-open custom-text">
                     <MessageOutlined />
                     {item.comment}
                   </div>
@@ -180,11 +180,11 @@ export default function Comment() {
             <p className="custom-text content">{clickItem.content}</p>
             <div className="bottom">
               <div className="left">
-                <div className="drawer-open">
+                <div className="drawer-open custom-text">
                   <LikeOutlined />
                   {clickItem.collection}
                 </div>
-                <div className="drawer-open">
+                <div className="drawer-open custom-text">
                   <MessageOutlined />
                   {clickItem.comment}
                 </div>
