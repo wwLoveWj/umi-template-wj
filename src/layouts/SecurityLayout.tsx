@@ -12,6 +12,7 @@ import { WjLayout, WjDrawer } from "magical-antd-ui";
 import routes from "@/routes"; // 配置的菜单项
 import { Setting } from "./Setting";
 import ThemeSetting from "./Setting/ThemeSetting";
+import Carousel from "./tools/Carousel";
 import { ElementPlusTheme, SystemThemeEnum } from "@/config/setting";
 // 获取到所有的菜单数据进行处理
 const menus =
@@ -157,7 +158,8 @@ export default function Layout() {
         }}
         themeMenu={currentTheme}
         extraRender={
-          <div>
+          <div style={{ display: "flex" }}>
+            <Carousel />
             {/* 设置  */}
             <div
               className="btn-box"

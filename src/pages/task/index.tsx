@@ -33,6 +33,7 @@ import { guid } from "@/utils";
 import dayjs from "dayjs";
 import "./style.less";
 import { MsModal } from "magical-antd-ui";
+import classNames from "classnames";
 
 const IntervalUnit = new Map([
   ["second", "秒"],
@@ -73,7 +74,8 @@ const Index = () => {
   const reminderTimeTaskFn = useRequest(reminderTimeTaskAPI, {
     debounceWait: 100,
     manual: true,
-    onSuccess: () => {
+    onSuccess: (res) => {
+      debugger;
       queryQueryTaskInfo.run();
       // 语音提示用户任务
       // const utterThis = new window.SpeechSynthesisUtterance(taskDetails.task);
@@ -84,6 +86,7 @@ const Index = () => {
   const reminderTaskFn = useRequest(reminderTaskAPI, {
     manual: true,
     onSuccess: (res) => {
+      debugger;
       if (res?.data?.userEmail?.length > 0) {
         reminderTimeTaskFn.run(res.data);
       }
@@ -134,6 +137,7 @@ const Index = () => {
   }) => {
     const { userEmail, reminderTime, reminderPattern, interval, task, taskId } =
       param;
+    debugger;
     reminderTaskFn.run({
       userEmail,
       reminderContent: task,
@@ -360,7 +364,10 @@ const Index = () => {
                   className={styles.animateCard}
                   bodyStyle={{
                     padding: "18px 20px",
-                    background: item.checked ? "orange" : "#f8f9fa",
+                    // #f8f9fa
+                    background: item.checked
+                      ? "orange"
+                      : "var(--art-main-bg-color)",
                   }}
                   loading={queryQueryTaskInfo.loading}
                 >
@@ -372,8 +379,17 @@ const Index = () => {
                     <div className={styles.taskHeader}>
                       <div>
                         <div className={styles.task}>
-                          <h3 style={{ color: "#0080f6" }}>Task：</h3>
-                          <h3 style={{ color: item.checked ? "#fff" : "#000" }}>
+                          <h3
+                            style={{ color: "#0080f6" }}
+                            className="custom-text"
+                          >
+                            Task：
+                          </h3>
+                          <h3
+                            style={{
+                              color: item.checked ? "#fff" : `#000`,
+                            }}
+                          >
                             {item.task}
                           </h3>
                         </div>
@@ -392,7 +408,10 @@ const Index = () => {
                       </div>
                       <div
                         ref={timeRef}
-                        className={styles.reminderTime}
+                        className={classNames(
+                          styles.reminderTime,
+                          "custom-text"
+                        )}
                         style={
                           item.reminderTime && Number(item.status) === 0
                             ? { animation: `colorChg 1.5s infinite` }
@@ -431,7 +450,11 @@ const Index = () => {
                       </p>
                       {item.reminderTime &&
                         item.reminderPattern !== "intervalTime" && (
-                          <p style={{ color: item.checked ? "#fff" : "#000" }}>
+                          <p
+                            style={{
+                              color: item.checked ? "#fff" : "#92999f",
+                            }}
+                          >
                             提醒时间：
                             {dayjs(item.reminderTime).format(
                               "YYYY-MM-DD HH:mm:ss"

@@ -1,0 +1,106 @@
+.animateCard {
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+  transition: 0.5s;
+  position: relative;
+  bottom: 0;
+  background: var(--art-main-bg-color);
+  overflow: hidden;
+  border: #f8f9fa;
+}
+.animateCard::after {
+  content: "";
+  display: block;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0));
+  transform: rotate(-45deg) translate(0, -360px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 70px;
+  width: 800px;
+}
+.animateCard:hover {
+  bottom: 5px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+.taskInfo {
+  position: relative;
+  height: 100%;
+  background: var(--art-main-bg-color);
+}
+.taskInfo .searchForm {
+  position: sticky;
+  top: -12px;
+  z-index: 999;
+  background: var(--art-main-bg-color);
+  padding: 12px;
+  transition: 0.5s;
+  margin-bottom: 12px;
+  box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+}
+.taskInfo .searchForm :global :where(.css-dev-only-do-not-override-3rel02).my-template-umi-ant-form-item {
+  margin-bottom: 0;
+}
+.taskInfo .allSelected {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.taskInfo .completedTotal {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 12px 0;
+  background: var(--art-main-bg-color);
+  font-weight: 700;
+}
+.taskInfo .completedTotal > span:first-child {
+  color: green;
+}
+.taskInfo .completedTotal span {
+  color: red;
+}
+.taskInfo .emptyCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 152px - 169px);
+}
+.taskInfo .times {
+  line-height: 40px;
+}
+.taskInfo .delBtn {
+  display: flex;
+  justify-content: space-between;
+}
+.taskInfo .delBtn .countDown {
+  display: flex;
+  font-weight: 600;
+  color: red;
+  font-size: 18px;
+}
+.taskInfo .taskHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.taskInfo .taskHeader .task {
+  display: flex;
+}
+.taskInfo .taskHeader .reminderTime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 20px;
+  color: #0083f6;
+}
+.competetime {
+  animation: colorChg 1.5s infinite;
+}
+@keyframes colorChg {
+  from {
+    color: yellow;
+  }
+  to {
+    color: red;
+  }
+}

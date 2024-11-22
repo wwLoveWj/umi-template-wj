@@ -1,0 +1,53 @@
+// * {
+//     margin: 0;
+//     padding: 0;
+//     text-decoration: none;
+//     list-style: none;
+//     background-repeat: no-repeat;
+// }
+
+.sound {
+    text-decoration: none;
+    list-style: none;
+    width: 480px;
+    background-color: #c5eee3;
+    color: #47a189;
+    border-radius: 20px;
+    // margin: 20px auto;
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+    // line-height: 37px;
+    align-items: center;
+}
+
+.sound .icon {
+    width: 28px;
+    height: 28px;
+    padding-left: 10px;
+}
+
+.sound li {
+    width: 85%;
+    overflow: hidden;
+}
+
+.sound li p {
+    width: 100%;
+    transform: translateX(420px);
+    white-space: nowrap;
+}
+
+.text {
+    animation: slideLeft 10s linear infinite;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(408px);
+    }
+
+    100% {
+        transform: translateX(-480px);
+    }
+}

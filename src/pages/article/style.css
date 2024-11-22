@@ -1,0 +1,80 @@
+.page-content {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: var(--console-margin);
+  border: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
+  border-radius: 8px;
+}
+.page-content .title {
+  margin-top: 20px;
+  font-size: 36px;
+  font-weight: 500;
+}
+.page-content .desc {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #5b5b5b;
+}
+.page-content .list {
+  margin-top: 40px;
+}
+.page-content .list .offset {
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment-box {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(25% - 16px);
+  aspect-ratio: 16 / 12;
+  padding: 16px;
+  margin: 0 16px 16px 0;
+  cursor: pointer;
+  background-color: #eae2cb;
+  transition: all 0.3s;
+}
+.comment-box .date {
+  font-size: 12px;
+  color: #949494;
+}
+.comment-box .content {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #333;
+}
+.comment-box .bottom {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
+}
+.comment-box .bottom .left {
+  display: flex;
+}
+.comment-box .bottom .left .drawer-open {
+  display: flex;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #949494;
+}
+.comment-box .bottom .left .drawer-open span {
+  margin-right: 5px;
+}
+.comment-box .bottom .right div {
+  font-size: 14px;
+  color: #333;
+}
+.comment-box:hover {
+  transform: translateY(-5px);
+}
+.drawer-default .comment-box {
+  width: 100%;
+}
+.drawer-default .comment-box:hover {
+  transform: translateY(0);
+}

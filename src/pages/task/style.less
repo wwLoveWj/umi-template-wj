@@ -4,12 +4,13 @@
   transition: 0.5s;
   position: relative;
   bottom: 0;
-  background: #f8f9fa;
+  background: var(--art-main-bg-color);
   overflow: hidden;
   // background-image: linear-gradient(to right, #fb7299, #ff5c7c);
   border: #f8f9fa;
   // background: conic-gradient(from 0deg, #008eff 0%, #f00 360deg, #000 360deg);//搭配下面的before实现进度条
 }
+
 // .animateCard::before {
 //   content: "";
 //   position: absolute;
@@ -21,12 +22,10 @@
 .animateCard::after {
   content: "";
   display: block;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0),
-    rgba(255, 255, 255, 0.3),
-    rgba(0, 0, 0, 0)
-  );
+  background: linear-gradient(0deg,
+      rgba(0, 0, 0, 0),
+      rgba(255, 255, 255, 0.3),
+      rgba(0, 0, 0, 0));
   transform: rotate(-45deg) translate(0, -360px);
   position: absolute;
   left: 0;
@@ -34,6 +33,7 @@
   height: 70px;
   width: 800px;
 }
+
 // 金属光泽感不完全
 // .animateCard:hover::after {
 //   transform: rotate(-45deg) translate(0, 100px);
@@ -47,24 +47,25 @@
 .taskInfo {
   position: relative;
   height: 100%;
-  background: #fff;
+  background: var(--art-main-bg-color);
+
   .searchForm {
     position: sticky;
     top: -12px;
     z-index: 999;
-    background: #fff;
+    background: var(--art-main-bg-color);
     padding: 12px;
     transition: 0.5s;
     margin-bottom: 12px;
     box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+
     :global {
-      :where(
-          .css-dev-only-do-not-override-3rel02
-        ).my-template-umi-ant-form-item {
+      :where(.css-dev-only-do-not-override-3rel02).my-template-umi-ant-form-item {
         margin-bottom: 0;
       }
     }
   }
+
   // 全选样式处理
   .allSelected {
     margin-right: 12px;
@@ -72,34 +73,41 @@
     align-items: center;
     justify-content: space-between;
   }
+
   // 任务完成情况统计
   .completedTotal {
     display: flex;
     justify-content: space-between;
     padding: 12px 12px 0;
-    background: #fff;
+    background: var(--art-main-bg-color);
     font-weight: 700;
-    > span:first-child {
+
+    >span:first-child {
       color: green;
     }
+
     span {
       color: red;
     }
   }
+
   .emptyCard {
     display: flex;
     justify-content: center;
     align-items: center;
     height: calc(100vh - 152px - 169px);
   }
+
   // -------------------卡片内样式------------------------
   .times {
     line-height: 40px;
     //   color: #92999f;
   }
+
   .delBtn {
     display: flex;
     justify-content: space-between;
+
     .countDown {
       display: flex;
       font-weight: 600;
@@ -107,13 +115,16 @@
       font-size: 18px;
     }
   }
+
   //卡片头部样式
   .taskHeader {
     display: flex;
     justify-content: space-between;
+
     .task {
       display: flex;
     }
+
     .reminderTime {
       display: flex;
       flex-direction: column;
@@ -124,13 +135,16 @@
     }
   }
 }
+
 .competetime {
   animation: colorChg 1.5s infinite;
 }
+
 @keyframes colorChg {
   from {
     color: yellow;
   }
+
   to {
     color: red;
   }

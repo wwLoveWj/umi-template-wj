@@ -11,13 +11,13 @@ import {
   HomeOutlined,
   AudioOutlined,
   SettingOutlined,
+  HeartOutlined,
+  FileTextOutlined,
+  PushpinOutlined,
+  CloudUploadOutlined,
+  FileImageOutlined,
   ThunderboltOutlined,
   FolderOpenOutlined,
-  FileTextOutlined,
-  FileImageOutlined,
-  CloudUploadOutlined,
-  HeartOutlined,
-  PushpinOutlined,
 } from "@ant-design/icons";
 
 export const menuRoutes: API.MenuRoutesType[] = [
@@ -31,6 +31,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
    *  hidden: 是否隐藏该菜单项
    *  routes：子级菜单项
    */
+  {
+    key: "DashBoard",
+    title: "DashBoard",
+    path: "/dash",
+    icon: HomeOutlined,
+    component: "./dashboard/index",
+  },
   {
     key: "home",
     title: "首页",
@@ -112,6 +119,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
         component: "./article/components/ArticleCreate.tsx",
         hidden: true,
       },
+      {
+        key: "comment",
+        title: "留言板",
+        path: "/article/comment",
+        component: "./article/components/Comment.tsx",
+        // hidden: true,
+      },
     ],
   },
   {
@@ -120,16 +134,16 @@ export const menuRoutes: API.MenuRoutesType[] = [
     path: "/task",
     icon: BellOutlined,
     routes: [
-      {
-        path: "/task",
-        hidden: true,
-        redirect: "/task/table",
-      },
+      // {
+      //   path: "/task",
+      //   hidden: true,
+      //   redirect: "/task/table",
+      // },
       {
         key: "task-table",
         hidden: true,
         title: "任务列表",
-        path: "/task/table",
+        path: "/task",
         component: "./task/index",
       },
     ],
