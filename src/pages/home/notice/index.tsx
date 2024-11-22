@@ -142,7 +142,7 @@ const Index = ({ show }: { show: boolean }) => {
       className="notice"
       style={{
         transform: show ? "scaleY(1)" : "scaleY(0.9)",
-        opacity: show ? 1 : 0,
+        display: show ? "block" : "none",
       }}
     >
       <div className="header">

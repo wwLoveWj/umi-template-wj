@@ -57,6 +57,7 @@
   --art-main-bg-color: #FFFFFF;
 }
 html.dark {
+  --dark-border-color: #006AE6;
   --art-primary: #006AE6;
   --art-success: #00A261;
   --art-warning: #C59A00;
@@ -159,8 +160,11 @@ ul {
 [data-box-mode='border-mode'] .console-box-2 {
   border: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
 }
-[data-box-mode='border-mode'] .menu-left {
+[data-box-mode='border-mode'] .my-template-umi-ant-layout-sider {
   border-right: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
+}
+[data-box-mode='border-mode'] .user-page-tabs {
+  border-bottom: 1px solid rgba(var(--art-gray-300-rgb), 0.6) !important;
 }
 [data-box-mode='shadow-mode'] .page-content,
 [data-box-mode='shadow-mode'] .worktab .scroll-view .tabs li,
@@ -168,6 +172,9 @@ ul {
 [data-box-mode='shadow-mode'] .console-box-2 {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
-[data-box-mode='shadow-mode'] .menu-left {
+[data-box-mode='shadow-mode'] .my-template-umi-ant-layout-sider {
   border-right: none;
+}
+[data-box-mode='shadow-mode'] .user-page-tabs {
+  border-bottom: none;
 }

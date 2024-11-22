@@ -292,7 +292,7 @@ html.dark {
   // 头部面包屑
   .user-page-tabs {
     background: var(--art-main-bg-color);
-    border-bottom: $border-color !important;
+    // border-bottom: $border-color !important;
 
     .my-template-umi-ant-tabs-tab {
       color: var(--art-gray-900) !important;
@@ -301,10 +301,6 @@ html.dark {
   }
 
   // 菜单区域
-  .my-template-umi-ant-layout-sider {
-    border-right: $border-color !important;
-  }
-
   .my-template-umi-ant-menu {
     .my-template-umi-ant-menu-sub {
       background: var(--art-main-bg-color) !important;
@@ -601,10 +597,6 @@ html.dark {
       text-align: center;
     }
   }
-}
-
-.my-template-umi-ant-layout-sider {
-  border-right: $border-color !important;
 }
 
 // .my-template-umi-ant-space-item {
