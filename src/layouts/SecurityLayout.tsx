@@ -12,6 +12,7 @@ import { WjLayout, WjDrawer } from "magical-antd-ui";
 import routes from "@/routes"; // 配置的菜单项
 import { Setting } from "./Setting";
 import ThemeSetting from "./Setting/ThemeSetting";
+import ThemeMenuType from "./Setting/ThemeMenuType";
 import Carousel from "./tools/Carousel";
 import Notice from "@/pages/home/notice";
 import LogoIndex from "./logo/index";
@@ -25,6 +26,11 @@ const systemThemeColor = ElementPlusTheme.primary;
 export default function Layout() {
   const [showNotice, setShowNotice] = useState(false);
   // const { pathname } = useLocation();
+  // const { currentMenuTheme } = useModel("themeColor");
+  const [currentMenuTheme, setMenuTheme] = useState(
+    localStorage.getItem("menuType")
+  );
+  debugger;
   const [currentTheme, setCurrentTheme] = useState(
     JSON.parse(
       localStorage?.getItem("systemColor") || `{systemThemeMode:light}`
@@ -52,7 +58,22 @@ export default function Layout() {
     homeWrapper.addEventListener("mouseover", callEvent);
     homeWrapper.addEventListener("mousewheel", callEvent);
   };
+
+  const bodyCloseNotice = (e: any) => {
+    let { className } = e.target;
+    debugger;
+    if (showNotice) {
+      if (typeof className === "object") {
+        setShowNotice(false);
+        return;
+      }
+      if (className.indexOf("notice-btn") === -1) {
+        setShowNotice(false);
+      }
+    }
+  };
   useEffect(() => {
+    document.addEventListener("click", bodyCloseNotice);
     //windows上设置一个循环定时器，每隔一秒调用一次监听函数，并定义在全局global上,用于超时后清除
     ChangeUserOperation();
     const CheckOpartionTimer = setInterval(() => {
@@ -87,6 +108,7 @@ export default function Layout() {
       }
     }, 1000);
     return () => {
+      document.addEventListener("click", bodyCloseNotice);
       clearInterval(CheckOpartionTimer);
       clearLocalStorage();
       homeWrapper.removeEventListener("click", function () {});
@@ -145,7 +167,9 @@ export default function Layout() {
   // 监听更改主题颜色
   const onChgTheme = (theme: SystemThemeEnum) => {
     setCurrentTheme(theme);
+    setMenuTheme(theme);
   };
+
   return (
     <div>
       <WjLayout
@@ -155,8 +179,8 @@ export default function Layout() {
         routes={menus}
         home="/home"
         projectName={
-          <div className="logo-title">
-            <LogoIndex />
+          <div className="logo-title" theme={currentMenuTheme}>
+            <LogoIndex theme={currentMenuTheme} />
             <div>{PROJECT_CONFIG.TITLE}</div>
           </div>
         }
@@ -164,7 +188,7 @@ export default function Layout() {
           background: `var(--art-main-bg-color)`,
           color: `var(--art-text-gray-700)`,
         }}
-        themeMenu={currentTheme}
+        themeMenu={currentMenuTheme}
         extraRender={
           <div style={{ display: "flex" }}>
             <Carousel />
@@ -212,6 +236,9 @@ export default function Layout() {
       <Notice show={showNotice} />
       <div style={{ display: "none" }}>
         <ThemeSetting />
+      </div>
+      <div style={{ display: "none" }}>
+        <ThemeMenuType />
       </div>
     </div>
   );

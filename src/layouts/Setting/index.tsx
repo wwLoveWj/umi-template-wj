@@ -4,6 +4,7 @@ import "./style.less";
 import ThemeSetting from "./ThemeSetting";
 import ThemeColor from "./ThemeColor";
 import ThemeShadow from "./ThemeShadow";
+import ThemeMenuType from "./ThemeMenuType";
 import { SystemThemeEnum, ElementPlusTheme } from "@/config/setting";
 
 const MyDrawerChild = ({
@@ -29,6 +30,8 @@ const MyDrawerChild = ({
       className="my-drawer"
       footer={null}
       width={"20%"}
+      maskClosable={true}
+      mask={false}
     >
       <div className="drawer-con">
         <ThemeSetting
@@ -36,6 +39,7 @@ const MyDrawerChild = ({
           onChgTheme={onChgTheme}
           mainColor={mainColor}
         />
+        <ThemeMenuType onChgTheme={onChgTheme} />
         <ThemeColor onChgMainTheme={onChgMainTheme} />
         <ThemeShadow />
       </div>

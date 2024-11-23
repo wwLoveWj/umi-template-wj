@@ -131,10 +131,9 @@ const ThemeSetting = ({
                 "is-active": item.theme === currentTheme,
               })}
             >
-              <div style={{ background: item.color[0] + "!important" }}>
+              <div style={{ background: item.color[0] }}>
                 {[1, 2, 3]?.map((cItem, index) => (
                   <div
-                    // v-for="(cItem, index) in 3"
                     key={index}
                     className={"line" + index}
                     style={{ background: item.leftLineColor }}
@@ -143,13 +142,11 @@ const ThemeSetting = ({
               </div>
               <div
                 style={{
-                  background:
-                    index === 2 ? item.color[1] : item.color[0] + "!important",
+                  background: index === 2 ? item.color[1] : item.color[0],
                 }}
               >
                 {[1, 2, 3]?.map((cItem, index) => (
                   <div
-                    // v-for="(cItem, index) in 3"
                     key={index}
                     className={"line" + index}
                     style={{ background: item.rightLineColor }}

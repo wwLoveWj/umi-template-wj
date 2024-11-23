@@ -12,7 +12,14 @@ import { MsConfigProvider } from "magical-antd-ui";
 // import vstores from "vstores";
 
 // let loginInfo = vstores.get("login-info");
+// import { autoFixContext } from "react-activation";
+// import jsxDevRuntime from "react/jsx-dev-runtime";
+// import jsxRuntime from "react/jsx-runtime";
 
+// autoFixContext(
+//   [jsxRuntime, "jsx", "jsxs", "jsxDEV"],
+//   [jsxDevRuntime, "jsx", "jsxs", "jsxDEV"]
+// );
 // 初始化路由菜单数据
 // export async function getInitialState() {
 //   return {};

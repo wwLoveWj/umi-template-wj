@@ -56,6 +56,7 @@
   --art-bg-color: #FAFBFC;
   --art-main-bg-color: #FFFFFF;
   --title-logo-color: #000;
+  --menu-dark-bg-color: #161618;
 }
 html.dark {
   --dark-border-color: #006AE6;

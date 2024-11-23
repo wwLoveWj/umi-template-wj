@@ -54,7 +54,16 @@
 }
 .logo-title {
   display: flex;
+  color: var(--art-gray-900) !important;
 }
 .logo-title div {
   font-size: 18px;
+}
+.logo-title[theme="dark"] {
+  color: #fff;
+  width: 100%;
+}
+.logo-title[theme="light"] {
+  color: #000;
+  width: 100%;
 }
