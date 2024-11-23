@@ -1,26 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Col, Progress, Row } from "antd";
 import { uploadImage } from "@/utils/index";
-import { PlusOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CloseCircleOutlined,
+  RightOutlined,
+  LeftOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import styles from "./style.less";
 import { getToken } from "@/utils/localToken";
-import { imgInfoQueryAPI } from "@/service/api/file";
+import { imgInfoQueryAPI, imgInfoDeleteAPI } from "@/service/api/file";
 import { useRequest } from "ahooks";
 import WjLoading from "@/components/WjLoading";
+import classnames from "classnames";
+import WjViewer from "@/components/WjViewer";
 const UploadPage = ({
   getImgUrl,
 }: {
   getImgUrl: ({ data }: { data: { filename: string; path: string } }) => void;
 }) => {
   const [upLoadProgress, setupLoadProgress] = useState(0);
-  const [displayClear, setDisplayClear] = useState(false);
+  const [displayClear, setDisplayClear] = useState("");
+  const [showImgUrl, setShowImgUrl] = useState("");
+  const [imgIdx, setImgIdx] = useState(0);
+  const viewerRef = useRef(null);
+
   const getStrokeColor = () => {
     return upLoadProgress > 50 ? "green" : "red";
   };
+
+  // 删除图片url
+  const { run: imgInfoDeleteAPIRun } = useRequest(imgInfoDeleteAPI, {
+    onSuccess: () => {
+      queryImgListRun();
+    },
+  });
   // 查询图片上传列表
   const { run: queryImgListRun, data: imageUrlList } =
     useRequest(imgInfoQueryAPI);
+
+  // 获取上传的url地址
   const getUrl = async (formData: any) => {
     let token = await getToken();
     axios({
@@ -63,12 +85,44 @@ const UploadPage = ({
       }
     });
   };
+
   return (
     <>
-      <Row className={styles?.imgList} gutter={10}>
-        {imageUrlList?.map((item: API.ImageUploadType) => (
-          <Col key={item?.imgId} className={styles?.imgCol}>
-            <img src={item?.imgUrl} alt="文件上传图片" />
+      <Row className={styles?.imgList} gutter={[10, 10]}>
+        {imageUrlList?.map((item: API.ImageUploadType, index: number) => (
+          <Col key={item?.imgId} className={styles?.imgCol} span={6}>
+            <img
+              src={item?.imgUrl}
+              alt="文件上传图片"
+              id={item?.imgId}
+              onMouseEnter={(e) => {
+                setDisplayClear(e.target.id);
+              }}
+              onClick={() => {
+                viewerRef?.current?.setImgIdx(index);
+                debugger;
+                setImgIdx(index);
+                setShowImgUrl(item?.imgUrl);
+              }}
+            />
+            {/* <div className={styles.delectImg}>
+              <DeleteOutlined />
+            </div> */}
+            {/* 清除图片 */}
+            <span
+              className={styles.clearImg}
+              onClick={(e) => {
+                console.log("我怎么又被删除了");
+                imgInfoDeleteAPIRun({ imgId: item?.imgId });
+              }}
+              style={
+                displayClear === item?.imgId
+                  ? { display: "block" }
+                  : { display: "none" }
+              }
+            >
+              <CloseCircleOutlined />
+            </span>
           </Col>
         ))}
         {[0, 100]?.includes(upLoadProgress) ? (
@@ -81,19 +135,6 @@ const UploadPage = ({
                 }}
               >
                 <PlusOutlined />
-
-                {/* 清除图片 */}
-                {/* <span
-            style={{ display: displayClear ? "block" : "none" }}
-            className={styles.clearImg}
-            onClick={(e) => {
-              e.preventDefault();
-              setDisplayClear(false);
-              setupLoadProgress(0);
-            }}
-          >
-            <CloseCircleOutlined />
-          </span> */}
               </div>
               {/* <p>上传进度:{upLoadProgress}</p>
         <Progress
@@ -112,6 +153,56 @@ const UploadPage = ({
           ></WjLoading>
         )}
       </Row>
+      {/* {showImgUrl && (
+        <div className={styles?.overlayImg}>
+          <img src={imageUrlList[imgIdx]?.imgUrl} alt="" />
+          <div
+            className={classnames(
+              styles?.clearOverlayImg,
+              styles?.switchImages
+            )}
+            onClick={() => setShowImgUrl("")}
+          >
+            <CloseOutlined />
+          </div>
+
+          {imgIdx > 0 && (
+            <div
+              className={classnames(
+                styles?.clearOverlayLT,
+                styles?.switchImages
+              )}
+              onClick={() => {
+                setImgIdx(imgIdx - 1);
+              }}
+            >
+              <LeftOutlined />
+            </div>
+          )}
+          {imgIdx < imageUrlList?.length - 1 && (
+            <div
+              className={classnames(
+                styles?.clearOverlayGT,
+                styles?.switchImages
+              )}
+              onClick={() => {
+                setImgIdx(imgIdx + 1);
+              }}
+            >
+              <RightOutlined />
+            </div>
+          )}
+        </div>
+      )} */}
+      {!!imgIdx && (
+        <WjViewer
+          viewerRef={viewerRef}
+          isShowViewer={!!showImgUrl}
+          imageUrlList={imageUrlList}
+          currentimgIdx={imgIdx}
+          onChgisShowViewer={(param) => setShowImgUrl(param)}
+        />
+      )}
     </>
   );
 };

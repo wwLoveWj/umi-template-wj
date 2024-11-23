@@ -49,6 +49,7 @@ export default function Index() {
   return (
     <WjTable
       columns={columns}
+      scroll={{ y: "auto-content" }}
       request={{ url: ArticleInfoListQueryAPI, params: {} }}
       rowKey="editorId"
       // batchOpertions={[{ label: "批量上传" }]}

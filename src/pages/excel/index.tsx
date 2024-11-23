@@ -236,6 +236,7 @@ export default function Index() {
         rowKey="backlogId"
         size="small"
         noCard={true}
+        scroll={{ y: "auto-content" }}
         createBtnOperations={[
           <Button type="primary" onClick={() => importExcel(1)}>
             导入excel

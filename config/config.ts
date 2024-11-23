@@ -6,7 +6,7 @@ export default defineConfig({
   title: "创世纪系统",
   mountElementId: PROJECT_CONFIG.NAME,
   // history: { type: "hash" },
-  // initialState: {},
+  initialState: {},
   model: {}, // 使用useModel需要这个配置
   // locale: {},
   // icons: {},
@@ -36,6 +36,6 @@ export default defineConfig({
     "@umijs/plugins/dist/initial-state",
     "@umijs/plugins/dist/model",
     // "@umijs/plugins/dist/locale",
-    // "umi-plugin-keep-alive",
+    "umi-plugin-keep-alive",
   ],
 });

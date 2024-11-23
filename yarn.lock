@@ -6271,10 +6271,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-magical-antd-ui@0.0.35:
-  version "0.0.35"
-  resolved "https://registry.npmjs.org/magical-antd-ui/-/magical-antd-ui-0.0.35.tgz#9693dbf097354934604cf8caa3e4212382ba2efa"
-  integrity sha512-Lm4q/88XVpy5WhORthq1WOo0O9x2z9+QrGpk0HWaAO5bEOsYOxnitFvp2kR3uDG9VfqqG4viQd17lK3q8I3uIw==
+magical-antd-ui@0.0.36:
+  version "0.0.36"
+  resolved "https://registry.npmjs.org/magical-antd-ui/-/magical-antd-ui-0.0.36.tgz#556068dca535e55b98b3ad54fd5c0fe764f99bc4"
+  integrity sha512-zj0GbJbYz8E8ggnNXQPZantkSUqw+G2a4NwAUP/Aznt5mjri3nbSIkDrRPrUWvpa0lUWuPSl/Hu60BwgLd3q0Q==
   dependencies:
     ahooks "^3.8.1"
     antd "^5.20.6"
@@ -7878,6 +7878,16 @@ react-activation@^0.12.1, react-activation@^0.12.4:
   version "0.12.4"
   resolved "https://registry.npmjs.org/react-activation/-/react-activation-0.12.4.tgz#b619ccfb2c554a45f6d11a1fa7bf3d8ef691dcbf"
   integrity sha512-6jJtnUnQBKCrWgvHkzCJP3QZAtthnhDuoPa5LJnj1+1TxS5qkh3Z74zdNZY40wMbkTsLbo6CYoS51Fx/bTM3/w==
+  dependencies:
+    create-react-context "^0.3.0"
+    hoist-non-react-statics "^3.3.0"
+    react-node-key "^0.4.0"
+    szfe-tools "^0.0.0-beta.7"
+
+react-activation@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.npmjs.org/react-activation/-/react-activation-0.13.0.tgz#422253c9344fb213436ce7d593f761a0765d6c32"
+  integrity sha512-6BkqV3fnSA/RswDEJZ9IRDJTZ3IVgpA01cQ8lajzOJV8PxFqzBpzP2WchZgYmDmFlDIMVf5CkcShx5QTr2FaBA==
   dependencies:
     create-react-context "^0.3.0"
     hoist-non-react-statics "^3.3.0"

@@ -13,22 +13,78 @@
   position: relative;
   font-size: 30px;
 }
-.fileUpload .fileUploadContent .clearImg {
-  position: absolute;
-  right: -6px;
-  top: -10px;
-}
 .imgList {
   display: flex;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
+  margin-top: 20px;
 }
 .imgList .imgCol {
-  width: 100px;
-  height: 100px;
+  position: relative;
+}
+.imgList .imgCol .clearImg {
+  position: absolute;
+  right: 8px;
+  top: 0px;
+  font-size: 30px;
+  cursor: pointer;
 }
 .imgList .imgCol img {
   object-fit: contain;
   width: 100%;
   height: 100%;
+  background: #ccc;
+}
+.imgList .imgCol .delectImg {
+  position: absolute;
+  bottom: 0;
+  width: 100px;
+  height: 30%;
+  margin: 0 16px;
+  background: rgba(0, 0, 0, 0.75);
+}
+.overlayImg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlayImg img {
+  height: 80%;
+  width: 60%;
+  object-fit: contain;
+}
+.overlayImg .clearOverlayImg {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.overlayImg .switchImages {
+  font-size: 30px;
+  color: #000;
+  background: #ccc;
+  width: 50px;
+  height: 50px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.overlayImg .clearOverlayGT {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+}
+.overlayImg .clearOverlayLT {
+  position: absolute;
+  left: 10px;
+  top: 50%;
 }
