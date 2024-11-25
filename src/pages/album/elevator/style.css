@@ -1,0 +1,60 @@
+.elevator {
+  padding: 20px 15px;
+  background: #6f00ff;
+  color: aliceblue;
+  scroll-behavior: smooth;
+  overflow: auto;
+  height: 100%;
+  width: calc(100% - 150px);
+  padding-bottom: 300px;
+}
+.elevator .content {
+  view-timeline-name: var(--s);
+  view-timeline-inset: 50%;
+}
+.elevator .content dt {
+  margin: 0;
+  padding: 0.8em 0;
+  scroll-margin: 20px;
+}
+.elevator .content dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.elevator .content dd img {
+  width: 200px;
+  height: 125px;
+}
+.elevator .nav {
+  position: fixed;
+  top: 75px;
+  right: 30px;
+  background: #fff;
+  padding: 10px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.elevator .nav li > a {
+  position: relative;
+  display: block;
+  line-height: 2;
+  padding: 0 15px;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #191919;
+  text-decoration: none;
+  animation: active;
+  animation-timeline: var(--s);
+  border-left: 4px solid transparent;
+}
+@keyframes active {
+  0%,
+  100% {
+    color: #6f00ff;
+    border-color: #6f00ff;
+  }
+}
+.elevator .nav li > a:hover {
+  background: #d5d5d54a;
+}
