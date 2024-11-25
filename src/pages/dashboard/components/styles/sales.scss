@@ -59,3 +59,14 @@
         }
     }
 }
+
+@media screen and (max-width: 800px) {
+    :where(.css-dev-only-do-not-override-vryruh).my-template-umi-ant-col-12 {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    // .box-width {
+    //     min-width: 100%;
+    // }
+}

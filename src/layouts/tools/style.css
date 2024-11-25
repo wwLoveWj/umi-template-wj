@@ -1,7 +1,7 @@
 .sound {
   text-decoration: none;
   list-style: none;
-  width: 480px;
+  width: 320px;
   background-color: #c5eee3;
   color: #47a189;
   border-radius: 20px;
@@ -33,5 +33,11 @@
   }
   100% {
     transform: translateX(-480px);
+  }
+}
+/* 适用于视口宽度小于768px的设备 */
+@media screen and (max-width: 800px) {
+  .sound {
+    display: none;
   }
 }

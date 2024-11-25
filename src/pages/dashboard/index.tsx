@@ -24,7 +24,7 @@ export default function Index() {
         {/* <NewUser></NewUser> */}
         <Col span={12}>
           <div
-            className={classNames(styles?.region, styles?.rightTodo)}
+            className={classNames(styles?.others, styles?.rightTodo)}
             style={{ width: "100%" }}
           >
             666

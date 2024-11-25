@@ -85,3 +85,11 @@
           }
       }
   }
+
+
+  @media screen and (max-width: 800px) {
+
+      .box-width {
+          min-width: 700px;
+      }
+  }

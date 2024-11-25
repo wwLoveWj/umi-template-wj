@@ -55,6 +55,8 @@
   --art-root-card-border-color: #F1F1F4;
   --art-bg-color: #FAFBFC;
   --art-main-bg-color: #FFFFFF;
+  --title-logo-color: #000;
+  --menu-dark-bg-color: #161618;
 }
 html.dark {
   --dark-border-color: #006AE6;
@@ -110,6 +112,7 @@ html.dark {
   --art-root-card-border-color: #1E2027;
   --art-bg-color: #070707;
   --art-main-bg-color: #161618;
+  --title-logo-color: #fff;
 }
 * {
   margin: 0;
@@ -177,4 +180,9 @@ ul {
 }
 [data-box-mode='shadow-mode'] .user-page-tabs {
   border-bottom: none;
+}
+@media screen and (max-width: 800px) {
+  #my-template-umi {
+    min-width: 700px;
+  }
 }

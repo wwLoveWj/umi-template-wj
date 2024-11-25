@@ -159,7 +159,7 @@ const Index = ({ show }: { show: boolean }) => {
                 label: `通知（${noticeList?.length}）`,
                 key: "1",
                 children:
-                  noticeList?.length < 0 ? (
+                  noticeList?.length > 0 ? (
                     <ul className="notice-list">
                       {noticeList?.map((item, index) => (
                         <li key={index}>

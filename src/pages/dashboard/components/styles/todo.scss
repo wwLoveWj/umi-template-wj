@@ -42,6 +42,8 @@
         height: calc(100% - 100px);
         margin-top: 10px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
 
         >div {
             position: relative;
