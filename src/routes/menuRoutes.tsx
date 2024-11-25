@@ -18,6 +18,7 @@ import {
   FileImageOutlined,
   ThunderboltOutlined,
   FolderOpenOutlined,
+  InstagramOutlined,
 } from "@ant-design/icons";
 
 export const menuRoutes: API.MenuRoutesType[] = [
@@ -168,6 +169,32 @@ export const menuRoutes: API.MenuRoutesType[] = [
     path: "/upload",
     icon: CloudUploadOutlined,
     component: "./upload/index",
+  },
+  {
+    key: "album",
+    title: "相册管理",
+    path: "/album",
+    icon: InstagramOutlined,
+    routes: [
+      {
+        path: "/album",
+        hidden: true,
+        redirect: "/album/waterfall",
+      },
+      {
+        key: "waterfall",
+        title: "瀑布流",
+        path: "/album/waterfall",
+        component: "./album/waterfall/index",
+      },
+      {
+        key: "elevator",
+        title: "电梯导航",
+        path: "/album/elevator",
+        component: "./album/elevator",
+        // hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
+      },
+    ],
   },
   // {
   //   key: "system",
