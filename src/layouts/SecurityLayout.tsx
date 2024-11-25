@@ -107,6 +107,30 @@ export default function Layout() {
         // }, 2000); // 延迟2秒
       }
     }, 1000);
+    // 菊花效果
+    // let flowerContainer = document.querySelector(".my-template-umi-ant-menu");
+    // flowerContainer.addEventListener("mousemove", function (e) {
+    //   let body = document.querySelector("body") as HTMLBodyElement;
+    //   let flower = document.createElement("div");
+    //   flower.setAttribute("id", "flower");
+    //   let x = e.offsetX;
+    //   let y = e.offsetY;
+    //   flower.style.left = x + "px";
+    //   flower.style.top = y + "px";
+
+    //   let size = Math.random() * 80;
+    //   flower.style.width = 20 + size + "px";
+    //   flower.style.height = 20 + size + "px";
+
+    //   let rotation = Math.random() * 360;
+    //   flower.style.transform = `rotate(${rotation}deg)`;
+
+    //   body.appendChild(flower);
+
+    //   setTimeout(function () {
+    //     flower.remove();
+    //   }, 2000);
+    // });
     return () => {
       document.addEventListener("click", bodyCloseNotice);
       clearInterval(CheckOpartionTimer);
