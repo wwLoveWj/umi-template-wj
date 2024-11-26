@@ -1,0 +1,31 @@
+.animateCard {
+  cursor: pointer;
+  box-shadow: 0 0px 15px 3px #ccc;
+  transition: 0.5s;
+  position: relative;
+  bottom: 0;
+}
+.animateCard .bg {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.animateCard .technologyContent {
+  display: flex;
+  align-items: center;
+  padding: 18px 12px;
+}
+.animateCard .technologyContent .desc {
+  margin-top: 12px;
+  max-width: calc((100vw - 100px)/4 - 140px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.animateCard:hover {
+  bottom: 5px;
+  box-shadow: 0 12px 15px 9px #ccc;
+}

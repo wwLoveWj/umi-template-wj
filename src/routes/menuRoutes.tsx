@@ -71,6 +71,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
       {
         path: "/collect",
         hidden: true,
+        title: "收藏管理",
         redirect: "/collect/table",
       },
       {
@@ -97,6 +98,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
     routes: [
       {
         path: "/article",
+        title: "文章管理",
         hidden: true,
         redirect: "/article/table",
       },
@@ -195,6 +197,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
         // hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
       },
     ],
+  },
+  {
+    key: "website",
+    title: "网址管理",
+    path: "/website",
+    icon: TagsOutlined,
+    component: "./websiteSharing",
   },
   // {
   //   key: "system",
