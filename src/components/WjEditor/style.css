@@ -1,15 +1,14 @@
 .allInfo {
   display: flex;
   width: 100%;
+  height: calc(100% - 62.4px - 24px);
+  overflow: auto;
   scroll-behavior: smooth;
   margin-top: 12px;
 }
 .allInfo .catalogue {
   width: 200px;
   margin-left: 20px;
-}
-.allInfo .content {
-  flex: 1;
 }
 @media screen and (max-width: 900px) {
   .catalogue {

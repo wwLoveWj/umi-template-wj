@@ -34,6 +34,7 @@ const UploadPage = ({
 
   // 删除图片url
   const { run: imgInfoDeleteAPIRun } = useRequest(imgInfoDeleteAPI, {
+    manual: true,
     onSuccess: () => {
       queryImgListRun();
     },
