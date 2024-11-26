@@ -35,7 +35,7 @@ const list = [
 ];
 export default function TodoList() {
   return (
-    <div className="region todo-list console-box">
+    <div className="region todo-list console-box box-width">
       <div className="card-header">
         <div className="title">
           <h4 className="custom-text box-title">代办事项</h4>

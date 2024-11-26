@@ -3,6 +3,7 @@ import "./index.less";
 import { removeToken } from "@/utils/localToken";
 import { SettingOutlined, BellOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { LoginOutlined, UserOutlined } from "@ant-design/icons";
 import { message, notification, Popover } from "antd";
 import React, { useEffect, useState } from "react";
 import { history, useLocation, useModel } from "umi";
@@ -30,7 +31,6 @@ export default function Layout() {
   const [currentMenuTheme, setMenuTheme] = useState(
     localStorage.getItem("menuType")
   );
-  debugger;
   const [currentTheme, setCurrentTheme] = useState(
     JSON.parse(
       localStorage?.getItem("systemColor") || `{systemThemeMode:light}`
@@ -58,10 +58,9 @@ export default function Layout() {
     homeWrapper.addEventListener("mouseover", callEvent);
     homeWrapper.addEventListener("mousewheel", callEvent);
   };
-
+  // 点击body关闭通知
   const bodyCloseNotice = (e: any) => {
     let { className } = e.target;
-    debugger;
     if (showNotice) {
       if (typeof className === "object") {
         setShowNotice(false);
@@ -171,6 +170,7 @@ export default function Layout() {
           退出登录
         </a>
       ),
+      icon: <LoginOutlined />,
     },
     {
       key: "2",
@@ -185,6 +185,7 @@ export default function Layout() {
           个人中心
         </a>
       ),
+      icon: <UserOutlined />,
     },
   ];
 

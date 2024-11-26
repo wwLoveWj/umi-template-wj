@@ -24,7 +24,7 @@
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "lodash-es": "^4.17.21",
-    "magical-antd-ui": "0.0.36",
+    "magical-antd-ui": "0.0.37",
     "md5": "^2.3.0",
     "react-activation": "^0.13.0",
     "react-schema-render": "^0.0.5",

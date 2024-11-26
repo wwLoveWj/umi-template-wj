@@ -108,7 +108,7 @@ export default function SalesOverview() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className="region-sales console-box">
+    <div className="region-sales console-box box-width">
       <div className={"cardHeader"}>
         <div className="title">
           <h4 className="custom-text box-title">访问量</h4>

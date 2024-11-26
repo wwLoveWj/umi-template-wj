@@ -34,7 +34,7 @@ const list = [
 ];
 export default function Dynamic() {
   return (
-    <div className="region dynamic console-box">
+    <div className="region dynamic console-box box-width">
       <div className="card-header">
         <div className="title">
           <h4 className="custom-text box-title">动态</h4>

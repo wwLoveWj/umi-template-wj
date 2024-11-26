@@ -86,7 +86,7 @@ export default function ActiveUser() {
     createChart(chartInstance);
   }, []);
   return (
-    <div className="region-activeUser console-box">
+    <div className="region-activeUser console-box box-width">
       <div className="chart" ref={chartRef}></div>
       <>
         <div className="text">

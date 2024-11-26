@@ -24,7 +24,11 @@ export default function Index() {
         {/* <NewUser></NewUser> */}
         <Col span={12}>
           <div
-            className={classNames(styles?.others, styles?.rightTodo)}
+            className={classNames(
+              styles?.others,
+              styles?.rightTodo,
+              "box-width"
+            )}
             style={{ width: "100%" }}
           >
             666
