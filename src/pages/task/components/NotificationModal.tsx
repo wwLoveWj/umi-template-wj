@@ -5,7 +5,17 @@ import { DatePicker, Form, Button, Select, TimePicker, Input } from "antd";
 import { useRequest } from "ahooks";
 import { UserInfoQueryAPI } from "@/service/api/user";
 import { disabledTime, disabledDate } from "@/utils/time";
+import CustomFormItem from "@/components/CustomFormItem";
+import TimeInput from "./TimeInput";
 
+interface TimeType {
+  dayOfWeek: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+}
 const { Option } = Select;
 const MyModal = MsModal.create(() => {
   const modal = MsModal.useModal();
@@ -44,10 +54,24 @@ const MyModal = MsModal.create(() => {
 
   return (
     <MsModal
+      width={"45%"}
       {...modal.props}
       title={"提醒时间"}
       onOk={() => {
         return form.validateFields().then((res) => {
+          if (res?.reminderPattern === "fixedTime") {
+            const timeS: TimeType = res.reminderTime;
+            res.reminderTime = [
+              timeS?.second,
+              timeS?.minute,
+              timeS?.hour,
+              timeS?.day,
+              timeS?.month,
+              timeS?.dayOfWeek,
+            ]?.join("");
+          }
+          console.log(res, "时间---------------");
+          debugger;
           modal.resolve({ ...res, interval });
           form.resetFields();
         });
@@ -93,7 +117,7 @@ const MyModal = MsModal.create(() => {
           rules={[{ required: true, message: "请选择您需要提醒的时间！" }]}
         >
           {time === "intervalTime" ? (
-            <Input addonAfter={selectBefore} />
+            <Input addonAfter={selectBefore} addonBefore="每" />
           ) : time === "fixedDate" ? (
             <DatePicker
               showTime
@@ -103,9 +127,45 @@ const MyModal = MsModal.create(() => {
               style={{ width: "100%" }}
             />
           ) : (
-            <TimePicker style={{ width: "100%" }} />
+            <CustomFormItem>
+              {({ onChange, value }) => (
+                <TimeInput
+                  value={value}
+                  onChange={(e) => {
+                    debugger;
+                    if (onChange) onChange(e);
+                  }}
+                />
+              )}
+            </CustomFormItem>
           )}
         </Form.Item>
+        {form.getFieldValue("reminderPattern") === "fixedTime" && (
+          <>
+            <Form.Item
+              label="开始时间"
+              name="startTime"
+              rules={[{ required: true, message: "请选择开始时间！" }]}
+            >
+              <DatePicker
+                showTime
+                style={{ width: "100%" }}
+                placeholder="请选择开始时间"
+              />
+            </Form.Item>
+            <Form.Item
+              label="截止时间"
+              name="endTime"
+              rules={[{ required: true, message: "请选择截止时间！" }]}
+            >
+              <DatePicker
+                showTime
+                style={{ width: "100%" }}
+                placeholder="请选择截止时间"
+              />
+            </Form.Item>
+          </>
+        )}
         <Form.Item
           label="提醒邮箱"
           name="userEmail"
