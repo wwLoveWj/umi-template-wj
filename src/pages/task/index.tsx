@@ -188,46 +188,47 @@ const Index = () => {
               justifyContent: "flex-end",
             }}
           >
-            {isShowDelBtn && (
-              <div className={styles.allSelected} style={{ flex: 4 }}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Checkbox checked={allChecked} onChange={selectAllTasks}>
-                    全选
-                  </Checkbox>
-                  <Alert
-                    message={`当前选中任务数：${taskIdList.length}项`}
-                    type="info"
-                    showIcon
-                    banner={true}
-                    style={{ width: "200px", color: "#1677ff" }}
-                  />
-                </div>
-                <Space>
-                  <Popconfirm
-                    title={`确定要取消所有任务吗？`}
-                    placement="topLeft"
-                    onConfirm={() => {
-                      reminderTimeTaskCancel.run({
-                        taskIdList: taskList.map((task) => task.taskId),
-                        action: "ALL",
-                      });
-                    }}
-                  >
-                    <Button danger type="primary">
-                      任务批量取消
-                    </Button>
-                  </Popconfirm>
-                  <Button
-                    danger
-                    type="primary"
-                    disabled={taskIdList.length === 0}
-                    onClick={() => batchDelTaskListFn.run({ taskIdList })}
-                  >
-                    批量删除
-                  </Button>
-                </Space>
+            <div
+              className={styles.allSelected}
+              style={{ flex: 4, opacity: isShowDelBtn ? 1 : 0 }}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Checkbox checked={allChecked} onChange={selectAllTasks}>
+                  全选
+                </Checkbox>
+                <Alert
+                  message={`当前选中任务数：${taskIdList.length}项`}
+                  type="info"
+                  showIcon
+                  banner={true}
+                  style={{ width: "200px", color: "#1677ff" }}
+                />
               </div>
-            )}
+              <Space>
+                <Popconfirm
+                  title={`确定要取消所有任务吗？`}
+                  placement="topLeft"
+                  onConfirm={() => {
+                    reminderTimeTaskCancel.run({
+                      taskIdList: taskList.map((task) => task.taskId),
+                      action: "ALL",
+                    });
+                  }}
+                >
+                  <Button danger type="primary">
+                    任务批量取消
+                  </Button>
+                </Popconfirm>
+                <Button
+                  danger
+                  type="primary"
+                  disabled={taskIdList.length === 0}
+                  onClick={() => batchDelTaskListFn.run({ taskIdList })}
+                >
+                  批量删除
+                </Button>
+              </Space>
+            </div>
             <div
               style={{
                 justifyContent: "flex-end",

@@ -93,26 +93,54 @@ export const countDownTime = (reminderTime: string) => {
   seconds = checkTime(seconds).toString();
   return days + " : " + hours + " : " + minutes + " : " + seconds;
 };
+
+// ====================================获取倒计时时间=========================================
 let timer: any = null;
-// 获取倒计时时间
-export const countDown = (
-  dom: string,
-  reminderTime: string,
-  status: number
-) => {
-  clearInterval(timer);
+// 给html赋值
+const getDomId = (dom: string, text: string) => {
+  if (document.getElementById(dom)) {
+    (document.getElementById(dom) as HTMLDivElement).innerHTML = text;
+  }
+};
+// 更新倒计时的函数
+function updateCountdown(targetDate: number, dom: string) {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+  if (distance <= 0) {
+    console.log("-------------------倒计时结束--------------", distance);
+    getDomId(dom, "倒计时结束！");
+    clearInterval(timer);
+    return;
+  }
+  // 计算天数、小时、分钟和秒
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  if (!days && !hours && !minutes && !seconds) {
+    clearInterval(timer);
+    return "倒计时结束！";
+  }
+  // 显示倒计时
+  return `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+}
+// 执行倒计时
+export const countDown = (dom: string, time: string, status: number) => {
+  let targetTime = new Date(time).getTime();
+  // clearInterval(timer);
   timer = setInterval(function () {
-    if (document.getElementById(dom)) {
-      (document.getElementById(dom) as HTMLDivElement).innerHTML = reminderTime
-        ? countDownTime(reminderTime)
-        : "";
-    }
+    // 显示倒计时
+    getDomId(dom, updateCountdown(targetTime, dom) || "倒计时结束！");
   }, 1000);
   // if (status === 1) {
   //   // clearInterval(timer);
   // }
-  return countDownTime(reminderTime);
+  return updateCountdown(targetTime, dom);
 };
+//=========================================================================================
+
 //毫秒数转换成时间
 export const getCurrentTime = function (milliseconds?: string) {
   var myDate = new Date();
