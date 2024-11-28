@@ -45,8 +45,10 @@ export const reminderTimeTaskAPI = (params: {
 
 // 取消该任务提醒
 export const reminderTimeTaskCancelAPI = (params: {
-  taskId: string;
-  jobId: string;
+  taskId?: string;
+  jobId?: string;
+  taskIdList?: string[];
+  action?: "ALL" | "SINGLE";
 }): Promise<any> => {
   return request.post("/reminder/task/cancel", params);
 };

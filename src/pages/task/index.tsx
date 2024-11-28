@@ -9,6 +9,7 @@ import {
   Checkbox,
   Alert,
   Empty,
+  Space,
 } from "antd";
 import { AlertOutlined, PoweroffOutlined } from "@ant-design/icons";
 import {
@@ -201,14 +202,30 @@ const Index = () => {
                     style={{ width: "200px", color: "#1677ff" }}
                   />
                 </div>
-                <Button
-                  danger
-                  type="primary"
-                  disabled={taskIdList.length === 0}
-                  onClick={() => batchDelTaskListFn.run({ taskIdList })}
-                >
-                  批量删除
-                </Button>
+                <Space>
+                  <Popconfirm
+                    title={`确定要取消所有任务吗？`}
+                    placement="topLeft"
+                    onConfirm={() => {
+                      reminderTimeTaskCancel.run({
+                        taskIdList: taskList.map((task) => task.taskId),
+                        action: "ALL",
+                      });
+                    }}
+                  >
+                    <Button danger type="primary">
+                      任务批量取消
+                    </Button>
+                  </Popconfirm>
+                  <Button
+                    danger
+                    type="primary"
+                    disabled={taskIdList.length === 0}
+                    onClick={() => batchDelTaskListFn.run({ taskIdList })}
+                  >
+                    批量删除
+                  </Button>
+                </Space>
               </div>
             )}
             <div

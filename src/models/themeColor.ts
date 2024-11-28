@@ -5,7 +5,6 @@ const themeInfo = () => {
   const [systemThemeColor, setSystemThemeColor] = useState(
     ElementPlusTheme?.primary
   );
-  debugger;
   const [currentTheme, setCurrentTheme] = useState(
     JSON.parse(
       localStorage?.getItem("systemColor") || `{systemThemeMode:light}`
