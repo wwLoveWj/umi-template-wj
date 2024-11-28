@@ -54,7 +54,8 @@
   --art-root-card-box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
   --art-root-card-border-color: #F1F1F4;
   --art-bg-color: #FAFBFC;
-  --art-main-bg-color: #FFFFFF;
+  --art-task-bg-color: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  --art-main-bg-color: #fff;
   --title-logo-color: #000;
   --menu-dark-bg-color: #161618;
 }
