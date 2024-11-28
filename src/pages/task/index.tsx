@@ -5,36 +5,30 @@ import {
   Flex,
   Row,
   Col,
-  Input,
   Popconfirm,
-  Form,
   Checkbox,
   Alert,
   Empty,
-  Switch,
-  DatePicker,
-  Select,
 } from "antd";
-import type { SearchProps } from "antd/es/input/Search";
-import { AlertOutlined, AudioOutlined } from "@ant-design/icons";
+import { AlertOutlined } from "@ant-design/icons";
 import {
   TaskInfoQueryAPI,
   reminderTaskAPI,
-  ReminderTaskcreateAPI,
   ReminderTaskDelAPI,
+  reminderTimeTaskCancelAPI,
   reminderTimeTaskAPI,
   TaskListBatchDelAPI,
 } from "@/service/api/task";
 import NotificationModal from "./components/NotificationModal";
 import { useRequest } from "ahooks";
 import styles from "./style.less";
-import { countDown, disabledDate, disabledRangeTime } from "@/utils/time";
-import { guid } from "@/utils";
+import { countDown } from "@/utils/time";
 import dayjs from "dayjs";
 import "./style.less";
 import { MsModal } from "magical-antd-ui";
 import classNames from "classnames";
 import WjCheckBox from "@/components/WjCheckBox";
+import SearchForm from "./components/SearchForm";
 
 const IntervalUnit = new Map([
   ["second", "秒"],
@@ -50,13 +44,9 @@ const STATUS_TYPE = new Map([
   ["0", "pendding"],
   ["2", "todoing"],
 ]);
-const { RangePicker } = DatePicker;
 // TODO:表单填写的校验和封装-------------------倒计时相关优化
-const { Search } = Input;
 const Index = () => {
-  const [form] = Form.useForm();
   const [taskList, setTaskList] = useState<API.TaskListType[]>([]);
-  const [taskName, setTaskName] = useState("");
   const [taskIdList, setTaskIdList] = useState<string[]>([]);
   const [allChecked, setAllChecked] = useState(false);
   const [isShowDelBtn, setIsShowDelBtn] = useState(true);
@@ -93,19 +83,7 @@ const Index = () => {
       }
     },
   });
-  //   创建任务信息卡片
-  const createReminderTask = useRequest(
-    (task: string) =>
-      ReminderTaskcreateAPI({ task, taskId: guid(), status: 2 }),
-    {
-      debounceWait: 100,
-      manual: true,
-      onSuccess: () => {
-        form.resetFields();
-        queryQueryTaskInfo.run();
-      },
-    }
-  );
+  // 单个删除任务
   const deleteReminderTask = useRequest(
     (taskId: string) => ReminderTaskDelAPI({ taskId }),
     {
@@ -136,34 +114,14 @@ const Index = () => {
     reminderPattern: string;
     interval: string;
   }) => {
-    const { userEmail, reminderTime, reminderPattern, interval, task, taskId } =
-      param;
     debugger;
     reminderTaskFn.run({
-      userEmail,
-      reminderContent: task,
-      reminderTime,
-      taskId,
-      reminderPattern,
-      interval,
-    });
-  };
-  const suffix = (
-    <AudioOutlined
-      style={{
-        fontSize: 16,
-        color: "#1677ff",
-      }}
-    />
-  );
-  //   创建任务
-  const onSearch: SearchProps["onSearch"] = (value) => {
-    form.validateFields().then(() => {
-      createReminderTask.run(value);
+      ...param,
+      reminderContent: param?.task,
     });
   };
 
-  // 单选checkbox
+  // ===================================单选checkbox================================================
   const selectedTask = (index: number) => {
     let tmpUsers = [...taskList];
     tmpUsers[index].checked = !tmpUsers[index].checked;
@@ -200,13 +158,9 @@ const Index = () => {
   const onChangeSwitch = (checked: boolean) => {
     setIsShowDelBtn(checked);
   };
-
-  const onChangeStatus = (value: string) => {
-    queryQueryTaskInfo.run({ taskStatus: value });
-  };
   // 查询任务
-  const onSearchTask: SearchProps["onSearch"] = (value) => {
-    queryQueryTaskInfo.run({ taskName: value });
+  const onSearchTask = (value: any) => {
+    queryQueryTaskInfo.run(value);
   };
   // 当子级全选时勾选中全选按钮
   useEffect(() => {
@@ -216,91 +170,7 @@ const Index = () => {
   }, [taskList]);
   return (
     <div className={styles.taskInfo}>
-      <Row style={{ padding: "12px 12px 0" }} gutter={[16, 12]}>
-        <Col span={8}>
-          <Search
-            placeholder="请输入你想查询的任务名称..."
-            enterButton
-            value={taskName}
-            onSearch={onSearchTask}
-            onChange={(e) => {
-              let value = e.target.value;
-              setTaskName(value);
-            }}
-            allowClear
-          />
-        </Col>
-        {/* TODO:查询有点问题不知道咋写 */}
-        <Col span={8}>
-          <RangePicker
-            disabledDate={disabledDate}
-            disabledTime={disabledRangeTime}
-            showTime={{
-              hideDisabledOptions: true,
-              defaultValue: [
-                dayjs("00:00:00", "HH:mm:ss"),
-                dayjs("11:59:59", "HH:mm:ss"),
-              ],
-            }}
-            format="YYYY-MM-DD HH:mm:ss"
-          />
-        </Col>
-        <Col span={8}>
-          <Select
-            showSearch
-            placeholder="请选择任务状态"
-            optionFilterProp="children"
-            onChange={onChangeStatus}
-            defaultValue={"2"}
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            style={{ width: "100%" }}
-            options={[
-              {
-                value: "0",
-                label: "pendding",
-              },
-              {
-                value: "1",
-                label: "completed",
-              },
-              {
-                value: "2",
-                label: "todoing",
-              },
-            ]}
-          />
-        </Col>
-      </Row>
-      <div className={styles.completedTotal}>
-        <span>{`已完成：${
-          taskList.filter((item) => Number(item.status) === 1)?.length
-        }条`}</span>
-        <span>{`未完成：${
-          taskList.filter((item) => Number(item.status) !== 1)?.length
-        }条`}</span>
-      </div>
-      <Form
-        name="basic"
-        form={form}
-        autoComplete="off"
-        className={styles.searchForm}
-      >
-        <Form.Item
-          name="task"
-          rules={[{ required: true, message: "请输入您想创建的任务..." }]}
-        >
-          <Search
-            placeholder="创建任务提醒"
-            enterButton="Add"
-            size="large"
-            className={styles.createTask}
-            suffix={suffix}
-            onSearch={onSearch}
-          />
-        </Form.Item>
-      </Form>
+      <SearchForm taskList={taskList} onSearchTask={onSearchTask} />
       {taskList?.length > 0 && (
         <div
           style={{
@@ -425,10 +295,7 @@ const Index = () => {
                           MsModal.open(NotificationModal).then((res: any) => {
                             getReminderTime({
                               ...item,
-                              reminderTime: res.reminderTime,
-                              userEmail: res.userEmail,
-                              reminderPattern: res.reminderPattern,
-                              interval: res.interval,
+                              ...res,
                             });
                           });
                         }}

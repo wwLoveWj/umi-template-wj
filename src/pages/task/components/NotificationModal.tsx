@@ -60,7 +60,7 @@ const MyModal = MsModal.create(() => {
       onOk={() => {
         return form.validateFields().then((res) => {
           if (res?.reminderPattern === "fixedTime") {
-            const timeS: TimeType = res.reminderTime;
+            const timeS: TimeType = res.reminderTime[0];
             res.reminderTime = [
               timeS?.second,
               timeS?.minute,
@@ -68,10 +68,9 @@ const MyModal = MsModal.create(() => {
               timeS?.day,
               timeS?.month,
               timeS?.dayOfWeek,
-            ]?.join("");
+            ]?.join(" ");
+            // res.reminderTime = cornTime?.replace(/0/g, "*");
           }
-          console.log(res, "时间---------------");
-          debugger;
           modal.resolve({ ...res, interval });
           form.resetFields();
         });
@@ -132,7 +131,6 @@ const MyModal = MsModal.create(() => {
                 <TimeInput
                   value={value}
                   onChange={(e) => {
-                    debugger;
                     if (onChange) onChange(e);
                   }}
                 />
