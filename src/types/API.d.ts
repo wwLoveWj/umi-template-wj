@@ -60,6 +60,7 @@ declare namespace API {
   interface TaskListType {
     task: string;
     taskId: string;
+    jobId: string;
     createTime: string;
     reminderTime: string;
     reminderPattern: string;

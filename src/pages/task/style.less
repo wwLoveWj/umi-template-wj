@@ -34,6 +34,12 @@
   width: 800px;
 }
 
+// 下面的卡片信息和批量操作高度，想全部滚动可以在.taskInfo中添加 overflow: auto;
+.allCardInfo {
+  height: calc(100% - 180px);
+  overflow: auto;
+}
+
 // 金属光泽感不完全
 // .animateCard:hover::after {
 //   transform: rotate(-45deg) translate(0, 100px);
@@ -134,6 +140,15 @@
       align-items: center;
       font-size: 20px;
       color: #0083f6;
+      // animation: colorChg 1.5s infinite;
+    }
+
+    .reminderTimeCancel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 20px;
+      color: var(--cancel-del-color);
       // animation: colorChg 1.5s infinite;
     }
   }

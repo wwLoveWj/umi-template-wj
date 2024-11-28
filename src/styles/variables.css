@@ -58,6 +58,7 @@
   --art-main-bg-color: #fff;
   --title-logo-color: #000;
   --menu-dark-bg-color: #161618;
+  --cancel-del-color: #ff4d4f;
 }
 html.dark {
   --dark-border-color: #006AE6;

@@ -10,7 +10,7 @@ import {
   Alert,
   Empty,
 } from "antd";
-import { AlertOutlined } from "@ant-design/icons";
+import { AlertOutlined, PoweroffOutlined } from "@ant-design/icons";
 import {
   TaskInfoQueryAPI,
   reminderTaskAPI,
@@ -77,7 +77,7 @@ const Index = () => {
   const reminderTaskFn = useRequest(reminderTaskAPI, {
     manual: true,
     onSuccess: (res) => {
-      debugger;
+      queryQueryTaskInfo.run();
       if (res?.data?.userEmail?.length > 0) {
         reminderTimeTaskFn.run(res.data);
       }
@@ -94,6 +94,13 @@ const Index = () => {
       },
     }
   );
+  // 取消单个任务的提醒
+  const reminderTimeTaskCancel = useRequest(reminderTimeTaskCancelAPI, {
+    manual: true,
+    onSuccess: () => {
+      queryQueryTaskInfo.run();
+    },
+  });
   // 批量删除任务
   const batchDelTaskListFn = useRequest(TaskListBatchDelAPI, {
     debounceWait: 100,
@@ -171,216 +178,260 @@ const Index = () => {
   return (
     <div className={styles.taskInfo}>
       <SearchForm taskList={taskList} onSearchTask={onSearchTask} />
-      {taskList?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            margin: "24px 12px 12px",
-            justifyContent: "flex-end",
-          }}
-        >
-          {isShowDelBtn && (
-            <div className={styles.allSelected} style={{ flex: 4 }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <Checkbox checked={allChecked} onChange={selectAllTasks}>
-                  全选
-                </Checkbox>
-                <Alert
-                  message={`当前选中任务数：${taskIdList.length}项`}
-                  type="info"
-                  showIcon
-                  banner={true}
-                  style={{ width: "200px", color: "#1677ff" }}
-                />
-              </div>
-              <Button
-                danger
-                type="primary"
-                disabled={taskIdList.length === 0}
-                onClick={() => batchDelTaskListFn.run({ taskIdList })}
-              >
-                批量删除
-              </Button>
-            </div>
-          )}
+      <div className={styles.allCardInfo}>
+        {taskList?.length > 0 && (
           <div
             style={{
-              justifyContent: "flex-end",
               display: "flex",
-              alignItems: "center",
+              margin: "24px 12px 12px",
+              justifyContent: "flex-end",
             }}
           >
-            {/* <Switch
+            {isShowDelBtn && (
+              <div className={styles.allSelected} style={{ flex: 4 }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Checkbox checked={allChecked} onChange={selectAllTasks}>
+                    全选
+                  </Checkbox>
+                  <Alert
+                    message={`当前选中任务数：${taskIdList.length}项`}
+                    type="info"
+                    showIcon
+                    banner={true}
+                    style={{ width: "200px", color: "#1677ff" }}
+                  />
+                </div>
+                <Button
+                  danger
+                  type="primary"
+                  disabled={taskIdList.length === 0}
+                  onClick={() => batchDelTaskListFn.run({ taskIdList })}
+                >
+                  批量删除
+                </Button>
+              </div>
+            )}
+            <div
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {/* <Switch
               checkedChildren="开启"
               unCheckedChildren="关闭"
               defaultChecked
               onChange={onChangeSwitch}
             /> */}
-            <WjCheckBox onChange={onChangeSwitch} />
+              <WjCheckBox onChange={onChangeSwitch} />
+            </div>
           </div>
-        </div>
-      )}
-      {taskList?.length > 0 ? (
-        <Row
-          gutter={[16, 12]}
-          style={{ padding: "0 12px 12px", width: `calc(100% + 8px)` }}
-        >
-          {taskList.map((item, index) => {
-            return (
-              <Col
-                span={8}
-                key={item.taskId}
-                onClick={() => selectedTask(index)}
-              >
-                <Card
-                  className={styles.animateCard}
-                  bodyStyle={{
-                    padding: "18px 20px",
-                    // #f8f9fa
-                    background: item.checked
-                      ? "orange"
-                      : "var(--art-main-bg-color)",
-                  }}
-                  loading={queryQueryTaskInfo.loading}
+        )}
+        {taskList?.length > 0 ? (
+          <Row
+            gutter={[16, 12]}
+            style={{ padding: "0 12px 12px", width: `calc(100% + 8px)` }}
+          >
+            {taskList.map((item, index) => {
+              return (
+                <Col
+                  span={8}
+                  key={item.taskId}
+                  onClick={() => selectedTask(index)}
                 >
-                  {/* <Checkbox
+                  <Card
+                    className={styles.animateCard}
+                    bodyStyle={{
+                      padding: "18px 20px",
+                      // #f8f9fa
+                      background: item.checked
+                        ? "orange"
+                        : "var(--art-main-bg-color)",
+                    }}
+                    loading={queryQueryTaskInfo.loading}
+                  >
+                    {/* <Checkbox
                   checked={item.checked}
                   onChange={() => selectedTask(index)}
                 /> */}
-                  <Flex wrap gap="small" vertical>
-                    <div className={styles.taskHeader}>
-                      <div>
-                        <div className={styles.task}>
-                          <h3
-                            style={{ color: "#0080f6" }}
-                            className="custom-text"
-                          >
-                            Task：
-                          </h3>
-                          <h3
-                            style={{
-                              color: item.checked ? "#fff" : `#000`,
-                            }}
-                          >
-                            {item.task}
-                          </h3>
-                        </div>
-                        <p
-                          style={{
-                            color:
-                              STATUS_TYPE.get(item.status) === "completed"
-                                ? "#44b06c"
-                                : Number(item.status) === 0
-                                ? "#ffc045"
-                                : "yellow",
-                          }}
-                        >
-                          状态：{STATUS_TYPE.get(item.status)}
-                        </p>
-                      </div>
-                      <div
-                        ref={timeRef}
-                        className={classNames(
-                          styles.reminderTime,
-                          "custom-text"
-                        )}
-                        style={
-                          item.reminderTime && Number(item.status) === 0
-                            ? { animation: `colorChg 1.5s infinite` }
-                            : {}
-                        }
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          // 调出时间设置弹窗
-                          MsModal.open(NotificationModal).then((res: any) => {
-                            getReminderTime({
-                              ...item,
-                              ...res,
-                            });
-                          });
-                        }}
-                      >
-                        <AlertOutlined />
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            color: item.checked ? "#fff" : "#8a8a8a",
-                            marginTop: "8px",
-                          }}
-                        >
-                          设置提醒
-                        </span>
-                      </div>
-                    </div>
-                    <div className={styles.times}>
-                      <p style={{ color: item.checked ? "#fff" : "#92999f" }}>
-                        创建时间：
-                        {dayjs(item.createTime).format("YYYY-MM-DD HH:mm:ss")}
-                      </p>
-                      {item.reminderTime &&
-                        item.reminderPattern !== "intervalTime" && (
+                    <Flex wrap gap="small" vertical>
+                      <div className={styles.taskHeader}>
+                        <div>
+                          <div className={styles.task}>
+                            <h3
+                              style={{ color: "#0080f6" }}
+                              className="custom-text"
+                            >
+                              Task：
+                            </h3>
+                            <h3
+                              style={{
+                                color: item.checked ? "#fff" : `#000`,
+                              }}
+                            >
+                              {item.task}
+                            </h3>
+                          </div>
                           <p
                             style={{
-                              color: item.checked ? "#fff" : "#92999f",
+                              color:
+                                STATUS_TYPE.get(item.status) === "completed"
+                                  ? "#44b06c"
+                                  : Number(item.status) === 0
+                                  ? "#ffc045"
+                                  : "yellow",
                             }}
                           >
-                            提醒时间：
-                            {dayjs(item.reminderTime).format(
-                              "YYYY-MM-DD HH:mm:ss"
-                            )}
+                            状态：{STATUS_TYPE.get(item.status)}
                           </p>
-                        )}
-                      {item.reminderTime &&
-                        item.reminderPattern === "intervalTime" && (
-                          <p>
-                            提醒间隔：
-                            <span style={{ color: "green" }}>
-                              {item.reminderTime}{" "}
-                              {IntervalUnit.get(item.intervalUnit)}
-                            </span>
-                          </p>
-                        )}
-                    </div>
-                    <div className={styles.delBtn}>
-                      <span onClick={(e) => e.stopPropagation()}>
-                        <Popconfirm
-                          title={`确定要删除【${item.task}】任务吗？`}
-                          placement="topLeft"
-                          onConfirm={() => {
-                            deleteReminderTask.run(item.taskId);
-                          }}
-                        >
-                          <Button type="primary" danger>
-                            删除
-                          </Button>
-                        </Popconfirm>
-                      </span>
-                      {item.reminderTime &&
-                        Number(item.status) === 0 &&
-                        item.reminderPattern !== "intervalTime" && (
-                          <div className={styles.countDown}>
-                            倒计时：
-                            <p id={`${item.taskId}`}>
-                              {countDown(
-                                item.taskId,
-                                item.reminderTime,
-                                Number(item.status)
+                        </div>
+                        {Number(item.status) !== 1 &&
+                          (Number(item.status) === 2 ? (
+                            <div
+                              ref={timeRef}
+                              className={classNames(
+                                styles.reminderTime,
+                                "custom-text"
+                              )}
+                              style={
+                                item.reminderTime && Number(item.status) === 0
+                                  ? { animation: `colorChg 1.5s infinite` }
+                                  : {}
+                              }
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                // 调出时间设置弹窗
+                                MsModal.open(NotificationModal).then(
+                                  (res: any) => {
+                                    getReminderTime({
+                                      ...item,
+                                      ...res,
+                                    });
+                                  }
+                                );
+                              }}
+                            >
+                              <AlertOutlined />
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  color: item.checked ? "#fff" : "#8a8a8a",
+                                  marginTop: "8px",
+                                }}
+                              >
+                                设置提醒
+                              </span>
+                            </div>
+                          ) : (
+                            // <Popconfirm
+                            //   title={`确定要取消【${item.task}】任务吗？`}
+                            //   placement="topLeft"
+                            //   // onConfirm={(e) => {
+                            //   //   e?.stopPropagation();
+                            //   //   reminderTimeTaskCancel.run({
+                            //   //     taskId: item?.taskId,
+                            //   //     jobId: item?.jobId,
+                            //   //   });
+                            //   // }}
+                            // >
+                            <div
+                              className={classNames(
+                                styles.reminderTimeCancel,
+                                "custom-text"
+                              )}
+                              onClick={(e) => {
+                                e?.stopPropagation();
+                                reminderTimeTaskCancel.run({
+                                  taskId: item?.taskId,
+                                  jobId: item?.jobId,
+                                });
+                              }}
+                            >
+                              <PoweroffOutlined />
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  color: item.checked ? "#fff" : "#8a8a8a",
+                                  marginTop: "8px",
+                                }}
+                              >
+                                取消提醒
+                              </span>
+                            </div>
+                            // </Popconfirm>
+                          ))}
+                      </div>
+                      <div className={styles.times}>
+                        <p style={{ color: item.checked ? "#fff" : "#92999f" }}>
+                          创建时间：
+                          {dayjs(item.createTime).format("YYYY-MM-DD HH:mm:ss")}
+                        </p>
+                        {item.reminderTime &&
+                          item.reminderPattern !== "intervalTime" && (
+                            <p
+                              style={{
+                                color: item.checked ? "#fff" : "#92999f",
+                              }}
+                            >
+                              提醒时间：
+                              {dayjs(item.reminderTime).format(
+                                "YYYY-MM-DD HH:mm:ss"
                               )}
                             </p>
-                          </div>
-                        )}
-                    </div>
-                  </Flex>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      ) : (
-        <div className={styles.emptyCard}>
-          <Empty description="暂无待办事项" />
-        </div>
-      )}
+                          )}
+                        {item.reminderTime &&
+                          item.reminderPattern === "intervalTime" && (
+                            <p>
+                              提醒间隔：
+                              <span style={{ color: "green" }}>
+                                {item.reminderTime}{" "}
+                                {IntervalUnit.get(item.intervalUnit)}
+                              </span>
+                            </p>
+                          )}
+                      </div>
+                      <div className={styles.delBtn}>
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <Popconfirm
+                            title={`确定要删除【${item.task}】任务吗？`}
+                            placement="topLeft"
+                            onConfirm={() => {
+                              deleteReminderTask.run(item.taskId);
+                            }}
+                          >
+                            <Button type="primary" danger>
+                              删除
+                            </Button>
+                          </Popconfirm>
+                        </span>
+                        {item.reminderTime &&
+                          Number(item.status) === 0 &&
+                          item.reminderPattern !== "intervalTime" && (
+                            <div className={styles.countDown}>
+                              倒计时：
+                              <p id={`${item.taskId}`}>
+                                {countDown(
+                                  item.taskId,
+                                  item.reminderTime,
+                                  Number(item.status)
+                                )}
+                              </p>
+                            </div>
+                          )}
+                      </div>
+                    </Flex>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+        ) : (
+          <div className={styles.emptyCard}>
+            <Empty description="暂无待办事项" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
