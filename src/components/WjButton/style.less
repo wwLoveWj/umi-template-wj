@@ -1,0 +1,55 @@
+.sendWjBtn {
+    font-family: inherit;
+    font-size: 14px;
+    background: royalblue;
+    color: white;
+    display: flex;
+    align-items: center;
+    border: none;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    padding: 4px 15px;
+    padding-left: 0.9em;
+    border-radius: 6px;
+    line-height: 1.57;
+    height: 32px;
+}
+
+.sendWjBtn span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+}
+
+.sendWjBtn svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sendWjBtn:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.sendWjBtn:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.sendWjBtn:hover span {
+    transform: translateX(5em);
+}
+
+.sendWjBtn:active {
+    transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+    from {
+        transform: translateY(0.1em);
+    }
+
+    to {
+        transform: translateY(-0.1em);
+    }
+}
