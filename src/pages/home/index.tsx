@@ -1,5 +1,10 @@
 import React from "react";
+import CardInfo from "./card/index";
 
 export default () => {
-  return <div>首页</div>;
+  return (
+    <div>
+      <CardInfo />
+    </div>
+  );
 };
