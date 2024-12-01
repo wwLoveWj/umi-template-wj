@@ -1,4 +1,9 @@
+:root {
+  --person-info-color: #35b4ed;
+  --hover-color: #0aa6ec;
+}
 .card-info-person {
+  cursor: pointer;
   width: 280px;
   height: 280px;
   background: white;
@@ -10,6 +15,7 @@
   margin-left: 12px;
 }
 .card-info-person .card-info-mail {
+  cursor: pointer;
   position: absolute;
   right: 2rem;
   top: 1.4rem;
@@ -17,11 +23,11 @@
   border: none;
 }
 .card-info-person .card-info-mail svg {
-  stroke: #fbb9b6;
+  stroke: var(--person-info-color);
   stroke-width: 3px;
 }
 .card-info-person .card-info-mail svg:hover {
-  stroke: #f55d56;
+  stroke: var(--hover-color);
 }
 .card-info-person .profile-pic {
   position: absolute;
@@ -31,7 +37,7 @@
   left: 3px;
   border-radius: 29px;
   z-index: 1;
-  border: 0px solid #fbb9b6;
+  border: 0px solid var(--person-info-color);
   overflow: hidden;
   transition: all 0.5s ease-in-out 0.2s, z-index 0.5s ease-in-out 0.2s;
 }
@@ -59,7 +65,7 @@
   bottom: 3px;
   left: 3px;
   right: 3px;
-  background: #fbb9b6;
+  background: var(--person-info-color);
   top: 80%;
   border-radius: 29px;
   z-index: 2;
@@ -105,12 +111,12 @@
   filter: drop-shadow(0 5px 5px rgba(165, 132, 130, 0.13333333));
 }
 .card-info-person .bottom .bottom-bottom .social-links-container svg:hover {
-  fill: #f55d56;
+  fill: var(--hover-color);
   transform: scale(1.2);
 }
 .card-info-person .bottom .bottom-bottom .editInfo-button {
   background: white;
-  color: #fbb9b6;
+  color: var(--person-info-color);
   border: none;
   border-radius: 20px;
   font-size: 0.6rem;
@@ -118,8 +124,9 @@
   box-shadow: rgba(165, 132, 130, 0.13333333) 0px 5px 5px 0px;
 }
 .card-info-person .bottom .bottom-bottom .editInfo-button:hover {
-  background: #f55d56;
+  background: var(--hover-color);
   color: white;
+  cursor: pointer;
 }
 .card-info-person:hover {
   border-top-left-radius: 55px;
@@ -137,7 +144,7 @@
   left: 10px;
   border-radius: 50%;
   z-index: 3;
-  border: 7px solid #fbb9b6;
+  border: 7px solid var(--person-info-color);
   box-shadow: rgba(96, 75, 74, 0.18823529) 0px 5px 5px 0px;
   transition: all 0.5s ease-in-out, z-index 0.5s ease-in-out 0.1s;
 }
@@ -146,9 +153,7 @@
   border-radius: 0px;
 }
 .card-info-person:hover .profile-pic img {
-  transform: scale(2.5);
-  -o-object-position: 0px 25px;
-  object-position: 0px 25px;
+  transform: scale(1);
   transition: all 0.5s ease-in-out 0.5s;
 }
 .card-info-person:hover .profile-pic svg {
