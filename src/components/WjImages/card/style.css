@@ -1,0 +1,58 @@
+.card-person {
+  width: 280px;
+  height: 280px;
+  color: white;
+  overflow: visible;
+  display: flex;
+}
+.card-person .options-item {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.options-item:hover {
+  transform: scale(1.5);
+  transition: all 350ms ease-in-out;
+}
+.options-item svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 7px;
+}
+.options-item--1 {
+  background: #c7c7ff;
+}
+.options-item--2 {
+  background: #ffd8be;
+}
+.options-item--3 {
+  background: #a9ecbf;
+}
+.options-item--4 {
+  background: #f3bbe1;
+}
+.quantity {
+  font-size: 25px;
+  font-weight: 600;
+}
+.text-card {
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.text-card--1 {
+  color: #9595ff;
+}
+.text-card--2 {
+  color: #fca147;
+}
+.text-card--3 {
+  color: #42c16e;
+}
+.text-card--4 {
+  color: #dc5bb7;
+}
