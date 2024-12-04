@@ -8,7 +8,11 @@ export default function Index() {
   return (
     <div className={styles.personInfoShow}>
       {/* <CoffeeMachine /> */}
-      <CharacterInfo />
+      <CharacterInfo
+        handleEditPersonInfo={() => {
+          // 编辑个人信息弹窗
+        }}
+      />
       <div className={styles.middleContent}>
         <div className={styles?.workInfo}>
           <EmitLightInput />

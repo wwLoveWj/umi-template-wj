@@ -1,14 +1,13 @@
 .allInfo {
   display: flex;
   width: 100%;
-  height: calc(100% - 62.4px - 24px);
-  overflow: auto;
+  height: 100%;
   scroll-behavior: smooth;
-  margin-top: 12px;
 }
 .allInfo .catalogue {
   width: 200px;
-  margin-left: 20px;
+  height: 100%;
+  margin-left: 12px;
 }
 @media screen and (max-width: 900px) {
   .catalogue {
@@ -16,39 +15,70 @@
     /* 添加 !important 以确保覆盖其他样式 */
   }
 }
+.table-of-title {
+  margin-bottom: 12px;
+}
 .table-of-contents {
   color: yellow;
 }
 .table-of-contents li:hover {
   color: #95c92c;
 }
+.table-of-contents .beyond-hidden {
+  overflow: hidden;
+  width: 180px;
+  text-overflow: ellipsis;
+  white-space: nowarp;
+  display: block;
+}
 .table-of-contents .active {
   font-weight: bold;
   color: #95c92c;
 }
-.user-box {
-  display: flex;
-  justify-content: space-between;
+.toobar-editor {
   position: sticky;
-  top: 12px;
-  z-index: 99999;
+  top: 0;
+  z-index: 10000;
+}
+.title-editor {
+  position: relative;
   width: 100%;
-  background: #fff;
+  font-size: 34px;
+  min-height: 50px;
+  line-height: 50px;
+  font-weight: 600;
+  word-break: break-all;
+  letter-spacing: 0;
 }
-.user-box input {
-  position: sticky;
-  top: 12px;
-  width: calc(100% - 220px);
-  padding: 10px 0;
-  color: green;
+.title-editor .textareaTitle {
+  padding: 0 12px;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  word-break: break-all;
   border: none;
-  border-bottom: 1px solid #ccc;
   outline: none;
-  font-size: 36px;
+  resize: none;
+  font-size: 34px;
+  line-height: 50px;
+  min-height: 50px;
+  font-weight: 600;
 }
-.user-box .upload-btn {
+.title-editor .textareaTitle:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-color: none;
+}
+.right-section {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #ccc;
+}
+.right-section .upload-btn {
   width: 200;
-  margin-left: 20;
   display: flex;
   justify-content: flex-end;
 }

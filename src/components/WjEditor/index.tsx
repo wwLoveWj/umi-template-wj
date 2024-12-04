@@ -16,7 +16,7 @@ import {
 } from "@/service/api/article";
 import { uploadImgAPI } from "@/service/api/file";
 import React, { useState, useEffect } from "react";
-import { Button, Affix, Tooltip, Space } from "antd";
+import { Button, Affix, Tooltip, Space, Input } from "antd";
 import { history } from "umi";
 import _ from "lodash-es";
 // 获取锚点、目录等公共方法
@@ -31,6 +31,7 @@ import styles from "./style.less";
 import "./style.less";
 import type { EditorTxtType, CatalogueType, Iprops } from "./type";
 
+const { TextArea } = Input;
 // 图片插入函数类型
 type InsertFnType = (url: string, alt: string, href: string) => void;
 function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
@@ -206,69 +207,72 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
 
   // 原文链接：https://blog.csdn.net/weixin_45072119/article/details/140772615
   return (
-    <>
-      {/* =================文章标题================== */}
-      <div className="user-box">
-        {/* <div id="typing">55555555555555</div> */}
-        <input
-          type="text"
-          required
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            changeEditorTitleWs();
-          }}
+    <div className={styles.allInfo}>
+      {/* =============编辑器部分================== */}
+      <div
+        style={{
+          // border: "1px solid #ccc",
+          zIndex: 100,
+          width: "calc(100% - 220px)",
+          overflowY: "auto",
+        }}
+        className="content-editor"
+      >
+        <Toolbar
+          editor={editor}
+          defaultConfig={toolbarConfig}
+          mode="default"
+          className="toobar-editor"
+          // style={{
+          //   borderBottom: "1px solid #ccc",
+          // }}
         />
+        {/* =================文章标题================== */}
+        <div className="title-editor">
+          {title}
+          <TextArea
+            className="textareaTitle"
+            maxLength={100}
+            // value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              changeEditorTitleWs();
+            }}
+            placeholder="请输入文档标题"
+            onPressEnter={() => editor?.focus(false)}
+          />
+        </div>
+        <Editor
+          defaultConfig={editorConfig}
+          value={html}
+          onCreated={setEditor}
+          onChange={(editor: IDomEditor) => {
+            // 定义好所有的锚点结构
+            setTableOfContents(generateTableOfContents());
+            addAnchorLinks();
+            if (isRealTimeediting) {
+              websocketMsgHandler(
+                JSON.stringify({
+                  editorContent: editor.getHtml(),
+                  editorKey: !isEditMode ? "editor-add" : editorId,
+                  title,
+                  isEditMode,
+                })
+              );
+            }
+          }}
+          mode="default"
+        />
+      </div>
+      <div className="right-section">
         <Space className="upload-btn">
           <Button>取消</Button>
           <Button type="primary" onClick={saveEditorContent}>
             更新
           </Button>
         </Space>
-      </div>
-      <div className={styles.allInfo}>
-        {/* =============编辑器部分================== */}
-        <div
-          style={{
-            border: "1px solid #ccc",
-            zIndex: 100,
-            height: "800px",
-            overflowY: "auto",
-          }}
-          className="content"
-        >
-          <Toolbar
-            editor={editor}
-            defaultConfig={toolbarConfig}
-            mode="default"
-            style={{
-              borderBottom: "1px solid #ccc",
-            }}
-          />
-          <Editor
-            defaultConfig={editorConfig}
-            value={html}
-            onCreated={setEditor}
-            onChange={(editor: IDomEditor) => {
-              // 定义好所有的锚点结构
-              setTableOfContents(generateTableOfContents());
-              addAnchorLinks();
-              if (isRealTimeediting) {
-                websocketMsgHandler(
-                  JSON.stringify({
-                    editorContent: editor.getHtml(),
-                    editorKey: !isEditMode ? "editor-add" : editorId,
-                    title,
-                    isEditMode,
-                  })
-                );
-              }
-            }}
-            mode="default"
-          />
-        </div>
         {/* =============右侧目录部分================ */}
-        <Affix offsetTop={180} className={styles.catalogue}>
+        <Affix offsetTop={140} className={styles.catalogue}>
           <div className="table-of-title">
             <span>目录</span>
           </div>
@@ -277,6 +281,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
               return (
                 <li
                   key={item.id}
+                  // 根据不同的标题等级处理间隔h1-h6
                   style={{ paddingLeft: item.level * 20 + "px" }}
                 >
                   <a
@@ -288,7 +293,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
                     }}
                   >
                     <Tooltip title={item.text} color="lime" placement="leftTop">
-                      {item.text}
+                      <div className="beyond-hidden">{item.text}</div>
                     </Tooltip>
                   </a>
                 </li>
@@ -297,7 +302,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
           </ul>
         </Affix>
       </div>
-    </>
+    </div>
   );
 }
 

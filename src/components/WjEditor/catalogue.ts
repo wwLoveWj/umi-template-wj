@@ -2,7 +2,7 @@ import type { CatalogueType } from "./type";
 
 // 获取所有的h1-h6节点集合
 export const getAllHtagList = () => {
-  let content = document.querySelector(".content") as HTMLElement;
+  let content = document.querySelector(".content-editor") as HTMLElement;
   return content?.querySelectorAll("h1,h2,h3,h4,h5,h6");
 };
 

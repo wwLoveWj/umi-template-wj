@@ -14,7 +14,7 @@ export default function Index({
    * 0 女士
    */
   sex?: 1 | 0;
-  isUploadAvatar: boolean;
+  isUploadAvatar?: boolean;
   /**
    *
    * @returns 修改个人资料的方法

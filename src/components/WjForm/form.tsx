@@ -124,7 +124,9 @@ export default function Index({
 }) {
   // 常规表单项
   const tableSearchColumns =
-    formConfigList?.filter((column: any) => column.search) || [];
+    formType === "search"
+      ? formConfigList?.filter((column: any) => column.search) || []
+      : formConfigList;
   // 响应式列数量
   const columnNumber = useResponsiveSize(columnShow);
   const [form] = Form.useForm(formInstance);
