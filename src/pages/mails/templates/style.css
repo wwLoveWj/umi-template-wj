@@ -1,0 +1,41 @@
+.mailsTemp {
+  width: 300px;
+  cursor: pointer;
+  transition: 0.5s;
+  position: relative;
+  bottom: 0;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+  transform: scale(0.6);
+}
+.mailsTemp:hover {
+  bottom: 5px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+.mailsHead {
+  padding: 10px 25px;
+  border-bottom: 1px solid #9400d3;
+  background-color: #9400d3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.mailsHead span {
+  height: 16px;
+  line-height: 16px;
+  font-size: 14px;
+  color: #ffffff;
+}
+.mailsModal {
+  padding: 5px 10px 10px;
+  background-color: #fff;
+  opacity: 0.8;
+}
+.lastName {
+  padding: 10px 10px 0 0;
+  border-top: 1px solid #ccc;
+  color: #747474;
+  line-height: 1.3em;
+  font-size: 12px;
+  text-align: right;
+}

@@ -114,8 +114,8 @@ const MyModal = MsModal.create(() => {
             }}
           >
             <Option value="fixedDate">固定日期</Option>
-            <Option value="fixedTime">固定时间</Option>
-            <Option value="everyDay">每天固定时间</Option>
+            <Option value="fixedTime">cron规则</Option>
+            <Option value="everyDay">固定时间</Option>
             <Option value="intervalTime">间隔时间</Option>
           </Select>
         </Form.Item>

@@ -19,7 +19,7 @@ import {
   reminderTimeTaskCancelAPI,
   reminderTimeTaskAPI,
   TaskListBatchDelAPI,
-  testTaskTempAPI,
+  // testTaskTempAPI,
 } from "@/service/api/task";
 import NotificationModal from "./components/NotificationModal";
 import { useRequest } from "ahooks";
@@ -175,7 +175,7 @@ const Index = () => {
   // 查询任务
   const onSearchTask = (value: any) => {
     queryQueryTaskInfo.run(value);
-    testTaskTempAPI({ sendToUser: "xxx@163.com" });
+    // testTaskTempAPI({ sendToUser: "xxx@163.com" });
   };
   // 当子级全选时勾选中全选按钮
   useEffect(() => {
@@ -403,9 +403,13 @@ const Index = () => {
                               }}
                             >
                               提醒时间：
-                              {dayjs(item.reminderTime).format(
-                                "YYYY-MM-DD HH:mm:ss"
-                              )}
+                              {item.reminderPattern === "fixedDate"
+                                ? dayjs(item.reminderTime).format(
+                                    "YYYY-MM-DD HH:mm:ss"
+                                  )
+                                : item.reminderPattern === "everyDay"
+                                ? "永不截止"
+                                : item.reminderTime}
                             </p>
                           )}
                         {item.reminderTime &&
@@ -435,7 +439,7 @@ const Index = () => {
                         </span>
                         {item.reminderTime &&
                           Number(item.status) === 0 &&
-                          item.reminderPattern !== "intervalTime" && (
+                          item.reminderPattern === "fixedDate" && (
                             <div className={styles.countDown}>
                               倒计时：
                               <p id={`${item.taskId}`}>

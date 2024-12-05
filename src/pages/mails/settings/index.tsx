@@ -1,8 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Form } from "antd";
+import { Form, Row, Col } from "antd";
 import { MsModal } from "magical-antd-ui";
 import { WjForm, WjFormColumnsPropsType } from "@/components/WjForm";
+import EmailModel from "../templates/EmailModel";
+import styles from "../style.less";
 
+const tempList = [
+  {
+    name: "模板一",
+    id: 1,
+    color: "RGB(148, 0, 211)",
+  },
+  {
+    name: "模板二",
+    color: "red",
+    title: "紧急邮件",
+    id: 2,
+  },
+  {
+    name: "模板三",
+    color: `var(--art-success)`,
+    title: "好消息",
+    id: 3,
+  },
+];
 const hostList = [
   { value: "smtp.163.com", label: "163邮箱" },
   { value: "smtp.qq.com", label: "qq邮箱" },
@@ -14,7 +35,8 @@ const secureList = [
 const Settings = MsModal.create(() => {
   const modal = MsModal.useModal();
   const [formRef] = Form.useForm();
-
+  // 当前选择的模板ID
+  const [tempId, setTempId] = useState(1);
   const columns: WjFormColumnsPropsType[] = [
     {
       dataIndex: "configName",
@@ -84,6 +106,7 @@ const Settings = MsModal.create(() => {
   return (
     <MsModal
       {...modal.props}
+      width={"50%"}
       onOk={() => {
         return formRef.validateFields().then((res) => {
           if (res.host === "smtp.163.com") {
@@ -97,7 +120,33 @@ const Settings = MsModal.create(() => {
       }}
       title="邮箱配置"
     >
+      {/* 选择邮件模板信息 */}
+      <Row style={{ marginBottom: "20px" }}>
+        {tempList?.map((item) => (
+          <Col
+            className={styles?.tempMail}
+            span={8}
+            onClick={() => setTempId(item.id)}
+          >
+            <EmailModel color={item?.color} title={item?.title} />
+            {/* 最底下的名称及绿点 */}
+            <p
+              style={item.id === tempId ? { color: item.color } : {}}
+              className={styles.name}
+            >
+              {item.name}
+            </p>
+            {item.id === tempId && (
+              <div
+                className={styles.active}
+                style={{ background: item.color }}
+              ></div>
+            )}
+          </Col>
+        ))}
+      </Row>
       <WjForm
+        // layout="vertical"
         form={formRef}
         formType="basic"
         noCard={true}
