@@ -136,6 +136,10 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
     }
   );
 
+  // 取消回到文章列表页并提醒是否需要保存
+  const cancel = () => {
+    history.push("/article/table");
+  };
   // 编辑器的数据保存提交事件
   const saveEditorContent = async () => {
     if (editor) {
@@ -233,7 +237,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
           <TextArea
             className="textareaTitle"
             maxLength={100}
-            // value={title}
+            value={title}
             onChange={(e) => {
               setTitle(e.target.value);
               changeEditorTitleWs();
@@ -266,7 +270,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
       </div>
       <div className="right-section">
         <Space className="upload-btn">
-          <Button>取消</Button>
+          <Button onClick={cancel}>取消</Button>
           <Button type="primary" onClick={saveEditorContent}>
             更新
           </Button>

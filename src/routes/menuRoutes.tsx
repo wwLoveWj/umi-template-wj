@@ -19,6 +19,7 @@ import {
   ThunderboltOutlined,
   FolderOpenOutlined,
   InstagramOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 
 export const menuRoutes: API.MenuRoutesType[] = [
@@ -204,6 +205,25 @@ export const menuRoutes: API.MenuRoutesType[] = [
     path: "/website",
     icon: TagsOutlined,
     component: "./websiteSharing",
+  },
+  {
+    key: "mail",
+    title: "邮箱管理",
+    path: "/mail",
+    icon: MailOutlined,
+    routes: [
+      {
+        path: "/mail",
+        hidden: true,
+        redirect: "/mail/settings",
+      },
+      {
+        key: "settings",
+        title: "邮箱配置",
+        path: "/mail/settings",
+        component: "./mails/index",
+      },
+    ],
   },
   // {
   //   key: "system",

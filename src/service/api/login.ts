@@ -3,6 +3,10 @@ import request from "../request";
 interface LoginInfoType {
   token: string;
   username: string;
+  email: string;
+  loginName: string;
+  loginPath: string;
+  menuList: string[];
 }
 export const registerUserAPI = (params: any): Promise<any> => {
   return request.post("/login/register", params);
