@@ -3,8 +3,7 @@ import WjEditor from "@/components/WjEditor/index";
 import { useLocation } from "umi";
 
 const Index: React.FC = () => {
-  const detailsFromProps = (useLocation() as any).state;
-
+  const detailsFromProps = (useLocation() as any).state || { editorId: "" };
   return (
     <div className="layout-padding-white">
       <WjEditor detailsFromProps={detailsFromProps} />

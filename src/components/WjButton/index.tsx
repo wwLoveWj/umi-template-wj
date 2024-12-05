@@ -6,7 +6,7 @@ export default function WjButton({
   /**
    * 按钮名字
    */
-  text: string;
+  text?: string;
 }) {
   return (
     <button className="sendWjBtn">

@@ -76,6 +76,7 @@ const Login = () => {
       onSuccess: async (res) => {
         // 存储token以及login信息
         await setToken(res?.token);
+        storage.set("login-info", res);
         // 语音提示用户登录成功
         // const utterThis = new window.SpeechSynthesisUtterance(
         //   "恭喜你登录成功" + res?.username + "欢迎回来！"

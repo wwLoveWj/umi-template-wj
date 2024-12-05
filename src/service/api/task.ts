@@ -52,3 +52,10 @@ export const reminderTimeTaskCancelAPI = (params: {
 }): Promise<any> => {
   return request.post("/reminder/task/cancel", params);
 };
+
+// 邮箱测试服务
+export const testTaskTempAPI = (params: {
+  sendToUser?: string;
+}): Promise<any> => {
+  return request.post("/reminder/test", params);
+};

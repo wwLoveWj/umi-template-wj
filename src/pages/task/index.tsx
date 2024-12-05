@@ -19,6 +19,7 @@ import {
   reminderTimeTaskCancelAPI,
   reminderTimeTaskAPI,
   TaskListBatchDelAPI,
+  testTaskTempAPI,
 } from "@/service/api/task";
 import NotificationModal from "./components/NotificationModal";
 import { useRequest } from "ahooks";
@@ -30,6 +31,9 @@ import { MsModal } from "magical-antd-ui";
 import classNames from "classnames";
 import WjCheckBox from "@/components/WjCheckBox";
 import SearchForm from "./components/SearchForm";
+import WjButton from "@/components/WjButton";
+// import SendButton from "@/components/Buttons/send/SendButton";
+// import DisabledButton from "@/components/Buttons/disabled/index";
 
 const IntervalUnit = new Map([
   ["second", "秒"],
@@ -121,11 +125,13 @@ const Index = () => {
     task: string;
     reminderPattern: string;
     interval: string;
+    desc: string;
   }) => {
     debugger;
     reminderTaskFn.run({
       ...param,
-      reminderContent: param?.task,
+      reminderTitle: param?.task,
+      reminderContent: param?.desc || param?.task,
     });
   };
 
@@ -169,6 +175,7 @@ const Index = () => {
   // 查询任务
   const onSearchTask = (value: any) => {
     queryQueryTaskInfo.run(value);
+    testTaskTempAPI({ sendToUser: "xxx@163.com" });
   };
   // 当子级全选时勾选中全选按钮
   useEffect(() => {
@@ -227,6 +234,9 @@ const Index = () => {
                 >
                   批量删除
                 </Button>
+                <WjButton />
+                {/* <SendButton />
+                <DisabledButton /> */}
               </Space>
             </div>
             <div

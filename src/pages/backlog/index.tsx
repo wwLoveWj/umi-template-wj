@@ -2,23 +2,27 @@ import React from "react";
 import { WjForm } from "@/components/WjForm";
 import { history } from "umi";
 import WjTable, { WjTableColumns } from "@/components/WjTable";
-import {
-  ArticleInfoListQueryAPI,
-  ArticleInfoDelAPI,
-} from "@/service/api/article";
+import { MailInfoQueryAPI } from "@/service/api/mail";
+import { storage } from "@/utils/storage";
 export default function Index() {
+  // 当前用户邮箱
+  const currentEmail = storage.get("login-info")?.email || "";
   const columns: WjTableColumns = [
     {
-      dataIndex: "taskName",
-      title: "待办事项",
+      dataIndex: "task",
+      title: "主题",
     },
     {
-      dataIndex: "email",
+      dataIndex: "description",
+      title: "通知内容",
+    },
+    {
+      dataIndex: "sendEmail",
       title: "通知人邮箱",
     },
     {
       valueType: "date",
-      dataIndex: "notifyTime",
+      dataIndex: "reminderTime",
       title: "通知时间",
     },
     {
@@ -40,17 +44,13 @@ export default function Index() {
         placeholder: "请选择状态",
       },
     },
-    {
-      dataIndex: "description",
-      title: "描述",
-    },
   ];
 
   return (
     <WjTable
       columns={columns}
       scroll={{ y: "auto-content" }}
-      request={{ url: ArticleInfoListQueryAPI, params: {} }}
+      request={{ url: MailInfoQueryAPI, params: { currentEmail } }}
       rowKey="editorId"
       // batchOpertions={[{ label: "批量上传" }]}
     />

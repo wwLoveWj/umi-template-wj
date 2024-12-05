@@ -1,13 +1,15 @@
 import { MsModal } from "magical-antd-ui";
 import React, { useState } from "react";
-import type { DatePickerProps, TimePickerProps } from "antd";
-import { DatePicker, Form, Button, Select, TimePicker, Input } from "antd";
+// import type { DatePickerProps, TimePickerProps } from "antd";
+import { DatePicker, Form, Select, Input } from "antd";
 import { useRequest } from "ahooks";
 import { UserInfoQueryAPI } from "@/service/api/user";
 import { disabledTime, disabledDate } from "@/utils/time";
 import CustomFormItem from "@/components/CustomFormItem";
 import TimeInput from "./TimeInput";
+import { storage } from "@/utils/storage";
 
+const { TextArea } = Input;
 interface TimeType {
   dayOfWeek: number;
   month: number;
@@ -18,6 +20,7 @@ interface TimeType {
 }
 const { Option } = Select;
 const MyModal = MsModal.create(() => {
+  const loginInfo = storage.get("login-info");
   const modal = MsModal.useModal();
   const [form] = Form.useForm();
   // const [type, setType] = useState<PickerType>("time");
@@ -48,10 +51,6 @@ const MyModal = MsModal.create(() => {
     debounceWait: 100,
   });
 
-  const onOk = (value: DatePickerProps["value"]) => {
-    console.log("onOk: ", value);
-  };
-
   return (
     <MsModal
       width={"45%"}
@@ -70,8 +69,17 @@ const MyModal = MsModal.create(() => {
               timeS?.dayOfWeek,
             ]?.join(" ");
             // res.reminderTime = cornTime?.replace(/0/g, "*");
+          } else if (res?.reminderPattern === "everyDay") {
+            //  Object.keys(res.reminderTime[0]);
+            const obj = res.reminderTime[0];
+            for (const key in obj) {
+              if (obj[key] === "*") {
+                Reflect.deleteProperty(obj, key);
+              }
+            }
+            res.reminderTime = res.reminderTime[0];
           }
-          modal.resolve({ ...res, interval });
+          modal.resolve({ ...res, interval, sendEmail: loginInfo?.email });
           form.resetFields();
         });
       }}
@@ -107,6 +115,7 @@ const MyModal = MsModal.create(() => {
           >
             <Option value="fixedDate">固定日期</Option>
             <Option value="fixedTime">固定时间</Option>
+            <Option value="everyDay">每天固定时间</Option>
             <Option value="intervalTime">间隔时间</Option>
           </Select>
         </Form.Item>
@@ -122,7 +131,6 @@ const MyModal = MsModal.create(() => {
               showTime
               disabledDate={disabledDate}
               disabledTime={disabledTime}
-              onOk={onOk}
               style={{ width: "100%" }}
             />
           ) : (
@@ -176,6 +184,18 @@ const MyModal = MsModal.create(() => {
             options={userEmailList}
             filterOption={filterOption}
             fieldNames={{ label: "username", value: "email" }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="提醒内容"
+          name="desc"
+          rules={[
+            { required: true, message: "请输入您想创建的任务提醒内容..." },
+          ]}
+        >
+          <TextArea
+            placeholder="请输入您想创建的任务提醒内容..."
+            autoSize={{ minRows: 3, maxRows: 5 }}
           />
         </Form.Item>
       </Form>

@@ -42,6 +42,7 @@ const Settings = MsModal.create(() => {
       title: "授权码",
       formItemProps: {
         rules: [{ required: true }],
+        tooltip: <a>如何获取授权码</a>,
       },
       fieldProps: {
         placeholder: "请填写邮箱授权码",
@@ -85,7 +86,11 @@ const Settings = MsModal.create(() => {
       {...modal.props}
       onOk={() => {
         return formRef.validateFields().then((res) => {
-          debugger;
+          if (res.host === "smtp.163.com") {
+            res.port = 465;
+          } else {
+            res.port = 465;
+          }
           modal.resolve({ ...res });
           formRef.resetFields();
         });
