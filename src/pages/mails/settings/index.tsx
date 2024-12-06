@@ -10,18 +10,21 @@ const tempList = [
     name: "模板一",
     id: 1,
     color: "RGB(148, 0, 211)",
+    key: "TASK_TIMING_REMINDER",
   },
   {
     name: "模板二",
     color: "red",
     title: "紧急邮件",
     id: 2,
+    key: "URGENT_EMAIL_REMINDER",
   },
   {
     name: "模板三",
     color: `var(--art-success)`,
     title: "好消息",
     id: 3,
+    key: "GOOD_NEWS_REMINDER",
   },
 ];
 const hostList = [
