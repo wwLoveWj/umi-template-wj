@@ -8,8 +8,8 @@ export default function index({
   svgWidth = 600,
   svgHeight = 400,
 }: {
-  svgWidth: number;
-  svgHeight: number;
+  svgWidth?: number;
+  svgHeight?: number;
 }) {
   const [downloadBtn, setDownloadBtn] = useState(true);
   const [containerSty, setContainerSty] = useState({});
