@@ -4,6 +4,7 @@ import { MsModal } from "magical-antd-ui";
 import { WjForm, WjFormColumnsPropsType } from "@/components/WjForm";
 import EmailModel from "../templates/EmailModel";
 import styles from "../style.less";
+import { storage } from "@/utils/storage";
 
 const tempList = [
   {
@@ -36,6 +37,7 @@ const secureList = [
   { value: 0, label: "否" },
 ];
 const Settings = MsModal.create(() => {
+  const loginInfo = storage.get("login-info");
   const modal = MsModal.useModal();
   const [formRef] = Form.useForm();
   // 当前选择的模板ID
@@ -105,6 +107,14 @@ const Settings = MsModal.create(() => {
         rules: [{ required: true }],
       },
     },
+    {
+      valueType: "textarea",
+      dataIndex: "emailConfig",
+      title: "邮箱模板配置",
+      formItemProps: {
+        rules: [{ required: true }],
+      },
+    },
   ];
   return (
     <MsModal
@@ -115,10 +125,12 @@ const Settings = MsModal.create(() => {
           if (res.host === "smtp.163.com") {
             res.port = 465;
           } else {
-            res.port = 465;
+            res.port = 587;
           }
+          res.configKey = tempList[tempId]?.key;
+          res.enteruser = loginInfo?.email;
           modal.resolve({ ...res });
-          formRef.resetFields();
+          // formRef.resetFields();
         });
       }}
       title="邮箱配置"
