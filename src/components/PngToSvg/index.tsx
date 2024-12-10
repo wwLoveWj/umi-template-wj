@@ -1,6 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "antd";
-export default function index() {
+import { PlusOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import styles from "./style.less";
+import { isImage } from "@/utils/index";
+
+export default function index({
+  svgWidth = 600,
+  svgHeight = 400,
+}: {
+  svgWidth: number;
+  svgHeight: number;
+}) {
+  const [downloadBtn, setDownloadBtn] = useState(true);
+  const [containerSty, setContainerSty] = useState({});
   // 返回文件(图片的宽和高)
   function getImageWH(file: any, callback: (w: number, h: number) => void) {
     // 创建一个FileReader实例
@@ -17,8 +29,8 @@ export default function index() {
       img.onload = function () {
         // 调用回调函数，并传入图片的宽高
         callback(img.width, img.height);
-        let width = img.width;
-        let height = img.height;
+        let width = svgWidth || img.width;
+        let height = svgHeight || img.height;
         let dataURL = result;
         //svg 的dom节点(字符串)
         var svgString = `<svg id="downloadSvg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -30,6 +42,7 @@ export default function index() {
         //把svg插入到页面中
         // $("#container").append(svgString);
         contanier.innerHTML = svgString;
+        setDownloadBtn(false);
       };
     };
     // 开始读取文件内容，以DataURL的形式
@@ -38,19 +51,15 @@ export default function index() {
   }
 
   // 读取文件,然后返回宽度和高度
-  function readFile(e: any) {
-    let file = e.target.files[0];
+  function readFile(file: any) {
     getImageWH(file, function (width: number, height: number) {
       console.log("Width:", width, "Height:", height);
+      setContainerSty({
+        width: svgWidth || width,
+        height: svgHeight || height,
+      });
     });
   }
-
-  useEffect(() => {
-    // 获取文件节点
-    let fileNode = document.getElementById("file") as HTMLInputElement;
-    // 给文件节点注册事件
-    fileNode.addEventListener("change", readFile);
-  }, []);
 
   //下载功能
   function download(arg: any) {
@@ -65,26 +74,69 @@ export default function index() {
     URL.revokeObjectURL(href);
   }
 
+  /**
+   * 图片上传的方法
+   */
+  const uploadImage = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("multiple", "multiple");
+    input.setAttribute("accept", "xlsx/*");
+    input.click();
+    input.onchange = async function (event: any) {
+      // 判断是否是图片格式文件
+      const file = event.target.files[0];
+      if (!isImage(file)) {
+        return;
+      }
+      readFile(file);
+    };
+    input.remove();
+  };
+
   return (
-    <div>
-      <p>图片地址：</p>
-      <div id="container"></div>
-      <br />
-      <br />
-      <br />
-      <p>转换为svg：</p>
-      <p>
-        <Button
+    <div className={styles.pngToSvgBox}>
+      <h3>转换后的svg图片：</h3>
+      <Button
+        style={{ marginTop: "12px" }}
+        disabled={downloadBtn}
+        onClick={() => {
+          let svgDom = document.querySelector("#downloadSvg");
+          if (svgDom) {
+            download(svgDom.outerHTML);
+          }
+        }}
+      >
+        下载svg
+      </Button>
+      <div className={styles.container} style={containerSty}>
+        <div id="container"></div>
+        <span
+          className={styles.clearImg}
           onClick={() => {
-            let svgDom = document.querySelector("#downloadSvg");
-            if (svgDom) {
-              download(svgDom.outerHTML);
-            }
+            setDownloadBtn(true);
+            let contanier = document.getElementById(
+              "container"
+            ) as HTMLDivElement;
+            contanier.innerHTML = "";
+            setContainerSty({});
           }}
+          style={!downloadBtn ? { display: "block" } : { display: "none" }}
         >
-          下载svg
-        </Button>
-        <input type="file" id="file" accept="image/*" />
+          <CloseCircleOutlined />
+        </span>
+      </div>
+      <p>
+        {downloadBtn && (
+          <div
+            className={styles.fileUploadContent}
+            onClick={() => {
+              uploadImage();
+            }}
+          >
+            <PlusOutlined />
+          </div>
+        )}
       </p>
     </div>
   );
