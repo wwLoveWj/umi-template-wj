@@ -263,7 +263,7 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
   const changeEditorContentWs = _.debounce(changeEditorContent, 300);
   // 原文链接：https://blog.csdn.net/weixin_45072119/article/details/140772615
   return (
-    <div className={styles.allInfo}>
+    <div className={styles.allEditorInfo}>
       {/* =============编辑器部分================== */}
       <div
         style={{
