@@ -55,6 +55,10 @@ declare namespace API {
     editorContent: string;
     title: string;
     createTime: string;
+    id: number;
+    imgBg: string;
+    typeName: string;
+    count: number;
   }
   //============================任务通知==================================
   interface TaskListType {

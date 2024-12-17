@@ -29,7 +29,7 @@ import {
 import { guid } from "@/utils";
 import styles from "./style.less";
 import "./style.less";
-import type { EditorTxtType, CatalogueType, Iprops } from "./type";
+import type { CatalogueType, Iprops } from "./type";
 
 const { TextArea } = Input;
 // 图片插入函数类型
@@ -114,11 +114,24 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
         //   console.log(`${file.name} 上传出错`, err, res);
         // },
       },
+      codeSelectLang: {
+        // 代码语言
+        codeLangs: [
+          { text: "CSS", value: "css" },
+          { text: "HTML", value: "html" },
+          { text: "XML", value: "xml" },
+          // 其他
+        ],
+      },
     },
   };
   // ---------------------------外部使用时传递的参数-----------------------------
   // const detailsData = (useLocation() as any).state;
-  const { editorId, isRealTimeediting = true }: Iprops = detailsFromProps;
+  const {
+    editorId,
+    isRealTimeediting = true,
+    disabled = false,
+  }: Iprops = detailsFromProps;
   const isEditMode = !!editorId;
   //   获取编辑器信息
   const searchEditorTxtApi = useRequest(
@@ -126,12 +139,13 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
     {
       debounceWait: 100,
       manual: true,
-      onSuccess: (res: EditorTxtType[]) => {
-        setHtml(res[0]?.editorContent);
-        setTitle(res[0]?.title);
-        editorConfig.readOnly = true;
-        editor && editor.restoreSelection(); //恢复选区
-        editor && editor.focus(true);
+      onSuccess: (res: API.ArticleTableDataType) => {
+        setHtml(res?.editorContent);
+        setTitle(res?.title);
+        editor && editor.setHtml(res?.editorContent);
+        // editorConfig.readOnly = false;
+        // editor && editor.restoreSelection(); //恢复选区
+        // editor && editor.focus(true);
       },
     }
   );
@@ -176,6 +190,24 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
 
   // 及时销毁 editor ，重要！
   useEffect(() => {
+    // if (editor) {
+    //   editor.on("change", () => {
+    //     const selectNodes = editor.getFragment();
+    //     const point = editor.selection?.anchor;
+    //     const allNodes = editor?.children;
+    //     // 获取当前光标位置
+    //     const { offset } = point;
+    //     console.log("光标位置====", offset);
+    //     // console.log(
+    //     //   "point",
+    //     //   point,
+    //     //   "selectNodes",
+    //     //   selectNodes,
+    //     //   "allNodes",
+    //     //   allNodes
+    //     // );
+    //   });
+    // }
     return () => {
       if (editor == null) return;
       editor.destroy();
@@ -183,6 +215,9 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
     };
   }, [editor]);
 
+  useEffect(() => {
+    disabled ? editor?.disable() : editor?.enable;
+  }, [editor, disabled]);
   useEffect(() => {
     if (isEditMode) {
       // 编辑操作时获取编辑器内容回填
@@ -209,6 +244,23 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
     });
   };
 
+  const changeEditorContent = () => {
+    // 定义好所有的锚点结构
+    setTableOfContents(generateTableOfContents());
+    addAnchorLinks();
+    if (isRealTimeediting && editor) {
+      websocketMsgHandler(
+        JSON.stringify({
+          editorContent: editor.getHtml(),
+          editorKey: !isEditMode ? "editor-add" : editorId,
+          title,
+          isEditMode,
+        })
+      );
+    }
+  };
+
+  const changeEditorContentWs = _.debounce(changeEditorContent, 300);
   // 原文链接：https://blog.csdn.net/weixin_45072119/article/details/140772615
   return (
     <div className={styles.allInfo}>
@@ -249,19 +301,25 @@ function MyEditor({ detailsFromProps }: { detailsFromProps: Iprops }) {
         <Editor
           defaultConfig={editorConfig}
           value={html}
-          onCreated={setEditor}
-          onChange={(editor: IDomEditor) => {
+          onCreated={(e) => setEditor(e)}
+          onChange={(e) => {
             // 定义好所有的锚点结构
             setTableOfContents(generateTableOfContents());
             addAnchorLinks();
-            if (isRealTimeediting) {
+            if (isRealTimeediting && e) {
               websocketMsgHandler(
                 JSON.stringify({
-                  editorContent: editor.getHtml(),
+                  editorContent: e.getHtml(),
                   editorKey: !isEditMode ? "editor-add" : editorId,
                   title,
                   isEditMode,
                 })
+              );
+              // setHtml(e.getHtml());
+              console.log(
+                e.getHtml(),
+                "文章内容-------------------------",
+                isEditMode
               );
             }
           }}

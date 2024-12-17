@@ -1,122 +1,90 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Space, Button } from "antd";
-import { history, useLocation } from "umi";
+import { Space, Button, Col, Row } from "antd";
+import { EyeOutlined, FieldTimeOutlined } from "@ant-design/icons";
+import { history } from "umi";
 import dayjs from "dayjs";
 import { useRequest } from "ahooks";
 import {
   ArticleInfoListQueryAPI,
   ArticleInfoDelAPI,
 } from "@/service/api/article";
-import DelPopconfirm from "@/components/DelPopconfirm";
-import type { ArticleTableDataType } from "./type.d.ts";
-import WjTable, { WjTableColumns, WjTableRefType } from "@/components/WjTable";
+import styles from "./style.scss";
 
 const Index: React.FC = () => {
-  const actionRef = useRef<WjTableRefType>(null);
-  // const detailsHistory = useLocation();
-
   //   删除文章列表数据接口
-  const DelArticleAPIRun = useRequest(ArticleInfoDelAPI, {
-    debounceWait: 100,
-    manual: true,
-    onSuccess: () => {
-      // 查询列表信息;
-      actionRef?.current?.reload();
-    },
+  const { data: articleList } = useRequest(async () => {
+    const res = await ArticleInfoListQueryAPI({});
+    debugger;
+    return res?.list;
   });
+  const toDetail = (item: API.ArticleTableDataType) => {
+    history.push(
+      {
+        pathname: "/article/detail",
+      },
+      item
+    );
+  };
 
-  // 列表项配置
-  const columns: WjTableColumns = [
-    {
-      title: "标题",
-      dataIndex: "title",
-      width: 180,
-      valueType: "input",
-      search: true,
-    },
-    {
-      title: "文章内容",
-      dataIndex: "editorContent",
-      render: (_, { editorContent }) => {
-        return <p dangerouslySetInnerHTML={{ __html: editorContent }}></p>;
-      },
-    },
-    {
-      title: "创建时间",
-      dataIndex: "createTime",
-      width: 210,
-      render: (_, { createTime }) => {
-        return createTime
-          ? dayjs(createTime).format("YYYY-MM-DD HH:mm:ss")
-          : "-";
-      },
-    },
-    {
-      title: "操作",
-      key: "action",
-      sorter: true,
-      width: 120,
-      render: (record: ArticleTableDataType) => (
-        <Space size="middle">
-          <a
-            onClick={() => {
-              history.push(
-                { pathname: "/article/edit" },
-                { editorId: record?.editorId }
-              );
-            }}
-          >
-            编辑
-          </a>
-          <DelPopconfirm
-            onConfirm={() => {
-              DelArticleAPIRun.run({ editorId: record?.editorId });
-            }}
-            title={`确定要删除【${record?.title}】的文章信息吗?`}
-          />
-          {/* <a
-            onClick={() => {
-              history.push(
-                {
-                  pathname: "/user-integral/integral-details",
-                },
-                { ...record }
-              );
-            }}
-          >
-            详情
-          </a> */}
-        </Space>
-      ),
-    },
-  ];
+  const toEdit = (record: API.ArticleTableDataType) => {
+    history.push({ pathname: "/article/edit" }, { editorId: record?.editorId });
+  };
   return (
-    <div>
-      <WjTable
-        actionRef={actionRef}
-        columns={columns}
-        request={{ url: ArticleInfoListQueryAPI, params: {} }}
-        rowKey="editorId"
-        size="small"
-        noCard={true}
-        createBtnOperations={[
-          <Button
-            type="primary"
-            onClick={() => {
-              history.push({ pathname: "/article/create" }, { editorId: "" });
-            }}
+    <>
+      <Button
+        style={{ marginBottom: "20px" }}
+        type="primary"
+        onClick={() => {
+          history.push({ pathname: "/article/create" }, { editorId: "" });
+        }}
+      >
+        写文章
+      </Button>
+      <Row className={styles.articleList}>
+        {articleList?.map((item: API.ArticleTableDataType) => (
+          <Col
+            className={styles.articleItem}
+            key={item.id}
+            onClick={() => toDetail(item)}
           >
-            写文章
-          </Button>,
-          // <Button type="primary" icon={<SearchOutlined />} onClick={run}>
-          //   查询
-          // </Button>,
-        ]}
-        // sticky
-        // scroll={{ y: "max-content" }}
-        // batchOpertions={[{ label: "批量上传" }]}
-      />
-    </div>
+            <div className={styles?.articleTop}>
+              <img
+                src={
+                  "https://www.qiniu.lingchen.kim/iShot_2024-03-01_16.48.16%20(1).png"
+                }
+              />
+              <span className={styles?.typeName}>{"nodejs"}</span>
+            </div>
+            <div className={styles.articleBottom}>
+              <h2>{item.title}</h2>
+              <div className={styles.articleInfo}>
+                <div className={styles.articleTxt}>
+                  <div className={styles.iconfont}>
+                    <FieldTimeOutlined />
+                  </div>
+                  <span>{dayjs(item.createTime).format("YYYY-MM-DD")}</span>
+                  <div className={styles.line}></div>
+                  <div className={styles.iconfont}>
+                    <EyeOutlined />
+                  </div>
+                  <span>{item.count}</span>
+                </div>
+                <Button
+                  size="small"
+                  className={styles.btn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toEdit(item);
+                  }}
+                >
+                  编辑
+                </Button>
+              </div>
+            </div>
+          </Col>
+        ))}
+      </Row>
+    </>
   );
 };
 
