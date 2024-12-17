@@ -17,6 +17,7 @@ function MyEditor({
   editorHtml,
   changeEditorTitleWs,
   editorTitle,
+  isComment = false,
 }: Iprops) {
   //------------------------- 编辑器相关配置----------------------------------
   const [editor, setEditor] = useState<IDomEditor | null>(null); // editor 实例
@@ -151,9 +152,9 @@ function MyEditor({
   return (
     <div
       style={{
-        border: "1px solid #ccc",
+        border: isComment ? "1px solid #ccc" : "none",
         zIndex: 100,
-        width: "calc(100% - 220px)",
+        width: isComment ? "100%" : "calc(100% - 220px)",
         overflowY: "auto",
       }}
       className="content-editor"
@@ -163,22 +164,25 @@ function MyEditor({
         defaultConfig={toolbarConfig}
         mode="default"
         className="toobar-editor"
-        style={{ borderBottom: "1px solid #ccc" }}
+        style={isComment ? { borderBottom: "1px solid #ccc" } : {}}
       />
       {/* =================文章标题================== */}
-      <div className="title-editor">
-        {editorTitle}
-        <TextArea
-          className="textareaTitle"
-          maxLength={100}
-          value={editorTitle}
-          onChange={(e: any) => {
-            changeEditorTitleWs && changeEditorTitleWs(e.target.value, editor);
-          }}
-          placeholder="请输入文档标题"
-          onPressEnter={() => editor?.focus(false)}
-        />
-      </div>
+      {!isComment && (
+        <div className="title-editor">
+          {editorTitle}
+          <TextArea
+            className="textareaTitle"
+            maxLength={100}
+            value={editorTitle}
+            onChange={(e: any) => {
+              changeEditorTitleWs &&
+                changeEditorTitleWs(e.target.value, editor);
+            }}
+            placeholder="请输入文档标题"
+            onPressEnter={() => editor?.focus(false)}
+          />
+        </div>
+      )}
       {children}
       <Editor
         defaultConfig={editorConfig}

@@ -5,6 +5,9 @@ export interface CatalogueType {
   index: number;
 }
 export interface Iprops {
+  isComment?: boolean; //是否属于评论组件
+  editorId?: string;
+  isRealTimeediting?: boolean; //是否开启websocket监听消息
   disabled?: boolean; //是否禁用编辑器
   children?: ReactDOM; //标题节点插入dom
   changeEditorContentWs: (editor: IDomEditor) => void; //编辑器内容的change事件
