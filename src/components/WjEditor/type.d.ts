@@ -26,3 +26,11 @@ export interface TitleEditorProps {
   onChgTitle: (val: string) => void;
   editorHtml: string; //编辑器内容区
 }
+
+export interface headListType {
+  text: string;
+  type: string;
+  children?: any;
+  id: string;
+  level?: number;
+}

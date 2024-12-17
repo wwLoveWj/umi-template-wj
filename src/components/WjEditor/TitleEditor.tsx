@@ -6,13 +6,14 @@ import {
   // websocket,
   websocketMsgHandler,
 } from "./websocket";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space } from "antd";
 import _ from "lodash-es";
-import "./style.less";
+import { generateTableOfContents } from "./catalogue";
 import MyEditor from "./editor";
 import Anchor from "./anchor";
-import { TitleEditorProps } from "./type";
+import { TitleEditorProps, CatalogueType } from "./type";
+import "./style.less";
 
 function WjEditor({
   saveEditorContent, //文章保存按钮
@@ -24,9 +25,9 @@ function WjEditor({
   isRealTimeediting = true,
   disabled = false,
 }: TitleEditorProps) {
-  const anchorRef = useRef(null);
   const isEditMode = !!editorId;
-
+  // 左侧锚点集合
+  const [tableOfContents, setTableOfContents] = useState<CatalogueType[]>([]); //目录结构集合
   // 标题的输入事件
   const changeEditorTitle = (e: IDomEditor) => {
     websocketMsgHandler(
@@ -42,7 +43,7 @@ function WjEditor({
 
   // 当编辑器内容改变时
   const changeEditorContent = (e: IDomEditor) => {
-    // anchorRef.current?.addAnchorLink();
+    setTableOfContents(generateTableOfContents());
     if (isRealTimeediting && e) {
       websocketMsgHandler(
         JSON.stringify({
@@ -52,6 +53,7 @@ function WjEditor({
           isEditMode,
         })
       );
+      // 原文链接：https://blog.csdn.net/qq_35891206/article/details/132626741
       console.log(e.getHtml(), "文章内容-------------------------", isEditMode);
     }
   };
@@ -92,7 +94,7 @@ function WjEditor({
           </Button>
         </Space>
         {/* =============右侧目录部分================ */}
-        <Anchor ref={anchorRef} />
+        <Anchor tableOfContents={tableOfContents} />
       </div>
     </div>
   );

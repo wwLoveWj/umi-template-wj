@@ -55,3 +55,20 @@ export const handleItemClick = (index: number) => {
     container.scrollTop = scrollTop;
   }
 };
+
+// header数据
+// const navGenerate = (editor: IDomEditor) => {
+//   const navList: headListType[] = [];
+//   const headers: any = editor.getElemsByTypePrefix("header");
+//   headers.map((header: headListType) => {
+//     const level =
+//       header.type === "header1" ? 1 : header.type === "header2" ? 2 : 3; // 根据标题等级设置目录项的缩进
+//     navList.push({
+//       id: header.id,
+//       type: header.type,
+//       level,
+//       text: header.children.map((v: { text: string }) => v.text).join(""),
+//     });
+//   });
+//   return navList;
+// };
