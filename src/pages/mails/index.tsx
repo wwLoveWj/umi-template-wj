@@ -6,6 +6,7 @@ import {
   MailConfigCreateAPI,
   MailConfigInfoQueryAPI,
   MailConfigInfoSetAPI,
+  CurrentMailConfigInfoAPI,
 } from "@/service/api/mail";
 import { useRequest } from "ahooks";
 import WjTable, { WjTableColumns } from "@/components/WjTable";
@@ -23,6 +24,7 @@ const STATUS = [
   },
 ];
 export default function MailIndex() {
+  const [isFirstLoading, setIsFirstLoading] = useState(false);
   // 选中的当前配置
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([
     "TASK_TIMING_REMINDER",
@@ -85,8 +87,14 @@ export default function MailIndex() {
     },
   ];
 
-  useRequest(() => MailConfigInfoSetAPI({ configKey: selectedRowKeys[0] }), {
-    refreshDeps: [selectedRowKeys],
+  const { run: setMailTempCnfigRun } = useRequest(MailConfigInfoSetAPI, {
+    manual: true,
+  });
+  // 查询当前邮件模板配置
+  useRequest(CurrentMailConfigInfoAPI, {
+    onSuccess: (res) => {
+      setSelectedRowKeys([res]);
+    },
   });
   return (
     <WjTable
@@ -105,15 +113,19 @@ export default function MailIndex() {
           邮箱配置
         </Button>,
       ]}
-      onRow={(record) => ({
-        onClick: () => setSelectedRowKeys([record?.configKey]),
-      })}
+      // onRow={(record) => ({
+      //   onClick: () => setSelectedRowKeys([record?.configKey]),
+      // })}
       rowSelection={{
         defaultSelectedRowKeys: selectedRowKeys,
         selectedRowKeys,
         type: "radio",
         onChange: (selectedRowKey: React.Key[]) => {
           setSelectedRowKeys(selectedRowKey);
+          if (isFirstLoading) {
+            setMailTempCnfigRun({ configKey: selectedRowKey[0] });
+          }
+          setIsFirstLoading(true);
         },
       }}
     />

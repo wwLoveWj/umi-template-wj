@@ -124,6 +124,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
         hidden: true,
       },
       {
+        key: "detail",
+        title: "文章详情",
+        path: "/article/detail",
+        component: "./article/components/ArticleDetails.tsx",
+        hidden: true,
+      },
+      {
         key: "comment",
         title: "留言板",
         path: "/article/comment",

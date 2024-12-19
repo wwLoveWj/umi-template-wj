@@ -21,3 +21,8 @@ export const MailConfigInfoQueryAPI = (params = {}): Promise<any> => {
 export const MailConfigInfoSetAPI = (params = {}): Promise<any> => {
   return request.post("/mail/config/set", params);
 };
+
+// 查询当前邮箱模板配置信息
+export const CurrentMailConfigInfoAPI = (params = {}): Promise<any> => {
+  return request.post("/mail/config/set/query", params);
+};

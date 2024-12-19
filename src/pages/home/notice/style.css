@@ -12,6 +12,7 @@
   transition: all 0.2s;
   transform-origin: center top 0;
   will-change: top, left;
+  z-index: 99999;
 }
 .notice .header {
   display: flex;
