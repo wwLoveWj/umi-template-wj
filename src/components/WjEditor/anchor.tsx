@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Affix, Tooltip } from "antd";
+import classNames from "classnames";
 // 获取锚点、目录等公共方法
 import { handleItemClick } from "./catalogue";
 import "./style.less";
@@ -22,19 +23,25 @@ export default function Anchor({
             <li
               key={item.id}
               // 根据不同的标题等级处理间隔h1-h6
-              style={{ paddingLeft: item.level * 20 + "px" }}
+              style={{
+                paddingLeft: item.level * 20 + "px",
+              }}
+              className="line-anchor"
             >
+              {activeIndex === index && <span className="line-anchor-a"></span>}
               <a
-                className={activeIndex === index ? "active" : ""}
+                className={classNames("line-anchor-y", {
+                  active: activeIndex === index,
+                })}
                 href={`#${item.id}`}
                 onClick={() => {
                   setActiveIndex(index);
                   handleItemClick(index);
                 }}
               >
-                <Tooltip title={item.text} color="lime" placement="leftTop">
-                  <div className="beyond-hidden">{item.text}</div>
-                </Tooltip>
+                {/* <Tooltip title={item.text} color="lime" placement="rightTop"> */}
+                <div className="beyond-hidden">{item.text}</div>
+                {/* </Tooltip> */}
               </a>
             </li>
           );

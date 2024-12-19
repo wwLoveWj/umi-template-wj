@@ -23,6 +23,7 @@
 }
 .table-of-contents li:hover {
   color: #95c92c;
+  background: #e8f6ff;
 }
 .table-of-contents .beyond-hidden {
   overflow: hidden;
@@ -30,6 +31,18 @@
   text-overflow: ellipsis;
   white-space: nowarp;
   display: block;
+}
+.table-of-contents .line-anchor {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 6px 0;
+}
+.table-of-contents .line-anchor-a {
+  position: absolute;
+  left: 0;
+  border-left: 5px solid #95c92c;
+  height: 20px;
 }
 .table-of-contents .active {
   font-weight: bold;
