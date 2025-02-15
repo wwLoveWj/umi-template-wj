@@ -9,7 +9,10 @@ import {
   InputNumber,
   Card,
   DatePicker,
+  TimePicker,
   Radio,
+  Slider,
+  Rate,
 } from "antd";
 import WjBtnConfigForm from "../../WjBtnConfigForm/index";
 
@@ -28,8 +31,11 @@ export type ComponentsType = {
   number: typeof InputNumber;
   password: typeof Input.Password;
   date: typeof DatePicker;
+  time: typeof TimePicker;
   searchForm: typeof WjBtnConfigForm;
   radio: typeof Radio.Group;
+  slider: typeof Slider;
+  rate: typeof Rate;
 };
 
 const components: ComponentsType = {
@@ -47,8 +53,11 @@ const components: ComponentsType = {
   number: InputNumber,
   password: Input.Password,
   date: DatePicker,
+  time: TimePicker,
   searchForm: WjBtnConfigForm,
   radio: Radio.Group,
+  slider: Slider,
+  rate: Rate,
 };
 
 export default components;

@@ -32,6 +32,7 @@ import classNames from "classnames";
 import WjCheckBox from "@/components/WjCheckBox";
 import SearchForm from "./components/SearchForm";
 import WjButton from "@/components/WjButton";
+import PngToSvg from "@/components/PngToSvg";
 // import SendButton from "@/components/Buttons/send/SendButton";
 // import DisabledButton from "@/components/Buttons/disabled/index";
 const IntervalUnit = new Map([
@@ -174,7 +175,7 @@ const Index = () => {
   // 查询任务
   const onSearchTask = (value: any) => {
     queryQueryTaskInfo.run(value);
-    // testTaskTempAPI({ sendToUser: "xxx@163.com" });
+    // testTaskTempAPI({ sendToUser: "blww885@163.com" });
   };
   // 当子级全选时勾选中全选按钮
   useEffect(() => {
@@ -462,6 +463,7 @@ const Index = () => {
             <Empty description="暂无待办事项" />
           </div>
         )}
+        <PngToSvg />
       </div>
     </div>
   );
