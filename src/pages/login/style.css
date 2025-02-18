@@ -70,9 +70,6 @@
   color: #fff;
   padding: 15px 20px;
 }
-.loginPage .container .content .mainLeft .formCard :global .my-template-umi-ant-form-horizontal .my-template-umi-ant-form-item-control {
-  margin-bottom: 12px;
-}
 .loginPage .container .content .mainLeft .formCard :global .my-template-umi-ant-checkbox-inner {
   background: transparent;
 }

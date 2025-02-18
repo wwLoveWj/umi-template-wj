@@ -1,0 +1,93 @@
+@keyframes slidetounlock {
+  0% {
+    background-position: var(--pwidth) 0;
+  }
+  100% {
+    background-position: var(--width) 0;
+  }
+}
+@keyframes slidetounlock2 {
+  0% {
+    background-position: var(--pwidth) 0;
+  }
+  100% {
+    background-position: var(--pwidth) 0;
+  }
+}
+.drag_verify {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid var(--art-border-dashed-color);
+}
+.drag_verify .dv_handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: move;
+}
+.drag_verify .dv_handler i {
+  padding-left: 0;
+  font-size: 14px;
+  color: #999;
+}
+.drag_verify .dv_handler .el-icon-circle-check {
+  margin-top: 9px;
+  color: #6c6;
+}
+.drag_verify .dv_progress_bar {
+  position: absolute;
+  width: 0;
+  height: 34px;
+}
+.drag_verify .dv_text {
+  position: absolute;
+  top: 0;
+  color: transparent;
+  user-select: none;
+  background: linear-gradient(to right, var(--textColor) 0%, var(--textColor) 40%, #fff 50%, var(--textColor) 60%, var(--textColor) 100%);
+  background-clip: text;
+  animation: slidetounlock 3s infinite;
+  -webkit-text-fill-color: transparent;
+  text-size-adjust: none;
+}
+.drag_verify .dv_text * {
+  -webkit-text-fill-color: var(--textColor);
+}
+.goFirst {
+  left: 0 !important;
+  transition: left 0.5s;
+}
+.goFirst2 {
+  width: 0 !important;
+  transition: width 0.5s;
+}
+.drag-verify {
+  position: relative;
+  padding-bottom: 20px;
+  margin-top: 25px;
+  width: 100%;
+}
+.drag-verify .drag-verify-content {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  user-select: none;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+.drag-verify .drag-verify-content.error {
+  border-color: #f56c6c;
+}
+.drag-verify .error-text {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #f56c6c;
+  transition: all 0.3s;
+}
+.drag-verify .error-text.show-error-text {
+  transform: translateY(40px);
+}

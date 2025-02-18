@@ -10,13 +10,19 @@ import JSEncrypt from "jsencrypt";
 import md5 from "md5";
 import { setPrivateKey, getPrivateKey } from "@/utils";
 import { storage } from "@/utils/storage";
+import VerifyLogin from "@/components/VerifyLogin";
 // 登录页面
 const Login = () => {
   const pwdRef = useRef(null);
   // const { pathname } = useLocation();
   const [form] = Form.useForm();
   const [checked, setChecked] = useState(false); //记住密码
-
+  const [isClickPass, setIsClickPass] = useState(false); //记录是否点击过通过按钮
+  const [isPassing, setIsPassing] = useState(false); //是否通过了校验
+  // 控制是否通过校验
+  const chgValue = (isPassingvalue: boolean) => {
+    setIsPassing(isPassingvalue);
+  };
   useEffect(() => {
     // 仅在组件挂载时运行
     const initializeForm = async () => {
@@ -100,7 +106,11 @@ const Login = () => {
     // encryptor.setPublicKey(pubKey); //设置公钥
     // const rsaPassWord = encryptor.encrypt(values?.password); // 对内容进行加密
     const params = { ...values, password: md5(values?.password) };
-    debugger;
+    // 判断是否通过滑块校验
+    if (!isPassing) {
+      setIsClickPass(true);
+      return;
+    }
     handleLoginInfoMsg.run(params);
   };
 
@@ -186,6 +196,11 @@ const Login = () => {
                     //   }
                   />
                 </Form.Item>
+                <VerifyLogin
+                  isClickPass={isClickPass}
+                  isPassing={isPassing}
+                  chgValue={chgValue}
+                />
                 {process.env.NODE_ENV === "development" && (
                   <Row className={styles.loginInfoCheck}>
                     <Form.Item
