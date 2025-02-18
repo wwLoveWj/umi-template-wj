@@ -3,14 +3,11 @@ import type { BadgeProps, CalendarProps } from "antd";
 import { Badge, Calendar } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import "./style.scss";
 import { MsModal } from "magical-antd-ui";
 import EventModal from "./components/EventModal";
 import classNames from "classnames";
-dayjs.extend(isSameOrAfter);
-dayjs.extend(isSameOrBefore);
+
 // 原文链接：https://blog.csdn.net/weixin_45389051/article/details/139958483
 
 const getMonthData = (value: Dayjs) => {
@@ -176,7 +173,7 @@ const App: React.FC = () => {
     return info.originNode;
   };
 
-  return <Calendar cellRender={cellRender} />;
+  return <Calendar cellRender={cellRender} showWeek={true} />;
 };
 
 export default App;
