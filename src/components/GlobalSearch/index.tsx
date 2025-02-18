@@ -301,6 +301,8 @@ export default function Index() {
             highlightPrevious();
           } else if (event.code === "Enter") {
             selectHighlighted();
+          } else if (event.code === "Escape") {
+            setShowSearchDialog(false);
           }
         }}
       />
