@@ -2,6 +2,7 @@ import React from "react";
 import { WjForm } from "@/components/WjForm";
 import { WjTableColumnType } from "@/components/WjTable";
 import { history } from "umi";
+import WjCalendar from "@/components/WjCalendar/calendar";
 export default function Index() {
   const formConfigList1: WjTableColumnType[] = [
     {
@@ -83,6 +84,7 @@ export default function Index() {
 
   return (
     <div>
+      <WjCalendar />
       <WjForm formConfigList={formConfigList1} />
     </div>
   );

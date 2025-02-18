@@ -189,53 +189,40 @@
 }
 
 .dark {
-    .search-widget {
-        .el-input {
-            :deep(.el-input__wrapper) {
-                background-color: #252526;
-                border: 1px solid #4c4d50;
-            }
+    .search-keydown {
+        background-color: #252526;
+        border: 1px solid #4c4d50;
+    }
 
-            .search-keydown {
-                background-color: #252526;
-                border: 1px solid #4c4d50;
-            }
-        }
+    .search-modal {
+        background-color: rgb(23 23 26 / 60%);
+        backdrop-filter: none;
+    }
 
-        :deep(.search-modal) {
-            background-color: rgb(23 23 26 / 60%);
-            backdrop-filter: none;
-        }
+    .result {
+        .box {
+            div {
+                color: rgba($color: #fff, $alpha: 60%) !important;
 
-        :deep(.el-dialog) {
-            background-color: #252526;
-        }
-
-        .result {
-            .box {
-                div {
-                    color: rgba($color: #fff, $alpha: 60%) !important;
-
-                    &.highlighted {
-                        color: #fff !important;
-                    }
-                }
-            }
-        }
-
-        .dialog-footer {
-            >div {
-                color: var(--art-gray-600) !important;
-
-                i {
-                    background-color: var(--art-gray-100);
-                }
-
-                span {
-                    margin-right: 15px;
-                    font-size: 12px;
+                &.highlighted {
+                    color: #fff !important;
                 }
             }
         }
     }
+
+    .dialog-footer {
+        >div {
+            color: var(--art-gray-600) !important;
+
+            span {
+                background-color: var(--art-gray-100);
+            }
+        }
+    }
+
+    .search-dialog {
+        background-color: #252526;
+    }
+
 }
