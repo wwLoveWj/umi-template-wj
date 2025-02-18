@@ -1,4 +1,5 @@
 declare namespace API {
+  import type { Dayjs } from "dayjs";
   /**
    * 全局类型接口编写规则：
    * 1. 首字母大写，并且驼峰命名
@@ -83,5 +84,12 @@ declare namespace API {
     imgUrl: string;
     imgType: string;
     descrption: string;
+  }
+
+  interface CalendarEvent {
+    startDate: string | Dayjs;
+    endDate?: string | Dayjs;
+    content: string;
+    type?: "warning" | "success" | "error";
   }
 }

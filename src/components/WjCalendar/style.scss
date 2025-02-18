@@ -1,0 +1,73 @@
+ .events {
+     height: 100%;
+     width: 100%;
+ }
+
+ .event-tag {
+     min-width: 100px;
+     padding: 6px 12px;
+     overflow: hidden;
+     font-size: 13px;
+     font-weight: 500;
+     line-height: 24px;
+     text-overflow: ellipsis;
+     //  white-space: nowrap;
+     border-radius: 4px;
+     background: #1cbd1c;
+     margin-bottom: 5px;
+     cursor: pointer;
+
+     &:hover {
+         opacity: 0.8;
+     }
+
+     &::before {
+         position: absolute;
+         top: 0;
+         left: 0;
+         display: inline-block;
+         width: 4px;
+         height: 100%;
+         content: '';
+     }
+
+     &.event-continues::after {
+         position: absolute;
+         top: 50%;
+         right: 4px;
+         font-size: 12px;
+         content: '►';
+         transform: translateY(-50%);
+     }
+ }
+
+ .bg-primary {
+     background-color: rgb(var(--art-bg-primary)) !important;
+     color: rgb(var(--art-primary)) !important;
+ }
+
+ .bg-secondary {
+     background-color: rgb(var(--art-bg-secondary)) !important;
+     color: rgb(var(--art-secondary)) !important;
+     border: 1px solid var(--art-secondary);
+ }
+
+ .bg-warning {
+     background-color: rgb(var(--art-bg-warning)) !important;
+     color: rgb(var(--art-warning)) !important;
+ }
+
+ .bg-error {
+     background-color: rgb(var(--art-bg-error)) !important;
+     color: rgb(var(--art-error)) !important;
+ }
+
+ .bg-success {
+     background-color: rgb(var(--art-bg-success)) !important;
+     color: rgb(var(--art-success)) !important;
+ }
+
+ .bg-danger {
+     background-color: rgb(var(--art-bg-danger)) !important;
+     color: rgb(var(--art-danger)) !important;
+ }
