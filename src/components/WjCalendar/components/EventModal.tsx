@@ -5,6 +5,7 @@ import { useRequest } from "ahooks";
 import { MsModal } from "magical-antd-ui";
 import { WjForm } from "@/components/WjForm";
 import dayjs from "dayjs";
+import { guid } from "@/utils";
 
 const eventTypes = [
   { label: "基本", value: "processing" },
@@ -17,6 +18,7 @@ const MyModal = MsModal.create(
   ({ editInfo }: { editInfo: API.CalendarEvent }) => {
     const modal = MsModal.useModal();
     const [formRef] = Form.useForm();
+    const isEditMode = !!editInfo?.calendarId;
 
     const columns: any[] = [
       {
@@ -80,6 +82,7 @@ const MyModal = MsModal.create(
               ...res,
               startDate,
               endDate,
+              calendarId: isEditMode ? editInfo?.calendarId : guid(),
             };
             modal.resolve(params);
           });

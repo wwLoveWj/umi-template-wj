@@ -7,7 +7,12 @@ import "./style.scss";
 import { MsModal } from "magical-antd-ui";
 import EventModal from "./components/EventModal";
 import classNames from "classnames";
-
+import {
+  CalendarInfoListQueryAPI,
+  CalendarInfoUpdateAPI,
+  CalendarInfoCreateAPI,
+} from "@/service/api/calendar";
+import { useRequest } from "ahooks";
 // 原文链接：https://blog.csdn.net/weixin_45389051/article/details/139958483
 
 const getMonthData = (value: Dayjs) => {
@@ -18,31 +23,51 @@ const getMonthData = (value: Dayjs) => {
 
 const App: React.FC = () => {
   const [events, setEvents] = useState<API.CalendarEvent[]>([
-    {
-      startDate: "2025-02-01",
-      content: "产品需求评审",
-      type: "warning",
-    },
-    {
-      startDate: "2025-02-03",
-      endDate: "2025-02-05",
-      content: "项目周报会议（跨日期）",
-      type: "warning",
-    },
-    {
-      startDate: "2025-02-10",
-      content: "瑜伽课程",
-      type: "error",
-      endDate: "2025-02-11",
-    },
-    { startDate: "2025-02-15", content: "团队建设活动", type: "warning" },
-    { startDate: "2025-02-20", content: "健身训练", type: "error" },
-    { startDate: "2025-02-20", content: "代码评审", type: "warning" },
-    { startDate: "2025-02-20", content: "团队午餐", type: "warning" },
-    { startDate: "2025-02-20", content: "项目进度汇报", type: "warning" },
-    { startDate: "2025-02-28", content: "月度总结会", type: "warning" },
+    // {
+    //   startDate: "2025-02-01",
+    //   content: "产品需求评审",
+    //   type: "warning",
+    // },
+    // {
+    //   startDate: "2025-02-03",
+    //   endDate: "2025-02-05",
+    //   content: "项目周报会议（跨日期）",
+    //   type: "warning",
+    // },
+    // {
+    //   startDate: "2025-02-10",
+    //   content: "瑜伽课程",
+    //   type: "error",
+    //   endDate: "2025-02-11",
+    // },
+    // { startDate: "2025-02-15", content: "团队建设活动", type: "warning" },
+    // { startDate: "2025-02-20", content: "健身训练", type: "error" },
+    // { startDate: "2025-02-20", content: "代码评审", type: "warning" },
+    // { startDate: "2025-02-20", content: "团队午餐", type: "warning" },
+    // { startDate: "2025-02-20", content: "项目进度汇报", type: "warning" },
+    // { startDate: "2025-02-28", content: "月度总结会", type: "warning" },
   ]);
+  // 获取待办信息
+  const CalendarInfoListQueryRun = useRequest(CalendarInfoListQueryAPI, {
+    onSuccess: (res) => {
+      setEvents(res?.list);
+    },
+  });
 
+  const CalendarInfoUpdateRun = useRequest(CalendarInfoUpdateAPI, {
+    manual: true,
+    onSuccess: (res) => {
+      debugger;
+      CalendarInfoListQueryRun.run({});
+    },
+  });
+
+  const CalendarInfoCreateRun = useRequest(CalendarInfoCreateAPI, {
+    manual: true,
+    onSuccess: (res) => {
+      CalendarInfoListQueryRun.run({});
+    },
+  });
   //   useEffect(() => {
   //     const diffInMilliseconds = dayjs("20250218").diff(dayjs("20250301"));
 
@@ -53,7 +78,6 @@ const App: React.FC = () => {
   //     // 对比差值是否小于0来判断日期1是否早于日期2
   //     const isDate1BeforeDate2 = diffInMilliseconds2 <= 0;
   //   }, []);
-
   // 判断大于等于
   const handisOnOrAfterToday = (start: Dayjs, end: Dayjs) => {
     const isOnOrAfterToday = start.isSameOrAfter(end, "day");
@@ -113,9 +137,7 @@ const App: React.FC = () => {
   // 新增事件处理函数
   const handleCellClick = (day: Dayjs) => {
     MsModal.open(EventModal).then((res: any) => {
-      const arr = [...events];
-      arr.push(res);
-      setEvents(arr);
+      CalendarInfoCreateRun.run(res);
     });
   };
   // 更新事件
@@ -127,10 +149,9 @@ const App: React.FC = () => {
     const startDate = dayjs(editInfo.startDate);
     const endDate = dayjs(editInfo.endDate);
     const event: API.CalendarEvent = {
+      ...editInfo,
       startDate,
       endDate,
-      content: editInfo.content,
-      type: editInfo.type,
     };
     //    找到事件中对应项
     const idx = events.findIndex(
@@ -142,10 +163,7 @@ const App: React.FC = () => {
     MsModal.open(EventModal, {
       editInfo: event,
     }).then((res: any) => {
-      const arr = [...events];
-      arr[idx] = res;
-      debugger;
-      setEvents(arr);
+      CalendarInfoUpdateRun.run(res);
     });
   };
   const dateCellRender = (value: Dayjs) => {
@@ -153,7 +171,7 @@ const App: React.FC = () => {
       <ul className="events" onClick={() => handleCellClick(value)}>
         {getEvents(value).map((item) => (
           <li
-            key={item.content}
+            key={item.calendarId}
             onClick={(e) => handleEventClick(e, item)}
             className={classNames("event-tag", `${"bg-" + item.type}`)}
           >
