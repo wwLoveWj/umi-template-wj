@@ -53,7 +53,7 @@ const MyModal = MsModal.create(
           rules: [{ required: true }],
         },
         fieldProps: {
-          format: "YYYY/MM/DD",
+          format: "YYYY-MM-DD",
           placeholder: "请选择开始日期",
         },
       },
