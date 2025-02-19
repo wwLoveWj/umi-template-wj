@@ -7,7 +7,7 @@ import { WjForm } from "@/components/WjForm";
 import dayjs from "dayjs";
 
 const eventTypes = [
-  { label: "基本", value: "primary" },
+  { label: "基本", value: "processing" },
   { label: "成功", value: "success" },
   { label: "警告", value: "warning" },
   { label: "危险", value: "error" },
@@ -36,7 +36,7 @@ const MyModal = MsModal.create(
         valueType: "radio",
         title: "事件颜色",
         formItemProps: {
-          initialValue: "bg-primary",
+          initialValue: "processing",
           rules: [{ required: true }],
         },
         fieldProps: {
