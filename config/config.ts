@@ -5,7 +5,9 @@ import { PROJECT_CONFIG } from "../src/constants/constant";
 export default defineConfig({
   title: "创世纪系统",
   mountElementId: PROJECT_CONFIG.NAME,
-  // history: { type: "hash" },
+  history: { type: "hash" },
+  base: "/",
+  publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   initialState: {},
   model: {}, // 使用useModel需要这个配置
   // locale: {},
@@ -38,4 +40,16 @@ export default defineConfig({
     // "@umijs/plugins/dist/locale",
     "umi-plugin-keep-alive",
   ],
+  // chainWebpack: (config) => {
+  //   // 将匹配到的文件使用worker-loader处理
+  //   config.module
+  //     .rule("worker")
+  //     .test(/\.worker\.js$/) // 匹配文件名为xxx.worker.js的文件
+  //     .use("worker-loader")
+  //     .loader("worker-loader")
+  //     .end();
+  //   config.module.rule("js").exclude.add(/\.worker\.js$/);
+  // },
+
+  // 原文链接：https://blog.csdn.net/zg97zb/article/details/128421260
 });

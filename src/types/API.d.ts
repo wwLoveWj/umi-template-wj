@@ -87,9 +87,10 @@ declare namespace API {
   }
 
   interface CalendarEvent {
+    calendarId: string;
     startDate: string | Dayjs;
     endDate?: string | Dayjs;
     content: string;
-    type?: "warning" | "success" | "error";
+    type?: "warning" | "success" | "error" | "processing";
   }
 }
