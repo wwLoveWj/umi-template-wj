@@ -1,4 +1,5 @@
 import vstores from "vstores";
+import { SystemThemeEnum } from "@/enums/appEnum";
 
 type StorageType = {
   "login-info": {
@@ -10,6 +11,13 @@ type StorageType = {
   role: 1 | 2 | 3 | 4;
   loginChecked: string;
   menuList: string[];
+  menuTheme: "dark" | "light";
+  systemColor: {
+    systemThemeMode: SystemThemeEnum;
+    systemThemeType: SystemThemeEnum;
+  };
+  themeColor: string;
+  borderMode: boolean;
 };
 
 export const storage = vstores.create<StorageType>({
