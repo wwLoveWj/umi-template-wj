@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "antd";
+import React, { useEffect } from "react";
 import SettingConfig from "./components/SettingsDrawer";
 import { useTheme } from "./hooks/useTheme";
 import { useModel } from "umi";
-import { SystemThemeEnum, ElementPlusTheme } from "@/config/setting";
-export default function Index() {
+import { SystemThemeEnum } from "@/config/setting";
+
+export default function Index({
+  onClose,
+  open,
+}: {
+  onClose: () => void;
+  open: boolean;
+}) {
   const { setSystemTheme, setSystemAutoTheme, setElementThemeColor } =
     useTheme();
-  const [visibleSetting, setVisibleSetting] = useState(false);
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const { systemThemeMode, systemThemeType, systemThemeColor } =
-    useModel("themeColor"); // 系统主题变量
+  const {
+    systemThemeMode,
+    systemThemeType,
+    systemThemeColor,
+    currentMenuTheme,
+  } = useModel("themeColor"); // 系统主题变量
 
   // 监听系统主题变化
   const listenerSystemTheme = () => {
@@ -30,25 +39,16 @@ export default function Index() {
     listenerSystemTheme();
     initSystemTheme();
     setElementThemeColor(systemThemeColor);
+    // 初始化刷新时的操作初始化
+    let menu = document.getElementsByTagName("aside")[0];
+    menu.setAttribute("theme", currentMenuTheme);
     return () => {
       mediaQuery.removeEventListener("change", initSystemTheme);
     };
   }, []);
   return (
-    <>
-      <SettingConfig
-        onClose={() => {
-          setVisibleSetting(false);
-        }}
-        open={visibleSetting}
-      />
-      <Button
-        onClick={() => {
-          setVisibleSetting(true);
-        }}
-      >
-        设置
-      </Button>
-    </>
+    <div>
+      <SettingConfig onClose={onClose} open={open} />
+    </div>
   );
 }

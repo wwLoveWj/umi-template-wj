@@ -19,7 +19,7 @@ export default function Index({
   //     }
   //   };
   return (
-    <Drawer title="Basic Drawer" onClose={onClose} open={open}>
+    <Drawer onClose={onClose} open={open}>
       <div className="drawer-con">
         <ThemeSetting />
         <ThemeMenuType />

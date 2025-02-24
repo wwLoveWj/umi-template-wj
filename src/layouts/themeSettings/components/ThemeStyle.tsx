@@ -10,7 +10,7 @@ const ThemeStyle = () => {
   const { systemThemeMode } = useModel("themeColor"); // 系统主题变量
 
   return (
-    <div>
+    <>
       <p className="title">主题风格</p>
       <div className="theme-wrap">
         {SettingThemeList?.map((item, index) => (
@@ -53,7 +53,7 @@ const ThemeStyle = () => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

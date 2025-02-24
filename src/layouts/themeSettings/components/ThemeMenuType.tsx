@@ -14,11 +14,7 @@ export default function ThemeMenuType() {
       setMenuTheme: model.setMenuTheme,
     })
   );
-  // 初始化刷新时的操作初始化
-  useEffect(() => {
-    let menu = document.getElementsByTagName("aside")[0];
-    menu.setAttribute("theme", currentMenuTheme);
-  }, []);
+
   return (
     <div>
       <p className="title" style={{ marginTop: "30px" }}>
