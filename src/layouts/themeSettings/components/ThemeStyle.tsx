@@ -7,7 +7,7 @@ import "../style.scss";
 
 const ThemeStyle = () => {
   const { switchTheme } = useTheme();
-  const { systemThemeMode } = useModel("themeColor"); // 系统主题变量
+  const { systemThemeMode, setMenuTheme } = useModel("themeColor"); // 系统主题变量
 
   return (
     <>
@@ -17,7 +17,12 @@ const ThemeStyle = () => {
           <div
             className="theme-item"
             key={item.theme}
-            onClick={() => switchTheme(item.theme)}
+            onClick={() => {
+              switchTheme(item.theme);
+              if (item.theme === "dark") {
+                setMenuTheme(item.theme);
+              }
+            }}
           >
             <div
               className={classNames("box", {

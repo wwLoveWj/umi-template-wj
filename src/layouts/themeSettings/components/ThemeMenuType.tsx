@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { ThemeList, MenuThemeEnum, SystemThemeEnum } from "@/config/setting";
+import { ThemeList } from "@/config/setting";
 import "../style.scss";
 import { useModel } from "umi";
 import { storage } from "@/utils/storage";
 
 const menuThemeList = ThemeList;
 export default function ThemeMenuType() {
-  const { currentMenuTheme, setMenuTheme } = useModel(
-    "themeColor",
-    (model) => ({
-      currentMenuTheme: model.currentMenuTheme,
-      setMenuTheme: model.setMenuTheme,
-    })
-  );
+  const { currentMenuTheme, setMenuTheme, systemThemeType } =
+    useModel("themeColor");
 
+  const getMenuTheme = (theme: string) => {
+    return (
+      (systemThemeType === "dark" && theme === "dark") ||
+      (systemThemeType === "light" && theme !== "design")
+    );
+  };
   return (
     <div>
       <p className="title" style={{ marginTop: "30px" }}>
@@ -27,14 +28,19 @@ export default function ThemeMenuType() {
               className="item"
               key={item.theme}
               onClick={() => {
-                setMenuTheme(item.theme);
-                storage.set("menuTheme", item.theme);
-                // 给aside身上添加样式
-                let menu = document.getElementsByTagName("aside")[0];
-                menu.setAttribute("theme", item.theme);
+                if (getMenuTheme(item.theme)) {
+                  setMenuTheme(item.theme);
+                  storage.set("menuTheme", item.theme);
+                  // 给aside身上添加样式
+                  let menu = document.getElementsByTagName("aside")[0];
+                  menu.setAttribute("theme", item.theme);
+                }
               }}
             >
               <div
+                style={{
+                  cursor: getMenuTheme(item.theme) ? "pointer" : "not-allowed",
+                }}
                 className={classNames("box", {
                   "is-active": item.theme === currentMenuTheme,
                 })}

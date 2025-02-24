@@ -51,7 +51,7 @@ export function useTheme() {
 
     for (let i = 1; i <= 9; i++) {
       document.documentElement.style.setProperty(
-        `--el-color-primary-light-${i}`,
+        `--antd-color-primary-light-${i}`,
         isDark
           ? `${getDarkColor(primary, i / 10)}`
           : `${getLightColor(primary, i / 10)}`
