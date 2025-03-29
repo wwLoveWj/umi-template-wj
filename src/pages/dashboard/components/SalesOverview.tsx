@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import { getCssVariable, hexToRgba } from "@/utils/color";
-import classNames from "classnames";
 // import style from "./sale.less";
 import "./styles/sales.scss";
+import "./styles/active.scss";
+import { useModel } from "umi";
+import { SystemThemeEnum } from "@/enums/appEnum";
 
 export default function SalesOverview() {
   const chartRef = useRef<HTMLDivElement | null>(null);
-  const [currentTheme, setCurrentTheme] = useState(
-    JSON.parse(
-      localStorage?.getItem("systemColor") || `{systemThemeType:light}`
-    )?.systemThemeType
-  );
-  const isLight = currentTheme === "light";
+  const { systemThemeType } = useModel("themeColor");
+  const isLight = systemThemeType === SystemThemeEnum.LIGHT;
   const createChart = (chartInstance) => {
     chartInstance?.setOption({
       grid: {
@@ -91,11 +89,11 @@ export default function SalesOverview() {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: hexToRgba(getCssVariable("--art-success"), 0.2).rgba,
+                color: hexToRgba(getCssVariable("--main-color"), 0.2).rgba,
               },
               {
                 offset: 1,
-                color: hexToRgba(getCssVariable("--art-warning"), 0.01).rgba,
+                color: hexToRgba(getCssVariable("--main-color"), 0.01).rgba,
               },
             ]),
           },

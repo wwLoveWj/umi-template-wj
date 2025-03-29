@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { getCssVariable } from "@/utils/color";
 import * as echarts from "echarts";
 import "./styles/active.scss";
+import { useModel } from "umi";
+import { SystemThemeEnum } from "@/enums/appEnum";
 
 const list = [
   { name: "总用户量", num: "32k" },
@@ -11,15 +13,11 @@ const list = [
 ];
 export default function ActiveUser() {
   const chartRef = useRef<HTMLDivElement | null>(null);
-  const [currentTheme, setCurrentTheme] = useState(
-    JSON.parse(
-      localStorage?.getItem("systemColor") || `{systemThemeType:light}`
-    )?.systemThemeType
-  );
+  const { systemThemeType } = useModel("themeColor");
   //   const { setOptions, removeResize, resize } = useECharts(
   //     chartRef as Ref<HTMLDivElement>
   //   );
-  const isDark = currentTheme === "dark";
+  const isDark = systemThemeType === SystemThemeEnum.DARK;
 
   const createChart = (chartInstance) => {
     chartInstance?.setOption({
