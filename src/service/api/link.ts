@@ -1,6 +1,8 @@
 import request from "../request";
 
-export const queryLinkCardListAPI = (params = {}): Promise<any> => {
+export const queryLinkCardListAPI = (
+  params = {}
+): Promise<API.CardListType[]> => {
   return request.get("/link/query", params);
 };
 
