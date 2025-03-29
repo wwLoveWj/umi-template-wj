@@ -17,10 +17,11 @@
   display: flex;
   align-items: center;
   padding: 18px 12px;
+  background: #fff;
 }
 .animateCard .technologyContent .desc {
   margin-top: 12px;
-  max-width: calc((100vw - 100px)/4 - 140px);
+  max-width: calc((100vw - 100px - 24px)/4 - 140px);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -28,4 +29,19 @@
 .animateCard:hover {
   bottom: 5px;
   box-shadow: 0 12px 15px 9px #ccc;
+}
+.websiteSharing {
+  padding: 12px;
+  background-image: url(@/assets/imgs/lake.jpg);
+  background-size: cover;
+  /* 确保图片覆盖整个元素 */
+  background-attachment: fixed;
+  /* 背景图片固定 */
+}
+.websiteSharing :global .my-template-umi-ant-tabs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: #fff;
+  padding-left: 12px;
 }
