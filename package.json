@@ -8,10 +8,13 @@
     "build": "umi build",
     "postinstall": "umi setup",
     "setup": "umi setup",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "deploy": "gh-pages -d dist"
   },
+  "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@antv/g2": "^5.2.11",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-react": "^1.0.6",
     "ahooks": "^3.8.0",
@@ -20,17 +23,25 @@
     "classnames": "^2.5.1",
     "dayjs": "^1.11.11",
     "echarts": "^5.5.1",
+    "events": "^3.3.0",
+    "highlight.js": "^11.11.0",
     "jsencrypt": "^3.3.2",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "lodash-es": "^4.17.21",
     "magical-antd-ui": "0.0.37",
+    "markdown-to-image": "^0.0.13",
+    "marked": "^15.0.4",
     "md5": "^2.3.0",
+    "oh-my-live2d": "^0.19.3",
+    "qnn-react-cron": "^2.0.1",
     "react-activation": "^0.13.0",
     "react-schema-render": "^0.0.5",
+    "spark-md5": "^3.0.2",
     "umi": "^4.3.25",
     "umi-plugin-keep-alive": "^0.0.1-beta.35",
-    "vstores": "^0.0.17"
+    "vstores": "^0.0.17",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
@@ -38,6 +49,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@umijs/plugins": "4.2.10",
+    "gh-pages": "^6.3.0",
     "sass": "^1.80.6",
     "typescript": "^5.0.3"
   }
