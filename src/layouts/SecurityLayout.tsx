@@ -4,40 +4,42 @@ import { removeToken } from "@/utils/localToken";
 import { SettingOutlined, BellOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { LoginOutlined, UserOutlined } from "@ant-design/icons";
-import { message, notification, Popover } from "antd";
+import { message, Popover } from "antd";
 import React, { useEffect, useState } from "react";
-import { history, useLocation, useModel } from "umi";
+import { history, useModel } from "umi";
 import { storage } from "@/utils/storage";
 import { PROJECT_CONFIG } from "@/constants/constant";
-import { WjLayout, WjDrawer } from "magical-antd-ui";
+import { WjLayout } from "magical-antd-ui";
 import routes from "@/routes"; // 配置的菜单项
-import { Setting } from "./Setting";
-import ThemeSetting from "./Setting/ThemeSetting";
-import ThemeMenuType from "./Setting/ThemeMenuType";
+import SettingConfig from "./themeSettings/index";
+import GlobalSearch from "@/components/GlobalSearch";
 import Carousel from "./tools/Carousel";
 import Notice from "@/pages/home/notice";
 import LogoIndex from "./logo/index";
-import { ElementPlusTheme, SystemThemeEnum } from "@/config/setting";
+import { ElementPlusTheme } from "@/config/setting";
+// import { useRequest } from "ahooks";
+// import { UserInfoQueryAPI } from "@/service/api/user";
+import ClickSearch from "./Search";
+// import loadingModel from "./config";
+
 // 获取到所有的菜单数据进行处理
 const menus =
   routes
     ?.find((route) => route.path === "/")
     ?.routes?.filter((item: any) => !item.redirect) || [];
-const systemThemeColor = ElementPlusTheme.primary;
+// const systemThemeColor = ElementPlusTheme.primary;
 export default function Layout() {
   const [showNotice, setShowNotice] = useState(false);
+  const [visibleSetting, setVisibleSetting] = useState(false);
   // const { pathname } = useLocation();
-  // const { currentMenuTheme } = useModel("themeColor");
-  const [currentMenuTheme, setMenuTheme] = useState(
-    localStorage.getItem("menuType")
-  );
-  const [currentTheme, setCurrentTheme] = useState(
-    JSON.parse(
-      localStorage?.getItem("systemColor") || `{systemThemeMode:light}`
-    )?.systemThemeMode
-  );
+  const { currentMenuTheme } = useModel("themeColor");
   const [showSettingGuide] = useState(true);
 
+  // useRequest(UserInfoQueryAPI, {
+  //   onSuccess: (res) => {
+  //     // debugger;
+  //   },
+  // });
   const clearLocalStorage = () => {
     storage.del("login-info");
     storage.del("menuList");
@@ -71,7 +73,9 @@ export default function Layout() {
       }
     }
   };
+
   useEffect(() => {
+    // loadingModel();
     document.addEventListener("click", bodyCloseNotice);
     //windows上设置一个循环定时器，每隔一秒调用一次监听函数，并定义在全局global上,用于超时后清除
     ChangeUserOperation();
@@ -132,8 +136,8 @@ export default function Layout() {
     // });
     return () => {
       document.addEventListener("click", bodyCloseNotice);
-      clearInterval(CheckOpartionTimer);
-      clearLocalStorage();
+      // clearInterval(CheckOpartionTimer);
+      // clearLocalStorage();
       homeWrapper.removeEventListener("click", function () {});
       homeWrapper.removeEventListener("keydown", function () {});
       homeWrapper.removeEventListener("mouseover", function () {});
@@ -189,14 +193,8 @@ export default function Layout() {
     },
   ];
 
-  // 监听更改主题颜色
-  const onChgTheme = (theme: SystemThemeEnum) => {
-    setCurrentTheme(theme);
-    setMenuTheme(theme);
-  };
-
   return (
-    <div>
+    <>
       <WjLayout
         isShowHeader={false}
         avatarItems={avatarItems}
@@ -215,13 +213,10 @@ export default function Layout() {
         }}
         themeMenu={currentMenuTheme}
         extraRender={
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <Carousel />
             {/* 设置  */}
-            <div
-              className="btn-box"
-              onClick={() => WjDrawer.open(Setting, { onChgTheme })}
-            >
+            <div className="btn-box" onClick={() => setVisibleSetting(true)}>
               {showSettingGuide && (
                 <Popover
                 // content={
@@ -245,6 +240,9 @@ export default function Layout() {
                 </Popover>
               )}
             </div>
+            {/* 搜索  */}
+            <ClickSearch />
+
             {/* 通知  */}
             <div
               className="btn-box notice-btn"
@@ -258,13 +256,14 @@ export default function Layout() {
           </div>
         }
       />
+      <GlobalSearch />
       <Notice show={showNotice} />
-      <div style={{ display: "none" }}>
-        <ThemeSetting />
-      </div>
-      <div style={{ display: "none" }}>
-        <ThemeMenuType />
-      </div>
-    </div>
+      <SettingConfig
+        onClose={() => {
+          setVisibleSetting(false);
+        }}
+        open={visibleSetting}
+      />
+    </>
   );
 }

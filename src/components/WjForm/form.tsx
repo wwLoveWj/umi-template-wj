@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { SchemaRender } from "react-schema-render";
 import { Form, notification } from "antd";
 import type { FormInstance, FormProps } from "antd";
@@ -87,41 +93,48 @@ type FieldType = {
   ];
  */
 
-export default function Index({
-  formConfigList,
-  form: formInstance,
-  successNotifyProps,
-  successNotify = true,
-  defaultCollapsed = true,
-  columnShow = 4,
-  onFinish,
-  loading,
-  submitter,
-  onSubmit,
-  onReset,
-  formType = "search",
-  ishideLabel = false, //是否隐藏label
-  ...restProps
-}: {
-  formConfigList: WjFormColumnsPropsType[];
-  form?: FormInstance;
-  successNotify?: boolean;
-  successNotifyProps?: any;
-  submitter?: {
-    submitText?: string;
-    resetText?: string;
-    resetBtnProps?: any;
-    submitBtnProps?: any;
-  };
-  formType?: "basic" | "search";
-  defaultCollapsed?: boolean;
-  columnShow?: number; //一行展示几列
-  onFinish?: any;
-  loading?: boolean;
-  onSubmit?: () => void;
-  onReset?: () => void;
-  [propsname: string]: any;
-}) {
+export default forwardRef<
+  HTMLDivElement,
+  {
+    formConfigList: WjFormColumnsPropsType[];
+    form?: FormInstance;
+    successNotify?: boolean;
+    successNotifyProps?: any;
+    submitter?: {
+      submitText?: string;
+      resetText?: string;
+      resetBtnProps?: any;
+      submitBtnProps?: any;
+    };
+    formType?: "basic" | "search";
+    defaultCollapsed?: boolean;
+    columnShow?: number; //一行展示几列
+    onFinish?: any;
+    loading?: boolean;
+    onSubmit?: () => void;
+    onReset?: () => void;
+    [propsname: string]: any;
+  }
+>(function Index(
+  {
+    formConfigList,
+    form: formInstance,
+    successNotifyProps,
+    successNotify = true,
+    defaultCollapsed = true,
+    columnShow = 4,
+    onFinish,
+    loading,
+    submitter,
+    onSubmit,
+    onReset,
+    formType = "search",
+    ishideLabel = false, //是否隐藏label
+    formRef,
+    ...restProps
+  },
+  ref
+) {
   // 常规表单项
   const tableSearchColumns =
     formType === "search"
@@ -235,6 +248,7 @@ export default function Index({
   }, [btnFormRef?.current?.collapsed]);
   // 组装schema的配置信息
   const schemaConfig = () => ({
+    ref,
     component: "wjfrom",
     initialValues: { remember: true },
     onFinishFailed,
@@ -296,6 +310,7 @@ export default function Index({
             ],
     },
   });
+
   // 最终的schema配置信息
   const schema = () => {
     //   是否需要卡片包裹
@@ -310,5 +325,10 @@ export default function Index({
           children: schemaConfig(),
         };
   };
+  useImperativeHandle(formRef, () => {
+    return {
+      getFieldsValue: form.getFieldsValue,
+    };
+  });
   return <SchemaRender schema={schema()}></SchemaRender>;
-}
+});

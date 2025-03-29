@@ -1,5 +1,11 @@
-import { Alert, Spin, Table, Button, Space } from "antd";
-import React, { useImperativeHandle, forwardRef, useState } from "react";
+import { Alert, Spin, Table, Space } from "antd";
+import type { FormInstance } from "antd";
+import React, {
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useRef,
+} from "react";
 import { useRequest } from "ahooks";
 import { isObject } from "lodash-es";
 import { WjForm, WjFormColumnsPropsType } from "../WjForm";
@@ -26,7 +32,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
     paginationType = "page",
     ...restProps
   } = props;
-
+  const formRef = useRef<FormInstance>();
   // ============================表单配置相关==============================
   const getCurrent = () => {
     if (paginationType === "cursor") return;
@@ -108,6 +114,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
   const { data, run, loading } = useRequest(async (query?: any) => {
     const res = request?.url
       ? await request?.url({
+          ...formRef.current.getFieldsValue(),
           ...request?.params,
           pageSize: 10,
           pageNo: 1,
@@ -146,6 +153,7 @@ const Index = forwardRef<HTMLDivElement, WjTableProps>((props, ref) => {
             formConfigList={columns as WjFormColumnsPropsType[]}
             onFinish={(params) => run(params)}
             successNotify={false}
+            formRef={formRef}
           />
         </div>
       )}
