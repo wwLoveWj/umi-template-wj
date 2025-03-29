@@ -11,6 +11,8 @@ import md5 from "md5";
 import { setPrivateKey, getPrivateKey } from "@/utils";
 import { storage } from "@/utils/storage";
 import VerifyLogin from "@/components/VerifyLogin";
+// import FaceIdentify from "./components/FaceIdentify";
+import "./style.less";
 // 登录页面
 const Login = () => {
   const pwdRef = useRef(null);
@@ -55,7 +57,24 @@ const Login = () => {
     };
 
     initializeForm();
+    // TODO:增加泡泡效果
+    function createBubble() {
+      const loginPage = document.getElementById("bubble");
+      const createElement = document.createElement("li");
+      debugger;
+      let size = Math.random() * 60;
+      createElement.style.width = 20 + size + "px";
+      createElement.style.height = 20 + size + "px";
+      createElement.style.left = Math.random() * innerWidth + "px";
+      loginPage?.append(createElement);
+      setTimeout(() => {
+        createElement?.remove();
+      }, 4000);
+    }
+
+    setInterval(createBubble, 300);
   }, []);
+
   // 记住密码;
   const onChangePwd = async (e: any) => {
     const loginChecked = getPrivateKey(storage.get("loginChecked") || "");
@@ -115,7 +134,7 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.loginPage}>
+    <div className={styles.loginPage} id="bubble">
       {/* {process.env.NODE_ENV === "development" && (
           <div className={styles.ribbon}>本地开发环境</div>
         )} */}
@@ -249,6 +268,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {/* <FaceIdentify /> */}
     </div>
   );
 };

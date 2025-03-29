@@ -92,6 +92,8 @@ const MyModal = MsModal.create(() => {
         autoComplete="off"
         initialValues={{ reminderPattern: "fixedDate" }}
       >
+        {/* cron规则 */}
+        {/* https://crontab.guru/monday-to-friday */}
         <Form.Item
           label="定时模式"
           name="reminderPattern"
