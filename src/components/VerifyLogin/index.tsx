@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import VerifyLogin from "./SliderAuthentication";
 import "./style.less";
+import useWindowSize from "./hooks/useWindowSize";
 
 export default function Index({
   isClickPass,
@@ -14,7 +15,7 @@ export default function Index({
 }) {
   //   const [isPassing, setIsPassing] = useState(false); //是否通过了校验
   //   const [isClickPass, setIsClickPass] = useState(false); //记录是否点击过通过按钮
-
+  const { width } = useWindowSize();
   return (
     <div className="drag-verify">
       <div
@@ -26,7 +27,7 @@ export default function Index({
           // ref={dragVerify}
           value={isPassing}
           chgValue={chgValue}
-          // width={width < 500 ? 328 : 438}
+          width={width < 850 ? 265.84 : 410.93}
           text="按住滑块拖动"
           textColor="var(--art-gray-800)"
           successText="验证成功"
