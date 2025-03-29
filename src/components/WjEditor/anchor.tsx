@@ -31,7 +31,7 @@ export default function Anchor({
               {activeIndex === index && <span className="line-anchor-a"></span>}
               <a
                 className={classNames("line-anchor-y", {
-                  active: activeIndex === index,
+                  highlight: activeIndex === index,
                 })}
                 href={`#${item.id}`}
                 onClick={() => {

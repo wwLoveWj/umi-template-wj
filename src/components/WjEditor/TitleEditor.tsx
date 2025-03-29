@@ -12,6 +12,7 @@ import _ from "lodash-es";
 import { generateTableOfContents } from "./catalogue";
 import MyEditor from "./editor";
 import Anchor from "./anchor";
+import WjUpload from "@/components/WjUpload";
 import { TitleEditorProps, CatalogueType } from "./type";
 import "./style.less";
 
@@ -24,7 +25,10 @@ function WjEditor({
   editorId, //编辑时才有这个
   isRealTimeediting = true,
   disabled = false,
+  onImgBg,
+  imgSrc = "",
 }: TitleEditorProps) {
+  debugger;
   const isEditMode = !!editorId;
   // 左侧锚点集合
   const [tableOfContents, setTableOfContents] = useState<CatalogueType[]>([]); //目录结构集合
@@ -72,6 +76,61 @@ function WjEditor({
     };
   }, []);
   // 原文链接：https://blog.csdn.net/weixin_45072119/article/details/140772615
+  const hightlight = (id) => {
+    document
+      .querySelectorAll("a.highlight")
+      .forEach((a) => a.classList.remove("highlight"));
+    if (id instanceof HTMLElement) {
+      id.classList.add("highlight");
+      return;
+    }
+    if (id.startsWith("#")) {
+      id = id.substring(1);
+    }
+    document.querySelector(`a[href="#${id}"]`)?.classList.add("highlight");
+  };
+
+  const scrollHandler = _.debounce(() => {
+    const links = document.querySelectorAll('.table-of-contents a[href^="#"]');
+
+    const titles = [];
+    for (const link of links) {
+      link.addEventListener("click", () => {
+        hightlight(link);
+      });
+      const url = new URL(link.href);
+      const dom = document.querySelector(url.hash);
+      if (dom) {
+        titles.push(dom);
+      }
+    }
+    debugger;
+    const rects = titles.map((title) => title.getBoundingClientRect());
+    const range = 300;
+    for (let index = 0; index < titles.length; index++) {
+      const title = titles[index];
+      const rect = rects[index];
+      if (rect.top >= 0 && rect.top <= range) {
+        hightlight(title.id);
+        break;
+      }
+      if (
+        rect.top < 0 &&
+        rects[index + 1] &&
+        rects[index + 1].top > document.documentElement.clientHeight
+      ) {
+        hightlight(title.id);
+        break;
+      }
+    }
+  }, 100);
+
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
   return (
     <div className="allEditorInfo">
       {/* =============编辑器部分================== */}
@@ -84,7 +143,9 @@ function WjEditor({
           changeEditorTitleWs(editor);
         }}
         editorTitle={title}
-      ></MyEditor>
+      >
+        <WjUpload onImgBg={onImgBg} imgSrc={imgSrc} />
+      </MyEditor>
       <div className="right-section">
         <Space className="upload-btn">
           {/* 取消回到文章列表页并提醒是否需要保存 */}

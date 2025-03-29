@@ -183,7 +183,6 @@ function MyEditor({
           />
         </div>
       )}
-      {children}
       <Editor
         defaultConfig={editorConfig}
         value={editorHtml}
@@ -191,6 +190,7 @@ function MyEditor({
         onChange={changeEditorContentWs}
         mode="default"
       />
+      {children}
     </div>
   );
 }

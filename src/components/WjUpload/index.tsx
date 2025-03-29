@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FilesDragAndDrop } from "./FilesDragAndDropHook";
 import classList from "./FilesDragAndDrop.scss";
+import { onUploadImage } from "@/utils/index";
 
-export default function Upload() {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const onUpload = (files, success) => {
-    console.log(files);
-    debugger;
-    setIsSuccess(success);
+export default function Upload({
+  onImgBg,
+  imgSrc = "",
+}: {
+  onImgBg: (imgSrc: string) => void;
+  imgSrc: string;
+}) {
+  debugger;
+  const [isSuccess, setIsSuccess] = useState("");
+
+  const onUpload = async (files, success) => {
+    const result = (await onUploadImage(files)) || "";
+    setIsSuccess(result);
+    onImgBg(result);
   };
+
+  useEffect(() => {
+    setIsSuccess(imgSrc);
+  }, [imgSrc]);
   return (
     <FilesDragAndDrop
       onUpload={onUpload}
@@ -17,10 +30,7 @@ export default function Upload() {
     >
       {isSuccess ? (
         <div className={classList["articleTop"]}>
-          <img
-            src="https://img0.baidu.com/it/u=1558344751,1233544091&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1734714000&t=dd1aa39bf0714b025dc361d83ea87fcf"
-            alt=""
-          />
+          <img src={isSuccess} alt="" />
         </div>
       ) : (
         <div className={classList["FilesDragAndDrop__area"]}>

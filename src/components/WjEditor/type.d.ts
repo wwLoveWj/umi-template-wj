@@ -25,6 +25,8 @@ export interface TitleEditorProps {
   title?: string; //默认标题
   onChgTitle: (val: string) => void;
   editorHtml: string; //编辑器内容区
+  onImgBg: (imgSrc: string) => void; //上传文章背景图
+  imgSrc: string;
 }
 
 export interface headListType {

@@ -18,6 +18,13 @@ const routes: API.MenuRoutesType[] = [
     ],
   },
   {
+    key: "waterfall",
+    title: "瀑布流",
+    path: "/album/waterfall",
+    component: "./album/waterfall/index",
+    layout: false,
+  },
+  {
     path: "/login",
     component: "@/pages/login", // 加载login登录页面
     layout: false,
@@ -32,6 +39,14 @@ const routes: API.MenuRoutesType[] = [
   //   component: "@/pages/bgTv", // 加载tv开机动画
   //   layout: false,
   // },
+  {
+    key: "detail",
+    title: "文章详情",
+    path: "/article/detail",
+    component: "./article/components/ArticleDetails.tsx",
+    hidden: true,
+    layout: false,
+  },
   {
     path: "/",
     component: "@/layouts/SecurityLayout", // 主页加载layout公共组件

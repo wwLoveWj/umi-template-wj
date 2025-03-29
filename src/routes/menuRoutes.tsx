@@ -35,7 +35,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
    */
   {
     key: "DashBoard",
-    title: "DashBoard",
+    title: "工作台",
     path: "/dash",
     icon: HomeOutlined,
     component: "./dashboard/index",
@@ -46,7 +46,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
     path: "/home",
     hidden: true,
     icon: HomeOutlined,
-    component: "./home/index",
+    component: "./home/cron",
     // routes: [
     //   {
     //     key: "home",
@@ -62,6 +62,26 @@ export const menuRoutes: API.MenuRoutesType[] = [
     //     hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
     //   },
     // ],
+  },
+  {
+    key: "todo",
+    title: "待办管理",
+    path: "/todo",
+    icon: HeartOutlined,
+    routes: [
+      {
+        path: "/todo",
+        hidden: true,
+        title: "待办日历",
+        redirect: "/todo/calendar",
+      },
+      {
+        key: "calendar",
+        title: "待办日历",
+        path: "/todo/calendar",
+        component: "./calendar/index",
+      },
+    ],
   },
   {
     key: "collect",
@@ -109,6 +129,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
         component: "./article/index",
         title: "文章列表",
       },
+      // {
+      //   key: "edit",
+      //   title: "更新文章",
+      //   path: "/article/edit/:editorId",
+      //   component: "./article/components/ArticleCreate.tsx",
+      //   hidden: true,
+      // },
       {
         key: "edit",
         title: "更新文章",
@@ -123,13 +150,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
         component: "./article/components/ArticleCreate.tsx",
         hidden: true,
       },
-      {
-        key: "detail",
-        title: "文章详情",
-        path: "/article/detail",
-        component: "./article/components/ArticleDetails.tsx",
-        hidden: true,
-      },
+      // {
+      //   key: "detail",
+      //   title: "文章详情",
+      //   path: "/article/detail",
+      //   component: "./article/components/ArticleDetails.tsx",
+      //   hidden: true,
+      // },
       {
         key: "comment",
         title: "留言板",
@@ -167,6 +194,13 @@ export const menuRoutes: API.MenuRoutesType[] = [
     component: "./backlog/index",
   },
   {
+    key: "baby",
+    title: "育儿管理",
+    path: "/baby",
+    icon: PushpinOutlined,
+    component: "./baby/index",
+  },
+  {
     key: "excel",
     title: "Excel管理",
     path: "/excel",
@@ -178,7 +212,20 @@ export const menuRoutes: API.MenuRoutesType[] = [
     title: "文件上传",
     path: "/upload",
     icon: CloudUploadOutlined,
-    component: "./upload/index",
+    routes: [
+      {
+        key: "upload-table",
+        title: "文件上传",
+        path: "/upload",
+        component: "./upload/index",
+      },
+      {
+        key: "upload-big",
+        title: "大文件上传",
+        path: "/upload/big",
+        component: "./upload/components/LargeFile.tsx",
+      },
+    ],
   },
   {
     key: "album",
@@ -196,6 +243,7 @@ export const menuRoutes: API.MenuRoutesType[] = [
         title: "瀑布流",
         path: "/album/waterfall",
         component: "./album/waterfall/index",
+        layout: false,
       },
       {
         key: "elevator",
@@ -203,6 +251,12 @@ export const menuRoutes: API.MenuRoutesType[] = [
         path: "/album/elevator",
         component: "./album/elevator",
         // hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
+      },
+      {
+        key: "timeline",
+        title: "时间线",
+        path: "/album/timeline",
+        component: "./album/timeline",
       },
     ],
   },
