@@ -19,11 +19,16 @@
   position: absolute;
   right: 10px;
   top: 10px;
+  transition: transform 0.3s;
+}
+.overlayImg .clearOverlayImg:hover {
+  transform: rotate(90deg);
 }
 .overlayImg .switchImages {
   font-size: 30px;
-  color: #000;
-  background: #ccc;
+  color: #fff;
+  background: rgba(159, 153, 153, 0.75);
+  border-radius: 50%;
   width: 50px;
   height: 50px;
   z-index: 9999;

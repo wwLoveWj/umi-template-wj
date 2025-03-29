@@ -2,8 +2,10 @@ import request from "../request";
 import axios from "axios";
 import { getToken } from "@/utils/localToken";
 
-export const imgInfoQueryAPI = (params = {}): Promise<any> => {
-  return request.get<API.ImageUploadType>("/file/query", { params });
+export const imgInfoQueryAPI = (
+  params = {}
+): Promise<API.ImageUploadType[]> => {
+  return request.get("/file/query", { params });
 };
 
 // 单张图片的删除

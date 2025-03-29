@@ -2,22 +2,25 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import styles from "./style.less";
 import classnames from "classnames";
 import { RightOutlined, LeftOutlined, CloseOutlined } from "@ant-design/icons";
+import { useControllableValue } from "ahooks";
 
-export default forwardRef(function Viewer({
-  isShowViewer,
-  imageUrlList,
-  onChgisShowViewer, //是否展示查看器的方法
-  currentimgIdx, //当前选中的图片
-  viewerRef,
-}: {
+export default forwardRef(function Viewer(props: {
   isShowViewer: boolean;
-  imageUrlList: any[];
+  imageUrlList: API.ImageUploadType[];
   onChgisShowViewer: (param: boolean) => void;
   currentimgIdx: number;
   viewerRef: any;
 }) {
-  const [imgIdx, setImgIdx] = useState(currentimgIdx);
-  debugger;
+  const {
+    isShowViewer,
+    imageUrlList,
+    onChgisShowViewer, //是否展示查看器的方法
+    currentimgIdx, //当前选中的图片
+    viewerRef,
+  } = props;
+  const [imgIdx, setImgIdx] = useControllableValue<number>(props, {
+    defaultValue: currentimgIdx,
+  });
   useImperativeHandle(viewerRef, () => ({
     setImgIdx,
   }));
