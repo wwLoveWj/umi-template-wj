@@ -18,10 +18,10 @@ const routes: API.MenuRoutesType[] = [
     ],
   },
   {
-    key: "waterfall",
-    title: "瀑布流",
-    path: "/album/waterfall",
-    component: "./album/waterfall/index",
+    key: "timeline",
+    title: "时间线",
+    path: "/album/timeline",
+    component: "./album/timeline",
     layout: false,
   },
   {
