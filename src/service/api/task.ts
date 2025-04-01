@@ -59,3 +59,8 @@ export const testTaskTempAPI = (params: {
 }): Promise<any> => {
   return request.post("/reminder/test", params);
 };
+
+// 创建待办通知
+export const CreateTODONoticeAPI = (params = {}): Promise<any> => {
+  return request.post("/reminder/ww", params);
+};

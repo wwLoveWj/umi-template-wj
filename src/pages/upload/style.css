@@ -13,6 +13,32 @@
   position: relative;
   font-size: 30px;
 }
+.fileDrag {
+  display: flex;
+  margin: 12px 0;
+}
+.fileDrag .imageUploadContainer {
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1200px;
+  height: 300px;
+  cursor: pointer;
+  position: relative;
+  font-size: 30px;
+}
+.fileDrag .imageUploadContainer .imageUploadIcon {
+  font-size: 40px;
+  color: #ff6b6b;
+}
+.fileDrag .imageUploadContainer .imageUploadText {
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+}
 .imgList {
   display: flex;
   width: 100%;

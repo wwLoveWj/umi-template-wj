@@ -18,6 +18,7 @@ type StorageType = {
   };
   themeColor: string;
   borderMode: boolean;
+  fileList: File[];
 };
 
 export const storage = vstores.create<StorageType>({

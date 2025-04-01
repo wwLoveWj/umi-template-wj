@@ -225,6 +225,12 @@ export const menuRoutes: API.MenuRoutesType[] = [
         path: "/upload/big",
         component: "./upload/components/LargeFile.tsx",
       },
+      {
+        key: "upload-drag",
+        title: "拖拽上传",
+        path: "/upload/drag",
+        component: "./upload/components/DragAndDrop.tsx",
+      },
     ],
   },
   {
