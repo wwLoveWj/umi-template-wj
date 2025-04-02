@@ -1,9 +1,44 @@
-export interface CatalogueType {
-  level: number;
-  id: string;
-  text: string | null;
-  index: number;
+import { IDomEditor } from "@wangeditor/core";
+
+/**
+ * 编辑器属性类型
+ */
+export interface EditorProps {
+  editorId?: string;
+  isRealTimeediting?: boolean;
+  disabled?: boolean;
 }
+
+/**
+ * 目录项类型
+ */
+export interface CatalogueType {
+  id: string;
+  level: number;
+  text: string;
+}
+
+/**
+ * 编辑器状态类型
+ */
+export interface EditorState {
+  editor: IDomEditor | null;
+  html: string;
+  title: string;
+  tableOfContents: CatalogueType[];
+  activeIndex: number;
+}
+
+/**
+ * WebSocket 消息类型
+ */
+export interface WebSocketMessage {
+  editorContent: string;
+  editorKey: string;
+  title: string;
+  isEditMode: boolean;
+}
+
 export interface Iprops {
   isComment?: boolean; //是否属于评论组件
   editorId?: string;

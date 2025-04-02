@@ -14,7 +14,6 @@ const Index: React.FC = () => {
   //   删除文章列表数据接口
   const { data: articleList } = useRequest(async () => {
     const res = await ArticleInfoListQueryAPI({});
-    debugger;
     return res?.list;
   });
   const toDetail = (item: API.ArticleTableDataType) => {
@@ -28,6 +27,7 @@ const Index: React.FC = () => {
 
   const toEdit = (record: API.ArticleTableDataType) => {
     history.push({ pathname: "/article/edit" }, { editorId: record?.editorId });
+    // history.push(`/article/edit/${record?.editorId}`);
   };
   return (
     <>
@@ -48,11 +48,7 @@ const Index: React.FC = () => {
             onClick={() => toDetail(item)}
           >
             <div className={styles?.articleTop}>
-              <img
-                src={
-                  "https://www.qiniu.lingchen.kim/iShot_2024-03-01_16.48.16%20(1).png"
-                }
-              />
+              <img src={item.imgBg} />
               <span className={styles?.typeName}>{"nodejs"}</span>
             </div>
             <div className={styles.articleBottom}>
