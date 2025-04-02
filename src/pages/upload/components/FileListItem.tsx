@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Progress } from "antd";
 import styles from "./style.less";
+import { UploadProgress } from "../type";
 /**
  * 文件列表项组件
  */
 interface FileListItemProps {
   file: File;
   onDelete: (file: File) => void;
+  uploadProgress: UploadProgress;
 }
 
-const FileListItem: React.FC<FileListItemProps> = ({ file, onDelete }) => {
+const FileListItem: React.FC<FileListItemProps> = (props) => {
+  const { file, onDelete, uploadProgress } = props;
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [isImage, setIsImage] = useState<boolean>(false);
 
@@ -65,14 +68,23 @@ const FileListItem: React.FC<FileListItemProps> = ({ file, onDelete }) => {
           <div className={styles.fileSize}>{formatFileSize(file.size)}</div>
         </div>
       </div>
-      <Button
-        type="link"
-        danger
-        onClick={() => onDelete(file)}
-        className={styles.deleteButton}
-      >
-        删除
-      </Button>
+      <div className={styles.fileActions}>
+        {uploadProgress[file.name] !== undefined && (
+          <Progress
+            percent={uploadProgress[file.name]}
+            size="small"
+            style={{ width: 100 }}
+          />
+        )}
+        <Button
+          type="link"
+          danger
+          onClick={() => onDelete(file)}
+          className={styles.deleteButton}
+        >
+          删除
+        </Button>
+      </div>
     </li>
   );
 };

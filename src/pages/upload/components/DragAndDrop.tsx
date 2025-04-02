@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Radio } from "antd";
+import { Radio, message } from "antd";
 import styles from "../style.less";
 import FileListItem from "./FileListItem";
 import {
@@ -8,52 +8,77 @@ import {
   deleteFileFromDB,
   saveFilesToDB,
 } from "./IndexDB";
-/**
- * 文件系统入口类型
- */
-interface FileSystemEntry {
-  isFile: boolean;
-  isDirectory: boolean;
-  name: string;
-  file: (callback: (file: File) => void) => void;
-  createReader: () => FileSystemDirectoryReader;
-}
-
-/**
- * 目录读取器类型
- */
-interface FileSystemDirectoryReader {
-  readEntries: (callback: (entries: FileSystemEntry[]) => void) => void;
-}
-
-/**
- * 文件系统目录入口类型
- */
-interface FileSystemDirectoryEntry extends FileSystemEntry {
-  isDirectory: true;
-  createReader: () => FileSystemDirectoryReader;
-}
-
-/**
- * 文件系统文件入口类型
- */
-interface FileSystemFileEntry extends FileSystemEntry {
-  isFile: true;
-  file: (callback: (file: File) => void) => void;
-}
-
-/**
- * 拖拽项类型
- */
-interface DataTransferItem {
-  webkitGetAsEntry: () => FileSystemEntry;
-}
+import type {
+  UploadProgress,
+  DataTransferItem,
+  FileSystemDirectoryEntry,
+  FileSystemFileEntry,
+} from "../type";
 
 export default function DragAndDrop() {
+  const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
   const [fileList, setFileList] = useState<File[]>([]);
   const [fileType, setFileType] = useState<"directory" | "file">("file");
   const drop = useRef<HTMLDivElement>(null);
+  const uploadFilesToServer = async (files: File[]): Promise<void> => {
+    try {
+      await Promise.all(files.map((file) => uploadFileToServer(file)));
+      message.success("所有文件上传完成");
+    } catch (error) {
+      console.error("批量上传失败:", error);
+      message.error("部分文件上传失败");
+    }
+  };
+  const uploadFileToServer = async (file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    // 从localStorage获取token
+    const token = localStorage.getItem("system-token");
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
 
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const progress = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress((prev) => ({
+            ...prev,
+            [file.name]: progress,
+          }));
+        }
+      };
+
+      // 处理上传完成
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          message.success(`${file.name} 上传成功`);
+          resolve();
+        } else if (xhr.status === 401) {
+          message.error("认证失败，请重新登录");
+          // 可以在这里添加重定向到登录页面的逻辑
+          reject(new Error("认证失败"));
+        } else {
+          message.error(`${file.name} 上传失败`);
+          reject(new Error(`上传失败: ${xhr.status}`));
+        }
+      };
+
+      xhr.onerror = () => {
+        message.error(`${file.name} 上传出错`);
+        reject(new Error("上传出错"));
+      };
+
+      xhr.open("POST", "http://localhost:3007/file/upload", true);
+      // 设置请求头
+      if (token) {
+        xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+      }
+
+      // 注意：使用FormData时不要手动设置Content-Type，让浏览器自动设置
+      // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+
+      xhr.send(formData);
+    });
+  };
   /**
    * 将Base64数据转换为File对象
    * @param dataURL Base64数据
@@ -167,10 +192,12 @@ export default function DragAndDrop() {
             entry as FileSystemDirectoryEntry
           );
           await saveFilesToDB(content);
+          await uploadFilesToServer(content); // 添加这行
           newFiles.push(...content);
         } else if (entry.isFile) {
           const content = await traverseFile(entry as FileSystemFileEntry);
           await saveFileToDB(content);
+          await uploadFileToServer(content); // 添加这行
           newFiles.push(content);
         }
       }
@@ -237,6 +264,7 @@ export default function DragAndDrop() {
         const newFiles: File[] = [...fileList];
 
         await saveFilesToDB(files);
+        await uploadFilesToServer(files); // 添加这行
         newFiles.push(...files);
 
         setFileList(newFiles);
@@ -361,6 +389,7 @@ export default function DragAndDrop() {
       console.error("删除文件失败:", error);
     }
   };
+
   return (
     <>
       <Radio.Group
@@ -402,6 +431,7 @@ export default function DragAndDrop() {
           key={`${file.name}-${index}`}
           file={file}
           onDelete={handleDeleteFile}
+          uploadProgress={uploadProgress}
         />
       ))}
     </>
