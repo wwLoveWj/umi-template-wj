@@ -1,7 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Radio, Button } from "antd";
+import { Radio } from "antd";
 import styles from "../style.less";
-
+import FileListItem from "./FileListItem";
+import {
+  getAllFilesFromDB,
+  saveFileToDB,
+  deleteFileFromDB,
+  saveFilesToDB,
+} from "./IndexDB";
 /**
  * 文件系统入口类型
  */
@@ -47,6 +53,45 @@ export default function DragAndDrop() {
   const [fileList, setFileList] = useState<File[]>([]);
   const [fileType, setFileType] = useState<"directory" | "file">("file");
   const drop = useRef<HTMLDivElement>(null);
+
+  /**
+   * 将Base64数据转换为File对象
+   * @param dataURL Base64数据
+   * @param filename 文件名
+   * @param mimeType MIME类型
+   * @returns File对象
+   */
+  const dataURLtoFile = (
+    dataURL: string,
+    filename: string,
+    mimeType: string
+  ): File => {
+    const arr = dataURL.split(",");
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mimeType });
+  };
+  // 组件加载时从IndexedDB加载文件
+  useEffect(() => {
+    const loadFilesFromDB = async () => {
+      try {
+        const files = await getAllFilesFromDB();
+        debugger;
+        const fileObjects = files.map((fileInfo) => {
+          // 将Base64数据转换回File对象
+          return dataURLtoFile(fileInfo.data, fileInfo.name, fileInfo.type);
+        });
+        setFileList(fileObjects);
+      } catch (error) {
+        console.error("加载文件失败:", error);
+      }
+    };
+    loadFilesFromDB();
+  }, []);
 
   /**
    * 遍历文件并获取File对象
@@ -113,23 +158,26 @@ export default function DragAndDrop() {
 
     const items = Array.from(e.dataTransfer!.items);
     const newFiles: File[] = [...fileList];
+    try {
+      for (const item of items) {
+        const entry = (item as unknown as DataTransferItem).webkitGetAsEntry();
 
-    for (const item of items) {
-      const entry = (item as unknown as DataTransferItem).webkitGetAsEntry();
-
-      if (entry.isDirectory) {
-        const content = await traverseDirectory(
-          entry as FileSystemDirectoryEntry
-        );
-        newFiles.push(...content);
-      } else if (entry.isFile) {
-        const content = await traverseFile(entry as FileSystemFileEntry);
-        newFiles.push(content);
-        // const files = [...e.dataTransfer.files];
-        // setFileList(files);
+        if (entry.isDirectory) {
+          const content = await traverseDirectory(
+            entry as FileSystemDirectoryEntry
+          );
+          await saveFilesToDB(content);
+          newFiles.push(...content);
+        } else if (entry.isFile) {
+          const content = await traverseFile(entry as FileSystemFileEntry);
+          await saveFileToDB(content);
+          newFiles.push(content);
+        }
       }
+      setFileList(newFiles);
+    } catch (error) {
+      console.error("文件处理失败:", error);
     }
-    setFileList(newFiles);
   };
 
   // 在拖拽区运动
@@ -182,12 +230,22 @@ export default function DragAndDrop() {
     // 如果需要限制文件类型，可以取消注释并修改
     // input.setAttribute("accept", "xlsx/*");
     input.click();
-    input.onchange = (event: Event): void => {
-      const target = event.target as HTMLInputElement;
-      const files: File[] = Array.from(target.files || []);
-      setFileList(files);
-      // 预览图片
-      handleFileChange(event);
+    input.onchange = async (event: Event): Promise<void> => {
+      try {
+        const target = event.target as HTMLInputElement;
+        const files: File[] = Array.from(target.files || []);
+        const newFiles: File[] = [...fileList];
+
+        await saveFilesToDB(files);
+        newFiles.push(...files);
+
+        setFileList(newFiles);
+        // 预览图片
+        handleFileChange(event);
+      } catch (error) {
+        console.error("文件上传失败:", error);
+      }
+
       // 如果需要预览图片，可以取消注释
       // previewImage(event);
 
@@ -293,7 +351,16 @@ export default function DragAndDrop() {
       maxHeight: 200,
     });
   };
-
+  // 修改文件删除处理函数
+  const handleDeleteFile = async (file: File) => {
+    try {
+      const fileId = `${file.name}-${file.lastModified}`;
+      await deleteFileFromDB(fileId);
+      setFileList(fileList.filter((f) => f.name !== file.name));
+    } catch (error) {
+      console.error("删除文件失败:", error);
+    }
+  };
   return (
     <>
       <Radio.Group
@@ -329,25 +396,14 @@ export default function DragAndDrop() {
           strokeColor={getStrokeColor()}
         /> */}
       </div>
-      <div className="custom-preview" />
-      <ul className={styles.fileList}>
-        {fileList.map((item) => (
-          <li>
-            <div>{item.name}</div>
-            <Button
-              type="link"
-              onClick={() => {
-                const idx = fileList.findIndex((val) => item.name === val.name);
-                const arr = [...fileList];
-                arr.splice(idx, 1);
-                setFileList(arr);
-              }}
-            >
-              删除
-            </Button>
-          </li>
-        ))}
-      </ul>
+      {/* <div className="custom-preview" /> */}
+      {fileList.map((file, index) => (
+        <FileListItem
+          key={`${file.name}-${index}`}
+          file={file}
+          onDelete={handleDeleteFile}
+        />
+      ))}
     </>
   );
 }
