@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Radio, message } from "antd";
-import styles from "../style.less";
+import { Radio, Button, message, Popconfirm } from "antd";
+import { ClearOutlined } from "@ant-design/icons";
+import styles from "./style.less";
 import FileListItem from "./FileListItem";
 import {
   getAllFilesFromDB,
   saveFileToDB,
   deleteFileFromDB,
   saveFilesToDB,
+  initDB,
+  STORE_NAME,
 } from "./IndexDB";
 import type {
   UploadProgress,
@@ -389,7 +392,22 @@ export default function DragAndDrop() {
       console.error("删除文件失败:", error);
     }
   };
-
+  /**
+   * 清除所有文件
+   */
+  const handleClearAll = async () => {
+    try {
+      const db = await initDB();
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      await store.clear();
+      setFileList([]);
+      message.success("所有文件已清除");
+    } catch (error) {
+      console.error("清除文件失败:", error);
+      message.error("清除文件失败");
+    }
+  };
   return (
     <>
       <Radio.Group
@@ -425,6 +443,23 @@ export default function DragAndDrop() {
           strokeColor={getStrokeColor()}
         /> */}
       </div>
+      {fileList.length > 0 && (
+        <Popconfirm
+          title="确定要清除所有文件吗？"
+          onConfirm={handleClearAll}
+          okText="确定"
+          cancelText="取消"
+        >
+          <Button
+            type="text"
+            danger
+            icon={<ClearOutlined />}
+            className={styles.clearButton}
+          >
+            清除全部
+          </Button>
+        </Popconfirm>
+      )}
       {/* <div className="custom-preview" /> */}
       {fileList.map((file, index) => (
         <FileListItem

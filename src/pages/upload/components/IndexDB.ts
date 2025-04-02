@@ -173,4 +173,11 @@ const saveFilesToDB = async (files: File[]): Promise<void> => {
   });
 };
 
-export { saveFileToDB, getAllFilesFromDB, deleteFileFromDB, saveFilesToDB };
+export {
+  saveFileToDB,
+  getAllFilesFromDB,
+  deleteFileFromDB,
+  saveFilesToDB,
+  initDB,
+  STORE_NAME,
+};
