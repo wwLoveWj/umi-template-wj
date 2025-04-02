@@ -461,14 +461,16 @@ export default function DragAndDrop() {
         </Popconfirm>
       )}
       {/* <div className="custom-preview" /> */}
-      {fileList.map((file, index) => (
-        <FileListItem
-          key={`${file.name}-${index}`}
-          file={file}
-          onDelete={handleDeleteFile}
-          uploadProgress={uploadProgress}
-        />
-      ))}
+      <ul className={styles.fileList}>
+        {fileList.map((file, index) => (
+          <FileListItem
+            key={`${file.name}-${index}`}
+            file={file}
+            onDelete={handleDeleteFile}
+            uploadProgress={uploadProgress}
+          />
+        ))}
+      </ul>
     </>
   );
 }
