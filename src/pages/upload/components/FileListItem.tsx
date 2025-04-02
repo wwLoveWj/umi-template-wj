@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Progress } from "antd";
 import styles from "./style.less";
-import { UploadProgress } from "../type";
+import { UploadProgress } from "./type";
 /**
  * 文件列表项组件
  */

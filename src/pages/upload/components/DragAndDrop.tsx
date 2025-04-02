@@ -12,97 +12,25 @@ import {
   STORE_NAME,
 } from "./IndexDB";
 import type {
-  UploadProgress,
   DataTransferItem,
   FileSystemDirectoryEntry,
   FileSystemFileEntry,
-} from "../type";
+} from "./type";
+import {
+  handleDragOver,
+  handleDragEnter,
+  handleDragLeave,
+  dataURLtoFile,
+} from "./utils";
+import { useFileUpload } from "./hooks/useFileUpload";
 
 export default function DragAndDrop() {
-  const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
+  const { uploadProgress, uploadFileToServer, uploadFilesToServer } =
+    useFileUpload();
   const [fileList, setFileList] = useState<File[]>([]);
   const [fileType, setFileType] = useState<"directory" | "file">("file");
   const drop = useRef<HTMLDivElement>(null);
-  const uploadFilesToServer = async (files: File[]): Promise<void> => {
-    try {
-      await Promise.all(files.map((file) => uploadFileToServer(file)));
-      message.success("所有文件上传完成");
-    } catch (error) {
-      console.error("批量上传失败:", error);
-      message.error("部分文件上传失败");
-    }
-  };
-  const uploadFileToServer = async (file: File): Promise<void> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    // 从localStorage获取token
-    const token = localStorage.getItem("system-token");
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
 
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const progress = Math.round((event.loaded / event.total) * 100);
-          setUploadProgress((prev) => ({
-            ...prev,
-            [file.name]: progress,
-          }));
-        }
-      };
-
-      // 处理上传完成
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          message.success(`${file.name} 上传成功`);
-          resolve();
-        } else if (xhr.status === 401) {
-          message.error("认证失败，请重新登录");
-          // 可以在这里添加重定向到登录页面的逻辑
-          reject(new Error("认证失败"));
-        } else {
-          message.error(`${file.name} 上传失败`);
-          reject(new Error(`上传失败: ${xhr.status}`));
-        }
-      };
-
-      xhr.onerror = () => {
-        message.error(`${file.name} 上传出错`);
-        reject(new Error("上传出错"));
-      };
-
-      xhr.open("POST", "http://localhost:3007/file/upload", true);
-      // 设置请求头
-      if (token) {
-        xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-      }
-
-      // 注意：使用FormData时不要手动设置Content-Type，让浏览器自动设置
-      // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-
-      xhr.send(formData);
-    });
-  };
-  /**
-   * 将Base64数据转换为File对象
-   * @param dataURL Base64数据
-   * @param filename 文件名
-   * @param mimeType MIME类型
-   * @returns File对象
-   */
-  const dataURLtoFile = (
-    dataURL: string,
-    filename: string,
-    mimeType: string
-  ): File => {
-    const arr = dataURL.split(",");
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mimeType });
-  };
   // 组件加载时从IndexedDB加载文件
   useEffect(() => {
     const loadFilesFromDB = async () => {
@@ -186,6 +114,7 @@ export default function DragAndDrop() {
 
     const items = Array.from(e.dataTransfer!.items);
     const newFiles: File[] = [...fileList];
+    const token = localStorage.getItem("system-token") || "";
     try {
       for (const item of items) {
         const entry = (item as unknown as DataTransferItem).webkitGetAsEntry();
@@ -195,12 +124,20 @@ export default function DragAndDrop() {
             entry as FileSystemDirectoryEntry
           );
           await saveFilesToDB(content);
-          await uploadFilesToServer(content); // 添加这行
+          await uploadFilesToServer(
+            content,
+            "http://localhost:3007/file/upload",
+            token
+          ); // 添加这行
           newFiles.push(...content);
         } else if (entry.isFile) {
           const content = await traverseFile(entry as FileSystemFileEntry);
           await saveFileToDB(content);
-          await uploadFileToServer(content); // 添加这行
+          await uploadFileToServer(
+            content,
+            "http://localhost:3007/file/upload",
+            token
+          ); // 添加这行
           newFiles.push(content);
         }
       }
@@ -210,23 +147,6 @@ export default function DragAndDrop() {
     }
   };
 
-  // 在拖拽区运动
-  const handleDragOver = (e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDragEnter = (e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("进来了");
-  };
-
-  const handleDragLeave = (e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("出去了");
-  };
   useEffect(() => {
     if (!drop.current) return;
     // useRef 的 drop.current 取代了 ref 的 this.drop
@@ -248,6 +168,7 @@ export default function DragAndDrop() {
    * @returns {void}
    */
   const createFileInput = (): void => {
+    const token = localStorage.getItem("system-token") || "";
     const input: HTMLInputElement = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("multiple", "multiple");
@@ -267,12 +188,16 @@ export default function DragAndDrop() {
         const newFiles: File[] = [...fileList];
 
         await saveFilesToDB(files);
-        await uploadFilesToServer(files); // 添加这行
+        await uploadFilesToServer(
+          files,
+          "http://localhost:3007/file/upload",
+          token
+        ); // 添加这行上传文件
         newFiles.push(...files);
 
         setFileList(newFiles);
         // 预览图片
-        handleFileChange(event);
+        // handleFileChange(event);
       } catch (error) {
         console.error("文件上传失败:", error);
       }
@@ -286,102 +211,6 @@ export default function DragAndDrop() {
     input.remove();
   };
 
-  /**
-   * 图片预览配置接口
-   */
-  interface PreviewConfig {
-    containerSelector: string;
-    fallbackImageUrl: string;
-    maxWidth?: number;
-    maxHeight?: number;
-  }
-
-  /**
-   * 默认预览配置
-   */
-  const DEFAULT_CONFIG: PreviewConfig = {
-    containerSelector: ".fileItem",
-    fallbackImageUrl: "https://via.placeholder.com/150?text=Image+Not+Found",
-    maxWidth: 300,
-    maxHeight: 300,
-  };
-
-  /**
-   * 预览图片
-   * @param event - 文件选择事件
-   * @param config - 预览配置
-   * @returns Promise<void>
-   */
-  const previewImage = async (
-    event: Event,
-    config: Partial<PreviewConfig> = {}
-  ): Promise<void> => {
-    try {
-      // 合并配置
-      const finalConfig = { ...DEFAULT_CONFIG, ...config };
-      // 获取文件
-      const target = event.target as HTMLInputElement;
-      const file = target.files?.[0];
-
-      if (!file) {
-        throw new Error("未选择文件");
-      }
-      // 验证文件类型
-      if (!file.type.startsWith("image/")) {
-        throw new Error("请选择图片文件");
-      }
-      // 创建预览容器
-      const container = document.querySelector(finalConfig.containerSelector);
-      if (!container) {
-        throw new Error("未找到预览容器");
-      }
-
-      // 创建图片元素
-      const img = document.createElement("img");
-      img.className = "preview-image";
-      img.style.maxWidth = `${finalConfig.maxWidth}px`;
-      img.style.maxHeight = `${finalConfig.maxHeight}px`;
-      img.style.objectFit = "contain";
-
-      // 使用 Promise 包装 FileReader
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          resolve(reader.result as string);
-        };
-
-        reader.onerror = () => {
-          reject(new Error("图片读取失败"));
-        };
-
-        reader.readAsDataURL(file);
-      });
-
-      // 设置图片源
-      img.src = dataUrl;
-
-      // 处理图片加载错误
-      img.onerror = () => {
-        img.src = finalConfig.fallbackImageUrl;
-      };
-
-      // 清空容器并添加新图片
-      container.innerHTML = "";
-      container.appendChild(img);
-    } catch (error) {
-      console.error("图片预览失败:", error);
-      // 可以在这里添加错误提示UI
-    }
-  };
-
-  const handleFileChange = (e: Event) => {
-    previewImage(e, {
-      containerSelector: ".custom-preview",
-      maxWidth: 200,
-      maxHeight: 200,
-    });
-  };
   // 修改文件删除处理函数
   const handleDeleteFile = async (file: File) => {
     try {
