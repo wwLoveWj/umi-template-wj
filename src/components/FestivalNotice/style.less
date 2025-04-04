@@ -139,7 +139,7 @@
     }
 
     .wish {
-        width: 20%;
+        min-width: 26%;
         font-family: 'Ma Shan Zheng', cursive;
         font-size: 36px;
         color: #fff;
@@ -150,17 +150,21 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        gap: 1em;
     }
 
     .poem-line {
         display: flex;
         flex-direction: column;
         margin-bottom: 1.5em;
+        // padding: 0.5em 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .character {
         opacity: 0;
         animation: fadeInCharacter 0.5s ease-in-out forwards;
+        // margin: 0.3em 0;
     }
 }
 
