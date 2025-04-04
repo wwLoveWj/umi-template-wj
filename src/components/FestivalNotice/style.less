@@ -46,6 +46,33 @@
         animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
     }
 
+    .mainContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        max-width: 1200px;
+        gap: 60px;
+    }
+
+    .illustration {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        animation: fadeIn 2s ease-in-out forwards;
+
+        img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+    }
+
     .wish {
         font-family: 'Ma Shan Zheng', cursive;
         font-size: 36px;
@@ -68,6 +95,16 @@
     .character {
         opacity: 0;
         animation: fadeInCharacter 0.5s ease-in-out forwards;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 

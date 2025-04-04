@@ -59,21 +59,19 @@ const FestivalNotice: React.FC = () => {
   };
 
   return (
-    <Modal
-      title="节日提示"
-      open={visible}
-      onCancel={handleClose}
-      footer={null}
-      width="100%"
-      className={styles.festivalModal}
-      maskClosable={true}
-    >
-      <div className={styles.content}>
-        <div className={styles.title}>
-          今天是{festivalInfo.isToday ? "" : "正值"}
-          {festivalInfo.name}
+    <div className={styles.content}>
+      <div className={styles.title}>
+        今天是{festivalInfo.isToday ? "" : "正值"}
+        {festivalInfo.name}
+      </div>
+      <div className={styles.date}>日期：{festivalInfo.date}</div>
+      <div className={styles.mainContent}>
+        <div className={styles.illustration}>
+          <img
+            src={require("@/assets/imgs/festival/qingming.png")}
+            alt="牧童遥指杏花村"
+          />
         </div>
-        <div className={styles.date}>日期：{festivalInfo.date}</div>
         <div className={styles.wish}>
           {displayLines
             .slice(0, currentLineIndex + 1)
@@ -108,7 +106,7 @@ const FestivalNotice: React.FC = () => {
             ))}
         </div>
       </div>
-    </Modal>
+    </div>
   );
 };
 
