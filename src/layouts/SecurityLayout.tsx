@@ -16,6 +16,7 @@ import GlobalSearch from "@/components/GlobalSearch";
 import Carousel from "./tools/Carousel";
 import Notice from "@/pages/home/notice";
 import LogoIndex from "./logo/index";
+import FestivalNotice from "@/components/FestivalNotice";
 import { ElementPlusTheme } from "@/config/setting";
 // import { useRequest } from "ahooks";
 // import { UserInfoQueryAPI } from "@/service/api/user";
@@ -195,6 +196,7 @@ export default function Layout() {
 
   return (
     <>
+      <FestivalNotice />
       <WjLayout
         isShowHeader={false}
         avatarItems={avatarItems}

@@ -6,7 +6,8 @@ export default function Waterfall() {
       time: "12.28",
       title: "我们出生了~",
       description: "这是第一阶段的内容。",
-      image: require("@/assets/imgs/baby/2025032801.jpg"),
+      image:
+        "https://img2.baidu.com/it/u=815774148,3892081775&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1741107600&t=a34940ab279a5306e0e51da75fd4f72a",
     },
     {
       time: "04.01",
@@ -20,7 +21,8 @@ export default function Waterfall() {
       time: "06.28",
       title: "我们会说话了~",
       description: "这是第三阶段的内容。",
-      image: require("@/assets/imgs/baby/2025032802.jpg"),
+      image:
+        "https://img2.baidu.com/it/u=815774148,3892081775&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1741107600&t=a34940ab279a5306e0e51da75fd4f72a",
     },
   ];
   return (

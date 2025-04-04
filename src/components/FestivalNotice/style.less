@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+
+.festivalModal {
+    :global {
+        .ant-modal-content {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .ant-modal-body {
+            padding: 0;
+        }
+    }
+}
+
+.content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .title {
+        font-family: 'Ma Shan Zheng', cursive;
+        font-size: 48px;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .date {
+        font-family: 'ZCOOL XiaoWei', serif;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 48px;
+        opacity: 0;
+        animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+    }
+
+    .wish {
+        font-family: 'Ma Shan Zheng', cursive;
+        font-size: 36px;
+        color: #fff;
+        line-height: 2;
+        text-align: center;
+        writing-mode: vertical-rl;
+        letter-spacing: 0.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .poem-line {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.5em;
+    }
+
+    .character {
+        opacity: 0;
+        animation: fadeInCharacter 0.5s ease-in-out forwards;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeInCharacter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
