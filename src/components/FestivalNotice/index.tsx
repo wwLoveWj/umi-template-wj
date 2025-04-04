@@ -6,7 +6,7 @@ import styles from "./style.less";
 /**
  * 节日提示组件
  */
-const FestivalNotice: React.FC = () => {
+const FestivalNotice: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [visible, setVisible] = useState(false);
   const [festivalInfo, setFestivalInfo] = useState<{
     name: string;
@@ -59,54 +59,54 @@ const FestivalNotice: React.FC = () => {
   };
 
   return (
+    // <div className={styles.mainContent}>
+    //   <div className={styles.illustration}>
+    //     <img
+    //       src={require("@/assets/imgs/festival/qingming.png")}
+    //       alt="牧童遥指杏花村"
+    //     />
+    //   </div>
     <div className={styles.content}>
+      <div className={styles.closeButton} onClick={onClose} />
       <div className={styles.title}>
         今天是{festivalInfo.isToday ? "" : "正值"}
         {festivalInfo.name}
       </div>
       <div className={styles.date}>日期：{festivalInfo.date}</div>
-      <div className={styles.mainContent}>
-        <div className={styles.illustration}>
-          <img
-            src={require("@/assets/imgs/festival/qingming.png")}
-            alt="牧童遥指杏花村"
-          />
-        </div>
-        <div className={styles.wish}>
-          {displayLines
-            .slice(0, currentLineIndex + 1)
-            .map((line, lineIndex) => (
-              <div key={lineIndex} className={styles.poemLine}>
-                {line.map((char, charIndex) => (
-                  <span
-                    key={charIndex}
-                    className={styles.character}
-                    style={{
-                      animationDelay: `${
-                        (lineIndex * line.length + charIndex) * 0.15
-                      }s`,
-                    }}
-                  >
-                    {char}
-                  </span>
-                ))}
-                {lineIndex < currentLineIndex && (
-                  <span
-                    className={styles.character}
-                    style={{
-                      animationDelay: `${
-                        (lineIndex * line.length + line.length) * 0.15
-                      }s`,
-                    }}
-                  >
-                    {getPunctuation(lineIndex)}
-                  </span>
-                )}
-              </div>
+
+      <div className={styles.wish}>
+        {displayLines.slice(0, currentLineIndex + 1).map((line, lineIndex) => (
+          <div key={lineIndex} className={styles.poemLine}>
+            {line.map((char, charIndex) => (
+              <span
+                key={charIndex}
+                className={styles.character}
+                style={{
+                  animationDelay: `${
+                    (lineIndex * line.length + charIndex) * 0.15
+                  }s`,
+                }}
+              >
+                {char}
+              </span>
             ))}
-        </div>
+            {lineIndex < currentLineIndex && (
+              <span
+                className={styles.character}
+                style={{
+                  animationDelay: `${
+                    (lineIndex * line.length + line.length) * 0.15
+                  }s`,
+                }}
+              >
+                {getPunctuation(lineIndex)}
+              </span>
+            )}
+          </div>
+        ))}
       </div>
     </div>
+    // </div>
   );
 };
 
