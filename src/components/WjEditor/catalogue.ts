@@ -43,16 +43,19 @@ export const generateTableOfContents = () => {
 export const handleItemClick = (index: number) => {
   // 获取目标目录项的锚点链接 href 属性值
   const targetItem = document.querySelector(
-    `.table-of-contents a[href="#section-${index + 1}"]`
+    `.content-editor #section-${index + 1}`
   ) as HTMLElement;
+  console.log(`#section-${index + 1}`, targetItem);
   // 滚动目录以确保当前点击的目录项可见
   if (targetItem) {
-    const container = document.querySelector(
-      ".table-of-contents"
-    ) as HTMLElement;
-    const containerRect = container.getBoundingClientRect();
-    const scrollTop = targetItem.offsetTop - containerRect.height / 2;
-    container.scrollTop = scrollTop;
+    // const container = document.querySelector(
+    //   ".table-of-contents"
+    // ) as HTMLElement;
+    targetItem.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // const containerRect = container.getBoundingClientRect();
+    // const scrollTop = targetItem.offsetTop - containerRect.height / 2;
+    // container.scrollTop = scrollTop;
   }
 };
 

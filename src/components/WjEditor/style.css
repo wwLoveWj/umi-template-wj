@@ -4,6 +4,9 @@
   height: 100%;
   scroll-behavior: smooth;
 }
+.allEditorInfo .content-editor {
+  scroll-snap-type: y mandatory;
+}
 .allEditorInfo .catalogue {
   width: 200px;
   height: 100%;
@@ -20,6 +23,11 @@
   margin: 0;
 }
 .allEditorInfo .catalogue .table-of-contents li {
+  overflow: hidden;
+  width: 180px;
+  text-overflow: ellipsis;
+  white-space: nowarp;
+  display: block;
   margin: 4px 0;
 }
 .allEditorInfo .catalogue .table-of-contents li a {
@@ -40,45 +48,35 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 180px;
+}
+.allEditorInfo .catalogue .table-of-contents li:hover {
+  color: #95c92c;
+  background: #e8f6ff;
+}
+.allEditorInfo .catalogue .table-of-contents .line-anchor {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 6px 0;
+}
+.allEditorInfo .catalogue .table-of-contents .line-anchor-a {
+  position: absolute;
+  left: 0;
+  border-left: 5px solid #95c92c;
+  height: 20px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.allEditorInfo .catalogue .table-of-contents .highlight {
+  font-weight: bold;
+  color: #95c92c;
 }
 @media screen and (max-width: 900px) {
   .catalogue {
     display: none !important;
     /* 添加 !important 以确保覆盖其他样式 */
   }
-}
-.table-of-title {
-  margin-bottom: 12px;
-}
-.table-of-contents {
-  color: yellow;
-}
-.table-of-contents li:hover {
-  color: #95c92c;
-  background: #e8f6ff;
-}
-.table-of-contents .beyond-hidden {
-  overflow: hidden;
-  width: 180px;
-  text-overflow: ellipsis;
-  white-space: nowarp;
-  display: block;
-}
-.table-of-contents .line-anchor {
-  display: flex;
-  position: relative;
-  align-items: center;
-  margin: 6px 0;
-}
-.table-of-contents .line-anchor-a {
-  position: absolute;
-  left: 0;
-  border-left: 5px solid #95c92c;
-  height: 20px;
-}
-.table-of-contents .highlight {
-  font-weight: bold;
-  color: #95c92c;
 }
 .toobar-editor {
   position: sticky;
