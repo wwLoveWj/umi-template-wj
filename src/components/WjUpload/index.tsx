@@ -10,7 +10,6 @@ export default function Upload({
   onImgBg: (imgSrc: string) => void;
   imgSrc: string;
 }) {
-  debugger;
   const [isSuccess, setIsSuccess] = useState("");
 
   const onUpload = async (files, success) => {

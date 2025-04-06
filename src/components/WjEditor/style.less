@@ -4,11 +4,51 @@
   height: 100%;
   scroll-behavior: smooth;
 
+
   .catalogue {
     width: 200px;
     height: 100%;
     margin-left: 12px;
+
     // border: 1px solid #ccc;
+    .table-of-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .table-of-contents {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 4px 0;
+
+        a {
+          display: block;
+          color: #333;
+          text-decoration: none;
+          padding: 4px 0;
+          transition: all 0.3s;
+
+          &:hover {
+            color: #1890ff;
+          }
+
+          &.active {
+            color: #1890ff;
+            font-weight: bold;
+          }
+
+          .beyond-hidden {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -1,10 +1,31 @@
 .article-detail {
+    height: calc(100vh - 88px);
+    overflow-y: auto;
+    background: #fff;
+    padding-bottom: 200px;
+    background-image: url("@/assets/imgs/articleBg.jpg");
+    // width: 40vw;
+    //     height: 80vh;
+    //     border: 1px solid white;
+    overflow: auto;
+    // padding: 2vw;
+    border-radius: 0.5vw;
+    box-shadow: 1vw 1vw 3vw black;
 
     // 详情
-    .content {
-        max-width: 800px;
+    .content-article {
+        max-width: 1000px;
         margin: auto;
         margin-top: 60px;
+
+        .markdown-body span {
+            color: black;
+            opacity: 0;
+            font-size: 2vw;
+            line-height: 2.5vw;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-right: 3px;
+        }
 
         .markdown-body {
             margin-top: 60px;

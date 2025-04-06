@@ -9,6 +9,38 @@
   height: 100%;
   margin-left: 12px;
 }
+.allEditorInfo .catalogue .table-of-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.allEditorInfo .catalogue .table-of-contents {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.allEditorInfo .catalogue .table-of-contents li {
+  margin: 4px 0;
+}
+.allEditorInfo .catalogue .table-of-contents li a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: all 0.3s;
+}
+.allEditorInfo .catalogue .table-of-contents li a:hover {
+  color: #1890ff;
+}
+.allEditorInfo .catalogue .table-of-contents li a.active {
+  color: #1890ff;
+  font-weight: bold;
+}
+.allEditorInfo .catalogue .table-of-contents li a .beyond-hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 @media screen and (max-width: 900px) {
   .catalogue {
     display: none !important;

@@ -193,10 +193,15 @@ export default function Layout() {
       icon: <UserOutlined />,
     },
   ];
-
+  const [visibleFestival, setVisibleFestival] = useState(true);
   return (
     <>
-      <FestivalNotice />
+      {visibleFestival && (
+        <FestivalNotice
+          visibleFestival={visibleFestival}
+          onClose={() => setVisibleFestival(false)}
+        />
+      )}
       <WjLayout
         isShowHeader={false}
         avatarItems={avatarItems}

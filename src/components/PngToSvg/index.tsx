@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { PlusOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./style.less";
 import { isImage } from "@/utils/index";
-
+// import { cutFile } from "../LargeFiles";
 export default function index({
   svgWidth = 600,
   svgHeight = 400,
@@ -90,6 +90,7 @@ export default function index({
         return;
       }
       readFile(file);
+      // cutFile(file);
     };
     input.remove();
   };
@@ -126,7 +127,7 @@ export default function index({
           <CloseCircleOutlined />
         </span>
       </div>
-      <p>
+      <div>
         {downloadBtn && (
           <div
             className={styles.fileUploadContent}
@@ -137,7 +138,7 @@ export default function index({
             <PlusOutlined />
           </div>
         )}
-      </p>
+      </div>
     </div>
   );
 }

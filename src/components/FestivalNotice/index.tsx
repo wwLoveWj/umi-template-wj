@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { getCurrentFestival } from "@/utils/festival";
 import styles from "./style.less";
@@ -20,12 +20,33 @@ const FestivalNotice: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
     const festival = getCurrentFestival();
     if (festival) {
-      setFestivalInfo(festival);
-      setVisible(true);
-      const poem = getFestivalWish(festival.name);
-      // 根据句号、逗号、问号等符号分隔诗句
-      const lines = poem.split(/[。，？！]/).filter((line) => line.trim());
-      setDisplayLines(lines.map((line) => line.split("")));
+      // 检查今天是否已经显示过节日提示
+      const today = new Date().toISOString().split("T")[0];
+      const shownFestivals = JSON.parse(
+        localStorage.getItem("shownFestivals") || "{}"
+      );
+
+      // 如果今天没有显示过这个节日，则显示
+      if (
+        !shownFestivals[today] ||
+        !shownFestivals[today].includes(festival.name)
+      ) {
+        setFestivalInfo(festival);
+        setVisible(true);
+
+        // 记录今天已显示的节日
+        if (!shownFestivals[today]) {
+          shownFestivals[today] = [];
+        }
+        shownFestivals[today].push(festival.name);
+        localStorage.setItem("shownFestivals", JSON.stringify(shownFestivals));
+
+        // 设置诗句
+        const poem = getFestivalWish(festival.name);
+        // 根据句号、逗号、问号等符号分隔诗句
+        const lines = poem.split(/[。，？！]/).filter((line) => line.trim());
+        setDisplayLines(lines.map((line) => line.split("")));
+      }
     }
   }, []);
 
@@ -59,54 +80,58 @@ const FestivalNotice: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    // <div className={styles.mainContent}>
-    //   <div className={styles.illustration}>
-    //     <img
-    //       src={require("@/assets/imgs/festival/qingming.png")}
-    //       alt="牧童遥指杏花村"
-    //     />
-    //   </div>
-    <div className={styles.content}>
-      <div className={styles.closeButton} onClick={onClose} />
-      <div className={styles.title}>
-        今天是{festivalInfo.isToday ? "" : "正值"}
-        {festivalInfo.name}
-      </div>
-      <div className={styles.date}>日期：{festivalInfo.date}</div>
+    <Modal
+      visible={visible}
+      footer={null}
+      closable={false}
+      width="100%"
+      className={styles.festivalModal}
+      style={{ top: 0, padding: 0 }}
+      bodyStyle={{ padding: 0, height: "100vh" }}
+    >
+      <div className={styles.content}>
+        <div className={styles.closeButton} onClick={handleClose} />
+        <div className={styles.title}>
+          今天是{festivalInfo.isToday ? "" : "正值"}
+          {festivalInfo.name}
+        </div>
+        <div className={styles.date}>日期：{festivalInfo.date}</div>
 
-      <div className={styles.wish}>
-        {displayLines.slice(0, currentLineIndex + 1).map((line, lineIndex) => (
-          <div key={lineIndex} className={styles.poemLine}>
-            {line.map((char, charIndex) => (
-              <span
-                key={charIndex}
-                className={styles.character}
-                style={{
-                  animationDelay: `${
-                    (lineIndex * line.length + charIndex) * 0.15
-                  }s`,
-                }}
-              >
-                {char}
-              </span>
+        <div className={styles.wish}>
+          {displayLines
+            .slice(0, currentLineIndex + 1)
+            .map((line, lineIndex) => (
+              <div key={lineIndex} className={styles.poemLine}>
+                {line.map((char, charIndex) => (
+                  <span
+                    key={charIndex}
+                    className={styles.character}
+                    style={{
+                      animationDelay: `${
+                        (lineIndex * line.length + charIndex) * 0.15
+                      }s`,
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))}
+                {lineIndex < currentLineIndex && (
+                  <span
+                    className={styles.character}
+                    style={{
+                      animationDelay: `${
+                        (lineIndex * line.length + line.length) * 0.15
+                      }s`,
+                    }}
+                  >
+                    {getPunctuation(lineIndex)}
+                  </span>
+                )}
+              </div>
             ))}
-            {lineIndex < currentLineIndex && (
-              <span
-                className={styles.character}
-                style={{
-                  animationDelay: `${
-                    (lineIndex * line.length + line.length) * 0.15
-                  }s`,
-                }}
-              >
-                {getPunctuation(lineIndex)}
-              </span>
-            )}
-          </div>
-        ))}
+        </div>
       </div>
-    </div>
-    // </div>
+    </Modal>
   );
 };
 

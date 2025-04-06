@@ -129,20 +129,20 @@ export const menuRoutes: API.MenuRoutesType[] = [
         component: "./article/index",
         title: "文章列表",
       },
-      // {
-      //   key: "edit",
-      //   title: "更新文章",
-      //   path: "/article/edit/:editorId",
-      //   component: "./article/components/ArticleCreate.tsx",
-      //   hidden: true,
-      // },
       {
         key: "edit",
         title: "更新文章",
-        path: "/article/edit",
+        path: "/article/edit/:editorId",
         component: "./article/components/ArticleCreate.tsx",
         hidden: true,
       },
+      // {
+      //   key: "edit",
+      //   title: "更新文章",
+      //   path: "/article/edit",
+      //   component: "./article/components/ArticleCreate.tsx",
+      //   hidden: true,
+      // },
       {
         key: "create",
         title: "创建文章",

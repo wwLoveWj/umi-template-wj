@@ -26,8 +26,8 @@ const Index: React.FC = () => {
   };
 
   const toEdit = (record: API.ArticleTableDataType) => {
-    history.push({ pathname: "/article/edit" }, { editorId: record?.editorId });
-    // history.push(`/article/edit/${record?.editorId}`);
+    // history.push({ pathname: "/article/edit" }, { editorId: record?.editorId });
+    history.push(`/article/edit/${record?.editorId}`);
   };
   return (
     <>

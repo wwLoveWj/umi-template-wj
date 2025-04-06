@@ -1,5 +1,6 @@
 import JSEncrypt from "jsencrypt";
-
+import axios from "axios";
+import { getToken } from "@/utils/localToken";
 export const toLoginPage = () => {};
 
 export const guid = () => {
@@ -85,4 +86,48 @@ export const uploadImage = (uploadApi: (params: any) => any) => {
     uploadApi(formData);
   };
   input.remove();
+};
+
+// 获取上传的url地址
+const UploadAPI = async (formData: any) => {
+  let token = await getToken();
+  let result;
+  await axios({
+    url: "http://localhost:3007/file/upload",
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+    data: formData,
+    // onUploadProgress: function (progressEvent) {
+    //   //原生获取上传进度的事件
+    //   if (progressEvent?.event?.lengthComputable) {
+    //     //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+    //     //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+    //     //   setupLoadProgress((progressEvent.loaded / progressEvent.total) * 100); //实时获取上传进度
+    //     setupLoadProgress(
+    //       Math.round(
+    //         (progressEvent.loaded * 100) / (progressEvent.total || 1)
+    //       )
+    //     );
+    //   }
+    // },
+  }).then((res) => {
+    debugger;
+    result = res?.data?.data?.url;
+  });
+  return result;
+};
+export const onUploadImage = async (files: FileList) => {
+  // 判断是否是图片格式文件
+  const file = files[0];
+  if (!isImage(file)) {
+    return;
+  }
+  // TODO:判断文件大小
+  const formData = new FormData();
+  formData.append("file", file);
+  console.log(files);
+  return await UploadAPI(formData);
 };

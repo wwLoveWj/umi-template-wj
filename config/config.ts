@@ -5,7 +5,7 @@ import { PROJECT_CONFIG } from "../src/constants/constant";
 export default defineConfig({
   title: "创世纪系统",
   mountElementId: PROJECT_CONFIG.NAME,
-  history: { type: "hash" },
+  // history: { type: "hash" },
   base: "/",
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   initialState: {},

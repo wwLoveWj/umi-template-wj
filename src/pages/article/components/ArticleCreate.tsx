@@ -10,8 +10,8 @@ import {
 import { guid } from "@/utils";
 import { history } from "umi";
 const Index: React.FC = () => {
-  // const { editorId } = useParams() || { editorId: "" };
-  const { editorId } = (useLocation() as any).state || { editorId: "" };
+  const { editorId } = useParams() || { editorId: "" };
+  // const { editorId } = (useLocation() as any).state || { editorId: "" };
   const isEditMode = !!editorId;
   const [html, setHtml] = useState(""); // 编辑器内容
   const [title, setTitle] = useState(""); //文章标题
