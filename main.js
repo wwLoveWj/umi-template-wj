@@ -74,33 +74,36 @@ function getSize() {
 function createCutWindow() {
   const { width, height } = getSize();
   cutWindow = new BrowserWindow({
-    width,
-    height,
-    autoHideMenuBar: true,
-    useContentSize: true,
-    movable: false,
-    frame: false,
-    resizable: false,
-    hasShadow: false,
-    transparent: true,
-    fullscreenable: true,
-    fullscreen: true,
-    simpleFullscreen: true,
-    alwaysOnTop: false,
+    title: "pear-rec 截屏",
+    icon: path.join(PUBLIC, "logo@2x.ico"),
+    width, // 宽度(px), 默认值为 800
+    height, // 高度(px), 默认值为 600
+    autoHideMenuBar: true, // 自动隐藏菜单栏
+    useContentSize: true, // width 和 height 将设置为 web 页面的尺寸
+    movable: false, // 是否可移动
+    frame: false, // 无边框窗口
+    resizable: false, // 窗口大小是否可调整
+    hasShadow: false, // 窗口是否有阴影
+    transparent: true, // 使窗口透明
+    fullscreenable: true, // 窗口是否可以进入全屏状态
+    fullscreen: true, // 窗口是否全屏
+    simpleFullscreen: true, // 在 macOS 上使用 pre-Lion 全屏
+    alwaysOnTop: false, // 窗口是否永远在别的窗口的上面
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
-
   if (NODE_ENV === "development") {
-    cutWindow.loadURL("http://localhost:8000/screenshot");
+    cutWindow.loadURL("http://localhost:8000/#/album/screenshot");
   } else {
     cutWindow.loadFile(path.join(__dirname, "../dist/index.html"), {
       hash: "cut",
     });
   }
+
+  cutWindow.webContents.openDevTools();
   cutWindow.maximize();
   cutWindow.setFullScreen(true);
 }

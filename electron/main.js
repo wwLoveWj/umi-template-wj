@@ -256,8 +256,14 @@ function openViewImageWin(imageUrl) {
       nodeIntegration: true,
       contextIsolation: false,
       webSecurity: false, // 允许加载本地资源
+      backgroundThrottling: false, // 禁用背景节流
+      enableRemoteModule: true, // 启用远程模块
+      partition: "persist:view-image", // 使用持久化的会话分区
     },
   });
+
+  // 在加载新页面时清除缓存
+  viewImageWin.webContents.session.clearCache();
 
   // 开发环境下加载本地服务
   viewImageWin.loadURL(
@@ -265,7 +271,6 @@ function openViewImageWin(imageUrl) {
       imageUrl
     )}`
   );
-  // viewImageWin.webContents.openDevTools();
 
   viewImageWin.on("closed", () => {
     viewImageWin = null;
