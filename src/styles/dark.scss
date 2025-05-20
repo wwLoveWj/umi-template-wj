@@ -326,6 +326,11 @@ html.dark {
       color: var(--art-gray-900) !important;
       background: var(--art-main-bg-color);
     }
+
+    // 跟随主按钮色样式
+    .my-template-umi-ant-tabs-tab-active {
+      color: var(--main-color) !important;
+    }
   }
 
   // -----------------------------------------菜单区域---------------------------------------------
@@ -489,19 +494,36 @@ html.dark {
 .user-page-tabs {
 
   //   background: var(--art-main-bg-color);
-  .my-template-umi-ant-tabs-tab-remove {
-    color: var(--art-gray-900) !important;
+
+  .my-template-umi-ant-tabs-tab:hover {
+    color: var(--main-color) !important;
+    border: 1px solid var(--main-color) !important;
+
+    .my-template-umi-ant-tabs-tab-btn,
+    .my-template-umi-ant-tabs-tab-remove span {
+      color: var(--main-color) !important;
+    }
   }
+
 
   // .my-template-umi-ant-tabs-tab {
   //   color: var(--art-gray-900) !important;
   //   background: var(--art-main-bg-color);
   // }
-}
 
-// 跟随主按钮色样式
-.my-template-umi-ant-tabs-tab-active {
-  color: var(--main-color) !important;
+  // 跟随主按钮色样式
+  .my-template-umi-ant-tabs-tab-active {
+    color: var(--main-color) !important;
+    border: 1px solid var(--main-color) !important;
+    background: transparent !important;
+
+    .my-template-umi-ant-tabs-tab-btn,
+    .my-template-umi-ant-tabs-tab-remove span {
+      color: var(--main-color) !important;
+    }
+  }
+
+
 }
 
 .my-template-umi-ant-input-suffix {

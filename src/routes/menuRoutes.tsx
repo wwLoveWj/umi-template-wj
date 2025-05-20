@@ -259,6 +259,12 @@ export const menuRoutes: API.MenuRoutesType[] = [
         // hidden: true, //隐藏该菜单项，主要是详情、新增、编辑页
       },
       {
+        key: "screenshot",
+        title: "屏幕截图",
+        path: "/album/screenshot1",
+        component: "./cutImage",
+      },
+      {
         key: "timeline",
         title: "时间线",
         path: "/album/timeline",

@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "main": "./electron/main.js",
   "scripts": {
+    "electron:start": "nodemon --exec electron .",
     "dev": "umi dev",
     "build": "umi build",
     "postinstall": "umi setup",

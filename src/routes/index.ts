@@ -18,6 +18,20 @@ const routes: API.MenuRoutesType[] = [
     ],
   },
   {
+    key: "screenshot",
+    title: "截图",
+    path: "/album/screenshot",
+    component: "./cutImage/ScreenShot",
+    layout: false,
+  },
+  {
+    key: "view-image",
+    title: "图片查看",
+    path: "/album/view-image",
+    component: "./cutImage/ViewImage",
+    layout: false,
+  },
+  {
     key: "timeline",
     title: "时间线",
     path: "/album/timeline",
