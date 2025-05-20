@@ -43,6 +43,7 @@
     "react-schema-render": "^0.0.5",
     "react-screenshots": "^0.5.22",
     "spark-md5": "^3.0.2",
+    "tesseract.js": "^6.0.1",
     "umi": "^4.3.25",
     "umi-plugin-keep-alive": "^0.0.1-beta.35",
     "vstores": "^0.0.17",
