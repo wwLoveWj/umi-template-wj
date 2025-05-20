@@ -6,9 +6,14 @@ const {
   desktopCapturer,
   screen,
   globalShortcut,
+  Tray,
+  Menu,
+  nativeImage,
+  MenuItem,
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const singleThreadOCR = require("./singleThread_js/singleThread"); //识图
 const {
   createShotScreenWin,
   closeShotScreenWin,
@@ -28,6 +33,7 @@ function closeCutWindow() {
   cutWindow = null;
 }
 
+let tray = null; // 在外面创建tray变量，防止被自动删除，导致图标自动消失
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
@@ -52,9 +58,67 @@ function createWindow() {
   //   // 生产环境下加载打包后的文件
   //   win.loadFile(path.join(__dirname, "../dist/index.html"));
   // }
+  // 创建任务栏图标
+  tray = new Tray(
+    path.resolve(
+      __dirname,
+      "/coding/20240320ww/my-umi-app/umi-template-wj/src/assets/imgs/flower.png"
+    )
+  );
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: "截图",
+      type: "radio",
+      click: () => {
+        if (mainWindow) {
+          closeShotScreenWin();
+          mainWindow.hide();
+          openShotScreenWin();
+        }
+      },
+    },
+    {
+      label: "关闭",
+      type: "radio",
+      click: () => {
+        if (mainWindow) {
+          mainWindow.hide();
+        }
+      },
+    },
+    {
+      label: "退出",
+      click: async function () {
+        // dbugger;
+        // console.log(123);
+        // win.destroy();
+        app.quit();
+        // win = null;
+      },
+    },
+    { label: "关于", type: "radio", checked: true },
+  ]);
 
-  win.on("closed", () => {
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip("欢迎访问创世纪系统~");
+  tray.setTitle("创世纪系统");
+  // 点击托盘图标，显示主窗口
+  tray.on("click", () => {
+    win.show();
+  });
+
+  win.on("closed", (e) => {
     closeCutWindow();
+    // e.preventDefault(); // 阻止退出程序
+    // win.setSkipTaskbar(true); // 取消任务栏显示
+    // win.hide(); // 隐藏主程序窗口
+    //回收BrowserWindow对象
+    if (win.isMinimized()) {
+      win = null;
+    } else {
+      e.preventDefault();
+      win.minimize();
+    }
   });
 
   mainWindow = win; // 将创建的窗口赋值给 mainWindow
@@ -64,10 +128,39 @@ function createWindow() {
 app.whenReady().then(() => {
   mainWindow = createWindow();
 
+  // 注册右下角的托盘图标
+  // const icon = nativeImage.createFromPath("../src/assets/imgs/flower.png");
+  // tray = new Tray(icon);
+
+  // 全局快捷键
+  const menu = new Menu();
+  menu.append(
+    new MenuItem({
+      label: "Electron",
+      submenu: [
+        {
+          role: "截屏",
+          accelerator:
+            process.platform === "darwin" ? "Alt+Cmd+I" : "Alt+Shift+I",
+          click: () => {
+            if (mainWindow) {
+              closeShotScreenWin();
+              mainWindow.hide();
+              openShotScreenWin();
+            }
+          },
+        },
+      ],
+    })
+  );
+  Menu.setApplicationMenu(menu);
   // 注册全局快捷键
   globalShortcut.register("CommandOrControl+Shift+A", () => {
     if (mainWindow) {
-      mainWindow.webContents.send("OPEN_CUT_SCREEN");
+      // mainWindow.webContents.send("ss:open-win");
+      closeShotScreenWin();
+      mainWindow.hide();
+      openShotScreenWin();
     }
   });
 
@@ -243,7 +336,7 @@ ipcMain.handle("ss:get-desktop-capturer-source", async () => {
  * 打开图片查看窗口
  * @param {string} imageUrl - 图片URL（可以是 Blob URL 或文件路径）
  */
-function openViewImageWin(imageUrl) {
+async function openViewImageWin(imageUrl) {
   if (viewImageWin) {
     viewImageWin.close();
   }
@@ -271,6 +364,18 @@ function openViewImageWin(imageUrl) {
       imageUrl
     )}`
   );
+  // ======================识别图片=======================
+  const len = imageUrl?.split("/");
+  await singleThreadOCR({
+    targetPhotoDir: path.join(
+      __dirname,
+      "./public/" + `${len[len?.length - 1]}.png`
+    ),
+    // targetPhotoDir: imgUrl,
+    languages: "chi_sim+eng",
+    targetPath: path.join(__dirname, "./upload/"),
+  });
+  // =====================================================
   viewImageWin.webContents.openDevTools();
   viewImageWin.on("closed", () => {
     viewImageWin = null;
