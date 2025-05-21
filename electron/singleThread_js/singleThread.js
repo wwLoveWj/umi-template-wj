@@ -65,6 +65,7 @@ const singleThreadOCR = async ({ targetPhotoDir, languages, targetPath }) => {
   // console.log(`detect执行后的${data2}`)
   // 终止
   await worker.terminate();
+  // return text;
   return `${targetPath}\img.txt`;
 };
 // singleThreadOCR({

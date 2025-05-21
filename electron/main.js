@@ -13,6 +13,7 @@ const {
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
+// const clipboardy = require("clipboardy");
 const singleThreadOCR = require("./singleThread_js/singleThread"); //识图
 const {
   createShotScreenWin,
@@ -364,9 +365,10 @@ async function openViewImageWin(imageUrl) {
       imageUrl
     )}`
   );
+
   // ======================识别图片=======================
   const len = imageUrl?.split("/");
-  await singleThreadOCR({
+  const text = await singleThreadOCR({
     targetPhotoDir: path.join(
       __dirname,
       "./public/" + `${len[len?.length - 1]}.png`
