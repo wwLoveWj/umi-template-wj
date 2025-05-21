@@ -24,6 +24,7 @@
     "antd": "^5.18.0",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
+    "clipboardy": "^4.0.0",
     "dayjs": "^1.11.11",
     "echarts": "^5.5.1",
     "electron": "^29.4.6",
