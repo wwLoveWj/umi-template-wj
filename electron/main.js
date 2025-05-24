@@ -10,9 +10,11 @@ const {
   Menu,
   nativeImage,
   MenuItem,
+  clipboard,
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const sendEmail = require("./email/send"); //发送邮件的工具
 // const clipboardy = require("clipboardy");
 const singleThreadOCR = require("./singleThread_js/singleThread"); //识图
 const {
@@ -28,6 +30,11 @@ const {
 } = require("./utils");
 const NODE_ENV = process.env.NODE_ENV;
 let mainWindow, cutWindow, viewImageWin;
+const { exec } = require("child_process");
+
+// 在应用启动前设置远程调试端口
+// app.commandLine.appendSwitch("remote-debugging-port", "3005");
+// app.commandLine.appendSwitch("remote-debugging-address", "127.0.0.1");
 
 function closeCutWindow() {
   cutWindow && cutWindow.close();
@@ -51,14 +58,29 @@ function createWindow() {
     },
   });
 
-  // 开发环境下加载本地服务
+  // 启用 Chrome DevTools Protocol
+  win.webContents.debugger.attach("1.3");
+
+  // 设置调试端口
+  // win.webContents.debugger.sendCommand("Network.enable");
+
+  // // 添加调试日志
+  // win.webContents.debugger.on("detach", (event, reason) => {
+  //   console.log("Debugger detached due to:", reason);
+  // });
+
+  // win.webContents.debugger.on("message", (event, method, params) => {
+  //   console.log("Debugger message:", method, params);
+  // });
+
+  // 加载应用
   // if (process.env.NODE_ENV === "development") {
   win.loadURL("http://localhost:8000");
-  win.webContents.openDevTools();
+  //   win.webContents.openDevTools();
   // } else {
-  //   // 生产环境下加载打包后的文件
   //   win.loadFile(path.join(__dirname, "../dist/index.html"));
   // }
+
   // 创建任务栏图标
   tray = new Tray(
     path.resolve(
@@ -79,25 +101,52 @@ function createWindow() {
       },
     },
     {
-      label: "关闭",
-      type: "radio",
-      click: () => {
-        if (mainWindow) {
-          mainWindow.hide();
-        }
+      label: "发送邮件",
+      click: async () => {
+        // if (mainWindow) {
+        //   mainWindow.hide();
+        // }
+        await sendEmail({
+          title: "yyds",
+          content: "测试",
+          sendToWho: "xxx@163.com",
+        }).then((res) => {
+          debugger;
+        });
       },
     },
     {
       label: "退出",
       click: async function () {
-        // dbugger;
-        // console.log(123);
-        // win.destroy();
+        win.destroy();
         app.quit();
-        // win = null;
+        win = null;
       },
     },
-    { label: "关于", type: "radio", checked: true },
+    {
+      label: "网页截图",
+      // type: "radio",
+      // checked: true,
+      click: () => {
+        // 这里可以添加其他关于信息
+        console.log("关于创世纪系统");
+        exec("nvm use 18.12.0", (error, stdout, stderr) => {
+          if (error) {
+            console.error(`执行的错误: ${error}`);
+            return;
+          }
+          console.log(`stdout: ${stdout}`);
+          exec("node demo.js", (error, stdout, stderr) => {
+            if (error) {
+              console.error(`执行的错误: ${error}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+            console.error(`stderr: ${stderr}`);
+          });
+        });
+      },
+    },
   ]);
 
   tray.setContextMenu(contextMenu);
@@ -365,18 +414,19 @@ async function openViewImageWin(imageUrl) {
       imageUrl
     )}`
   );
-
+  clipboard.writeImage(imageUrl);
   // ======================识别图片=======================
-  const len = imageUrl?.split("/");
-  const text = await singleThreadOCR({
-    targetPhotoDir: path.join(
-      __dirname,
-      "./public/" + `${len[len?.length - 1]}.png`
-    ),
-    // targetPhotoDir: imgUrl,
-    languages: "chi_sim+eng",
-    targetPath: path.join(__dirname, "./upload/"),
-  });
+  // const len = imageUrl?.split("/");
+  // const text = await singleThreadOCR({
+  //   targetPhotoDir: path.join(
+  //     __dirname,
+  //     "./public/" + `${len[len?.length - 1]}.png`
+  //   ),
+  //   // targetPhotoDir: imgUrl,
+  //   languages: "chi_sim+eng",
+  //   targetPath: path.join(__dirname, "./upload/"),
+  // });
+  // clipboard.writeText(text);
   // =====================================================
   viewImageWin.webContents.openDevTools();
   viewImageWin.on("closed", () => {

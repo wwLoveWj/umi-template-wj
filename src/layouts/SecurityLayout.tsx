@@ -10,6 +10,7 @@ import { history, useModel } from "umi";
 import { storage } from "@/utils/storage";
 import { PROJECT_CONFIG } from "@/constants/constant";
 import { WjLayout } from "magical-antd-ui";
+// import WjLayout from "./test/WjLayout";
 import routes from "@/routes"; // 配置的菜单项
 import SettingConfig from "./themeSettings/index";
 import GlobalSearch from "@/components/GlobalSearch";
@@ -18,6 +19,7 @@ import Notice from "@/pages/home/notice";
 import LogoIndex from "./logo/index";
 import FestivalNotice from "@/components/FestivalNotice";
 import { ElementPlusTheme } from "@/config/setting";
+// import CustomTabs from "@/components/CustomTabs";
 // import { useRequest } from "ahooks";
 // import { UserInfoQueryAPI } from "@/service/api/user";
 import ClickSearch from "./Search";
@@ -202,6 +204,7 @@ export default function Layout() {
           onClose={() => setVisibleFestival(false)}
         />
       )}
+      {/* <CustomTabs /> */}
       <WjLayout
         isShowHeader={false}
         avatarItems={avatarItems}
