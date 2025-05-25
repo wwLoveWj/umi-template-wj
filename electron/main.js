@@ -76,7 +76,7 @@ function createWindow() {
   // 加载应用
   // if (process.env.NODE_ENV === "development") {
   win.loadURL("http://localhost:8000");
-  //   win.webContents.openDevTools();
+  win.webContents.openDevTools();
   // } else {
   //   win.loadFile(path.join(__dirname, "../dist/index.html"));
   // }
@@ -163,12 +163,13 @@ function createWindow() {
     // win.setSkipTaskbar(true); // 取消任务栏显示
     // win.hide(); // 隐藏主程序窗口
     //回收BrowserWindow对象
-    if (win.isMinimized()) {
-      win = null;
-    } else {
-      e.preventDefault();
-      win.minimize();
-    }
+    //会报错
+    // if (win.isMinimized()) {
+    //   win = null;
+    // } else {
+    //   e.preventDefault();
+    //   win.minimize();
+    // }
   });
 
   mainWindow = win; // 将创建的窗口赋值给 mainWindow
@@ -186,7 +187,7 @@ app.whenReady().then(() => {
   const menu = new Menu();
   menu.append(
     new MenuItem({
-      label: "Electron",
+      // label: "Electron",
       submenu: [
         {
           role: "截屏",

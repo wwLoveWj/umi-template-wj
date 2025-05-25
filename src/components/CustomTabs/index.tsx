@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Tabs } from "antd";
+import { getTagTitle } from "magical-antd-ui";
 import { useLocation, useNavigate } from "react-router-dom";
 import { KeepAlive } from "react-activation";
 import ContextMenu from "./ContextMenu";
 import styles from "./style.less";
+import routes from "@/routes"; // 配置的菜单项
 
 interface TabItem {
   key: string;
@@ -43,7 +45,7 @@ const CustomTabs: React.FC = () => {
   // 根据路由更新标签页
   useEffect(() => {
     const path = location.pathname;
-    const title = document.title || path;
+    const title = getTagTitle(path, routes) || path;
 
     setTabs((prevTabs) => {
       const existingTab = prevTabs.find((tab) => tab.path === path);

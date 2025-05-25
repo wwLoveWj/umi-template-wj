@@ -61,7 +61,6 @@ const Login = () => {
     function createBubble() {
       const loginPage = document.getElementById("bubble");
       const createElement = document.createElement("li");
-      debugger;
       let size = Math.random() * 60;
       createElement.style.width = 20 + size + "px";
       createElement.style.height = 20 + size + "px";
@@ -72,7 +71,11 @@ const Login = () => {
       }, 4000);
     }
 
-    setInterval(createBubble, 300);
+    const timer = setInterval(createBubble, 300);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   // 记住密码;

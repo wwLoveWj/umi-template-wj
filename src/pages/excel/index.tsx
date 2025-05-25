@@ -188,21 +188,26 @@ export default function Index() {
     // input.setAttribute("accept", "xlsx/*");
     input.click();
     input.onchange = function (event: any) {
-      // 判断是否是图片格式文件
-      const file = event.target.files[0];
-      let formData = new FormData();
-      let suffix = file.name && file.name.split(".")[1]; //文件类型后缀xlsx
-      let defaultName = file.name && file.name.split(".")[0]; //默认文件名
-      let fileName = name
-        ? name.replace(/[\u4e00-\u9fa5]/g, "") + "." + suffix
-        : defaultName.replace(/[\u4e00-\u9fa5]/g, "") + "." + suffix;
-      formData.append("file", file, fileName);
-      // if (!isImage(file)) {
-      //   return;
-      // }
-      // TODO:判断文件大小
-      // 上传文件的接口
-      ExcelInfoImportAPI(formData, append);
+      try {
+        if (!event.target.files[0]) {
+          return;
+        }
+        // 判断是否是图片格式文件
+        const file = event.target.files[0];
+        let formData = new FormData();
+        let suffix = file.name && file.name.split(".")[1]; //文件类型后缀xlsx
+        let defaultName = file.name && file.name.split(".")[0]; //默认文件名
+        let fileName = name
+          ? name.replace(/[\u4e00-\u9fa5]/g, "") + "." + suffix
+          : defaultName.replace(/[\u4e00-\u9fa5]/g, "") + "." + suffix;
+        formData.append("file", file, fileName);
+        // if (!isImage(file)) {
+        //   return;
+        // }
+        // TODO:判断文件大小
+        // 上传文件的接口
+        ExcelInfoImportAPI(formData, append);
+      } catch (error) {}
     };
     input.remove();
   }
